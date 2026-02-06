@@ -203,7 +203,7 @@ export async function selectQuestion(q, li) {
 
     <button id="toggle">Show solution</button>
     <div class="solution" id="solution-container" style="display:none;">
-      <p class="placerholder" style="display:none">
+      <p class="placeholder" style="display:none">
         Solution not available yet.
       </p>
     </div>
@@ -226,7 +226,7 @@ export async function selectQuestion(q, li) {
 
       const img = document.createElement("img");
       img.src = imgPath;
-      img.alt = `Solution ${id} (${i})`;
+      img.alt = `Solution ${questionId} (${i})`;
 
       solutionContainer.appendChild(img);
       foundAny = true;
