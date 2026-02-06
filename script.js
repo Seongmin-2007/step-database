@@ -40,6 +40,8 @@ document.getElementById("logout").onclick = async () => {
   await signOut(auth);
 };
 
+console.log("SCRIPT LOADED");
+
 onAuthStateChanged(auth, user => {
   if (user) {
     document.getElementById("logout").style.display = "inline";
