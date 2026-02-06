@@ -202,14 +202,17 @@ function makeId({ year, paper, question }) {
 function renderList() {
   listEl.innerHTML = "";
 
+  const filter = FILTER.toLowerCase(); // normalize input
+
   QUESTIONS
     .filter(q => {
       const qId = makeId(q).toLowerCase();
-      const qPath = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-      const tags = (QUESTION_TAGS[qPath] || []).map(t => t.toLowerCase());
 
-      // Check if search input matches question ID or any tag
-      return qId.includes(FILTER) || tags.some(t => t.includes(FILTER));
+      const qPath = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
+      const tags = (QUESTION_TAGS[qPath] || []).map(t => t.toLowerCase()); // lowercase for search
+
+      // Search matches question ID OR any tag
+      return qId.includes(filter) || tags.some(t => t.includes(filter));
     })
     .forEach(q => {
       const li = document.createElement("li");
