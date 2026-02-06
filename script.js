@@ -1,4 +1,4 @@
-console.log("SCRIPT LOADED 11234");
+console.log("SCRIPT LOADED 112345");
 
 import {
   doc,
@@ -241,30 +241,7 @@ export async function selectQuestion(q, li) {
     updateStars();
   }
 
-  // // ----- Save progress -----
-  // async function saveProgress() {
-  //   const user = auth.currentUser;
-  //   if (!user) return;
-
-  //   saveStatus.textContent = "Saving…";
-
-  //   const ref = doc(db, "users", user.uid, "progress", questionId);
-
-  //   await setDoc(ref, {
-  //     questionId,
-  //     status: statusEl.value,
-  //     timeMinutes: timeEl.value ? Number(timeEl.value) : null,
-  //     difficulty: difficulty || null,
-  //     notes: notesEl.value || "",
-  //     updatedAt: serverTimestamp(),
-  //     ...(statusEl.value === "completed" && {
-  //       completedAt: serverTimestamp()
-  //     })
-  //   }, { merge: true });
-
-  //   saveStatus.textContent = "Saved ✓";
-  // }
-
+  let currentDifficulty = 0;
   async function saveProgress() {
     const user = auth.currentUser;
     if (!user) return;
