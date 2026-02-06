@@ -35,7 +35,8 @@ function renderList() {
     });
 }
 
-function selectQuestion(q, li) {
+async function selectQuestion(q, li) {
+  // Highlight selected question
   document
     .querySelectorAll("#questionList li")
     .forEach(x => x.classList.remove("active"));
@@ -46,8 +47,6 @@ function selectQuestion(q, li) {
 
   const qImg =
     `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-  const sImg =
-    `images/solutions/${q.year}/step${q.paper}/q${q.question}.png`;
 
   viewer.innerHTML = `
     <h2>${id}</h2>
@@ -56,8 +55,7 @@ function selectQuestion(q, li) {
 
     <button id="toggle">Show solution</button>
 
-    <div class="solution" style="display:none;">
-      <img src="${sImg}" alt="Solution ${id}">
+    <div class="solution" id="solution-container" style="display:none;">
       <p class="placeholder" style="display:none;">
         Solution not available yet.
       </p>
@@ -65,17 +63,40 @@ function selectQuestion(q, li) {
   `;
 
   const toggle = document.getElementById("toggle");
-  const sol = viewer.querySelector(".solution");
-  const solImg = sol.querySelector("img");
-  const fallback = sol.querySelector(".placeholder");
+  const solutionContainer = document.getElementById("solution-container");
+  const placeholder = solutionContainer.querySelector(".placeholder");
 
-  solImg.onerror = () => {
-    solImg.style.display = "none";
-    fallback.style.display = "block";
-  };
+  // Load all solution images automatically
+  let i = 1;
+  let foundAny = false;
 
+  while (true) {
+    const imgPath =
+      `images/solutions/${q.year}/step${q.paper}/q${q.question}-${i}.jpg`;
+
+    try {
+      const res = await fetch(imgPath, { method: "HEAD" });
+      if (!res.ok) break;
+
+      const img = document.createElement("img");
+      img.src = imgPath;
+      img.alt = `Solution ${id} (${i})`;
+
+      solutionContainer.appendChild(img);
+      foundAny = true;
+      i++;
+    } catch {
+      break;
+    }
+  }
+
+  if (!foundAny) {
+    placeholder.style.display = "block";
+  }
+
+  // Toggle visibility
   toggle.onclick = () => {
-    sol.style.display =
-      sol.style.display === "none" ? "block" : "none";
+    solutionContainer.style.display =
+      solutionContainer.style.display === "none" ? "block" : "none";
   };
 }
