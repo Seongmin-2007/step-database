@@ -10,6 +10,7 @@ import {
 import {
   auth,
   createUserWithEmailAndPassword,
+  db,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged
