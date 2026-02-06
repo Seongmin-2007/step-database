@@ -1,5 +1,15 @@
 console.log("SCRIPT LOADED");
 
+import {
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import { auth, db } from "./firebase.js";
+
+
 
 import {
   auth,
@@ -99,49 +109,6 @@ document.addEventListener("click", e => {
 });
 
 
-// const emailInput = document.getElementById("email");
-// const passwordInput = document.getElementById("password");
-// const statusText = document.getElementById("auth-status");
-
-// document.getElementById("signup").onclick = async () => {
-//   try {
-//     await createUserWithEmailAndPassword(
-//       auth,
-//       emailInput.value,
-//       passwordInput.value
-//     );
-//     statusText.textContent = "Signed up!";
-//   } catch (e) {
-//     statusText.textContent = e.message;
-//   }
-// };
-
-// document.getElementById("login").onclick = async () => {
-//   try {
-//     await signInWithEmailAndPassword(
-//       auth,
-//       emailInput.value,
-//       passwordInput.value
-//     );
-//     statusText.textContent = "Logged in!";
-//   } catch (e) {
-//     statusText.textContent = e.message;
-//   }
-// };
-
-// document.getElementById("logout").onclick = async () => {
-//   await signOut(auth);
-// };
-
-// onAuthStateChanged(auth, user => {
-//   if (user) {
-//     document.getElementById("logout").style.display = "inline";
-//     statusText.textContent = `Logged in as ${user.email}`;
-//   } else {
-//     document.getElementById("logout").style.display = "none";
-//     statusText.textContent = "Not logged in";
-//   }
-// });
 
 let QUESTIONS = [];
 let FILTER = "";
@@ -193,10 +160,56 @@ async function selectQuestion(q, li) {
   const qImg =
     `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
 
+  // viewer.innerHTML = `
+  //   <h2>${id}</h2>
+
+  //   <img src="${qImg}" alt="Question ${id}">
+
+  //   <button id="toggle">Show solution</button>
+
+  //   <div class="solution" id="solution-container" style="display:none;">
+  //     <p class="placeholder" style="display:none;">
+  //       Solution not available yet.
+  //     </p>
+  //   </div>
+  // `;
+
   viewer.innerHTML = `
     <h2>${id}</h2>
 
     <img src="${qImg}" alt="Question ${id}">
+
+    <!-- PROGRESS PANEL -->
+    <div id="progress-panel" class="progress-panel">
+      <div class="status-row">
+        <label>Status:</label>
+        <select id="status">
+          <option value="not_started">Not started</option>
+          <option value="attempted">Attempted</option>
+          <option value="completed">Completed</option>
+          <option value="revision">Needs revision</option>
+        </select>
+      </div>
+
+      <div class="time-row">
+        <label>Time (minutes):</label>
+        <input id="time" type="number" min="0" placeholder="optional">
+      </div>
+
+      <div class="difficulty-row">
+        <label>Difficulty:</label>
+        <div id="stars" class="stars">
+          ${[1,2,3,4,5].map(i => `<span data-star="${i}">☆</span>`).join("")}
+        </div>
+      </div>
+
+      <div class="notes-row">
+        <label>Notes:</label>
+        <textarea id="notes" rows="3" placeholder="optional"></textarea>
+      </div>
+
+      <div id="save-status" class="save-status"></div>
+    </div>
 
     <button id="toggle">Show solution</button>
 
