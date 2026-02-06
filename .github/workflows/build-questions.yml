@@ -1,0 +1,31 @@
+name: Build Questions JSON
+
+on:
+  push:
+    paths:
+      - 'images/questions/**'   # only run when question images change
+  workflow_dispatch:          # also allow manual run
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Generate questions.json
+        run: python generate_questions.py
+
+      - name: Commit questions.json
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add questions.json
+          git diff --cached --quiet || git commit -m "Auto-generate questions.json"
+          git push
