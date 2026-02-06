@@ -256,13 +256,17 @@ export async function selectQuestion(q, li) {
 
   const questionId = `${q.year}-step${q.paper}-q${q.question}`;
   const qImg = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-
+  const tags = QUESTION_TAGS[qImg] || [];
+  
   // ------------------------------
   // Render question + progress UI
   // ------------------------------
   viewer.innerHTML = `
     <h2>${questionId}</h2>
-
+    <div style="margin-top:10px; font-size:0.9em; color:#555;">
+      <strong>Tags:</strong> ${tags.length ? tags.join(", ") : "No tags available"}
+    </div>
+    
     <img src="${qImg}" alt="Question ${questionId}">
 
     <div class="progress-panel">
