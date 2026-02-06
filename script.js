@@ -166,7 +166,6 @@ let TAG_FILTER = "";
 const listEl = document.getElementById("questionList");
 const viewer = document.getElementById("viewer");
 const search = document.getElementById("search");
-const tagSearch = document.getElementById("tagSearch"); // new input for tag filtering
 
 // -----------------------
 // Load questions + tags
@@ -184,16 +183,11 @@ Promise.all([
 // Event listeners
 // -----------------------
 search.addEventListener("input", e => {
-  FILTER = e.target.value.toLowerCase();
+  const value = e.target.value.toLowerCase();
+  FILTER = value;
   renderList();
 });
 
-if (tagSearch) {
-  tagSearch.addEventListener("input", e => {
-    TAG_FILTER = e.target.value.toLowerCase();
-    renderList();
-  });
-}
 
 // -----------------------
 // Helper to make ID
@@ -209,35 +203,21 @@ function renderList() {
   listEl.innerHTML = "";
 
   QUESTIONS
-    .filter(q => makeId(q).toLowerCase().includes(FILTER))
     .filter(q => {
-      if (!TAG_FILTER) return true; // no tag filter, include all
+      const qId = makeId(q).toLowerCase();
       const qPath = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-      const tags = QUESTION_TAGS[qPath] || [];
-      return tags.some(t => t.toLowerCase().includes(TAG_FILTER));
+      const tags = (QUESTION_TAGS[qPath] || []).map(t => t.toLowerCase());
+
+      // Check if search input matches question ID or any tag
+      return qId.includes(FILTER) || tags.some(t => t.includes(FILTER));
     })
     .forEach(q => {
       const li = document.createElement("li");
       li.textContent = makeId(q);
-
-      // display tags below question
-      const qPath = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-      const tags = QUESTION_TAGS[qPath] || [];
-      if (tags.length) {
-        const tagDiv = document.createElement("div");
-        tagDiv.style.fontSize = "0.8em";
-        tagDiv.style.color = "#555";
-        tagDiv.textContent = "Tags: " + tags.join(", ");
-        li.appendChild(tagDiv);
-      }
-
       li.onclick = () => selectQuestion(q, li);
       listEl.appendChild(li);
     });
 }
-
-
-
 
 
 
@@ -266,7 +246,7 @@ export async function selectQuestion(q, li) {
     <div style="margin-top:10px; font-size:0.9em; color:#555;">
       <strong>Tags:</strong> ${tags.length ? tags.join(", ") : "No tags available"}
     </div>
-    
+
     <img src="${qImg}" alt="Question ${questionId}">
 
     <div class="progress-panel">
