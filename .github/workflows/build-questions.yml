@@ -30,3 +30,19 @@ jobs:
           git add questions.json
           git diff --cached --quiet || git commit -m "Auto-generate questions.json"
           git push
+  build-info:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Write build info
+        run: |
+          echo "{ \"commit\": \"${GITHUB_SHA}\", \"time\": \"$(date -u)\" }" > build.json
+
+      - name: Commit build info
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add build.json
+          git commit -m "Update build info" || echo "No changes"
+          git push
