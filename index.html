@@ -32,63 +32,49 @@
   </main>
 
   <header class="topbar">
-<header class="topbar">
-  <div class="auth-area">
+  <header class="topbar">
+    <div class="auth-area">
 
-    <!-- Logged OUT -->
-    <div id="auth-buttons">
-      <button id="login-btn">Log in</button>
-      <button id="signup-btn">Sign up</button>
-    </div>
-
-    <!-- Logged IN -->
-    <div id="user-menu" class="hidden">
-      <button id="profile-btn" class="profile-circle">👤</button>
-
-      <div id="profile-dropdown" class="dropdown hidden">
-        <button id="logout-btn">Log out</button>
+      <!-- Logged OUT -->
+      <div id="auth-buttons">
+        <button id="login-btn">Log in</button>
+        <button id="signup-btn">Sign up</button>
       </div>
+
+      <!-- Logged IN -->
+      <div id="user-menu" class="hidden">
+        <button id="profile-btn" class="profile-circle">👤</button>
+
+        <div id="profile-dropdown" class="dropdown hidden">
+          <button id="logout-btn">Log out</button>
+        </div>
+      </div>
+
     </div>
+  </header>
 
-  </div>
-</header>
-
-<!-- LOGIN POPUP -->
-<div id="login-modal" class="modal hidden">
-  <div class="modal-content">
-    <h3>Log in</h3>
-    <input id="login-email" type="email" placeholder="Email">
-    <input id="login-password" type="password" placeholder="Password">
-    <button id="login-submit">Log in</button>
-    <button class="close-modal">Cancel</button>
-  </div>
-</div>
-
-<!-- SIGNUP POPUP -->
-<div id="signup-modal" class="modal hidden">
-  <div class="modal-content">
-    <h3>Sign up</h3>
-    <input id="signup-email" type="email" placeholder="Email">
-    <input id="signup-password" type="password" placeholder="Password">
-    <button id="signup-submit">Create account</button>
-    <button class="close-modal">Cancel</button>
-  </div>
-</div>
-</header>
-
-  <!-- <aside class="login">
-    <div id="auth">
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
-
-    <button id="signup">Sign up</button>
-    <button id="login">Log in</button>
-    <button id="logout" style="display:none;">Log out</button>
-
-    <p id="auth-status"></p>
+  <!-- LOGIN POPUP -->
+  <div id="login-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Log in</h3>
+      <input id="login-email" type="email" placeholder="Email">
+      <input id="login-password" type="password" placeholder="Password">
+      <button id="login-submit">Log in</button>
+      <button class="close-modal">Cancel</button>
     </div>
-  </aside> -->
+  </div>
 
+  <!-- SIGNUP POPUP -->
+  <div id="signup-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Sign up</h3>
+      <input id="signup-email" type="email" placeholder="Email">
+      <input id="signup-password" type="password" placeholder="Password">
+      <button id="signup-submit">Create account</button>
+      <button class="close-modal">Cancel</button>
+    </div>
+  </div>
+  </header>
 </div>
 
 <script type="module" src="firebase.js"></script>
