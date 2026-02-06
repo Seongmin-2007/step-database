@@ -204,7 +204,7 @@ export async function selectQuestion(q, li) {
     <button id="toggle">Show solution</button>
     <div class="solution" style="display:none;"></div>
   `;
-  
+
   const solutionContainer = document.getElementById("solution-container");
   const placeholder = solutionContainer.querySelector(".placeholder");
 
@@ -313,7 +313,8 @@ export async function selectQuestion(q, li) {
   }
 
   starsEl.onclick = e => {
-    if (!e.target.dataset.star) return;
+    if (!e.target.dataset.star || statusEl.disabled) return;
+
     const n = Number(e.target.dataset.star);
     difficulty = (difficulty === n) ? 0 : n;
     updateStars();
