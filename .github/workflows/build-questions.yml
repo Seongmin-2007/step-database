@@ -1,4 +1,4 @@
-name: Build Questions JSON
+name: Build JSON files
 
 permissions:
   contents: write
@@ -10,10 +10,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # important for git push
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -23,26 +24,14 @@ jobs:
       - name: Generate questions.json
         run: python generate_questions.py
 
-      - name: Commit questions.json
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add questions.json
-          git diff --cached --quiet || git commit -m "Auto-generate questions.json"
-          git push
-  build-info:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Write build info
+      - name: Generate build.json
         run: |
           echo "{ \"commit\": \"${GITHUB_SHA}\", \"time\": \"$(date -u)\" }" > build.json
 
-      - name: Commit build info
+      - name: Commit generated files
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add build.json
-          git commit -m "Update build info" || echo "No changes"
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add questions.json build.json
+          git diff --cached --quiet || git commit -m "Auto-generate JSON files"
           git push
