@@ -204,6 +204,36 @@ export async function selectQuestion(q, li) {
     <button id="toggle">Show solution</button>
     <div class="solution" style="display:none;"></div>
   `;
+  
+  const solutionContainer = document.getElementById("solution-container");
+  const placeholder = solutionContainer.querySelector(".placeholder");
+
+  // Load all solution images automatically
+  let i = 1;
+  let foundAny = false;
+  while (true) {
+    const imgPath =
+      `images/solutions/${q.year}/step${q.paper}/q${q.question}-${i}.jpg`;
+    try {
+      const res = await fetch(imgPath, { method: "HEAD" });
+
+      if (!res.ok) break;
+
+      const img = document.createElement("img");
+      img.src = imgPath;
+      img.alt = `Solution ${id} (${i})`;
+
+      solutionContainer.appendChild(img);
+      foundAny = true;
+      i++;
+    } catch {
+      break;
+    }
+  }
+
+  if (!foundAny) {
+    placeholder.style.display = "block";
+  }
 
   // ==============================
   // PROGRESS LOGIC
@@ -219,7 +249,6 @@ export async function selectQuestion(q, li) {
 
   // ----- Load existing progress -----
   async function loadProgress() {
-    console.log("Attempting to load progress");
     const user = auth.currentUser;
     if (!user) {
       saveStatus.textContent = "Log in to track progress";
@@ -233,13 +262,10 @@ export async function selectQuestion(q, li) {
     const snap = await getDoc(ref);
 
     if (!snap.exists()) {
-      console.log("No such data exists?!");
       return;
     }
 
-    console.log("Data retrieved?");
     const data = snap.data();
-    console.log(Object.entries(data));
     statusEl.value = data.status ?? "not_started";
     timeEl.value = data.timeMinutes ?? "";
     notesEl.value = data.notes ?? "";
