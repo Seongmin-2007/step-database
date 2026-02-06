@@ -1,4 +1,4 @@
-console.log("SCRIPT LOADED 11234567");
+console.log("SCRIPT LOADED 112345678");
 
 import {
   doc,
@@ -247,12 +247,13 @@ export async function selectQuestion(q, li) {
     updateStars();
   }
 
-  let currentDifficulty = 0;
+
   async function saveProgress() {
     const user = auth.currentUser;
     if (!user) return;
 
     const ref = doc(db, "users", user.uid, "progress", questionId);
+    let currentDifficulty = difficulty;
 
     try {
       await setDoc(ref, {
