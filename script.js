@@ -202,7 +202,12 @@ export async function selectQuestion(q, li) {
     </div>
 
     <button id="toggle">Show solution</button>
-    <div class="solution" style="display:none;"></div>
+    <div class="solution" id="solution-container" style="display:none;">
+      <p class="placerholder" style="display:none">
+        Solution not available yet.
+      </p>
+    </div>
+    
   `;
 
   const solutionContainer = document.getElementById("solution-container");
