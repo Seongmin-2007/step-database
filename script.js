@@ -1,4 +1,4 @@
-console.log("SCRIPT LOADED 112345");
+console.log("SCRIPT LOADED 1123456");
 
 import {
   doc,
@@ -219,6 +219,7 @@ export async function selectQuestion(q, li) {
 
   // ----- Load existing progress -----
   async function loadProgress() {
+    console.log("Attempting to load progress");
     const user = auth.currentUser;
     if (!user) {
       saveStatus.textContent = "Log in to track progress";
@@ -233,6 +234,7 @@ export async function selectQuestion(q, li) {
 
     if (!snap.exists()) return;
 
+    console.log("Data retrieved?");
     const data = snap.data();
     statusEl.value = data.status ?? "not_started";
     timeEl.value = data.timeMinutes ?? "";
