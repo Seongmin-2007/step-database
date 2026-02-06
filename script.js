@@ -1,50 +1,81 @@
+let QUESTIONS = [];
+let FILTER = "";
+
+const listEl = document.getElementById("questionList");
+const viewer = document.getElementById("viewer");
+const search = document.getElementById("search");
+
 fetch("questions.json")
-  .then(response => response.json())
-  .then(questions => {
-    const container = document.getElementById("questions");
-
-    questions.forEach(({ year, paper, question }) => {
-      const id = `${String(year % 100).padStart(2, "0")}-S${paper}-Q${question}`;
-
-      const questionImg =
-        `images/questions/${year}/step${paper}/q${question}.png`;
-
-      const solutionImg =
-        `images/solutions/${year}/step${paper}/q${question}.png`;
-
-      const card = document.createElement("div");
-      card.className = "question-card";
-
-      card.innerHTML = `
-        <h3>${id}</h3>
-        <img src="${questionImg}" alt="Question ${id}">
-        <button>Show solution</button>
-        <div class="solution" style="display:none;">
-          <img src="${solutionImg}" alt="Solution ${id}">
-          <p class="no-solution" style="display:none;">
-            Solution not available yet.
-          </p>
-        </div>
-      `;
-
-      const button = card.querySelector("button");
-      const solutionDiv = card.querySelector(".solution");
-      const solutionImage = solutionDiv.querySelector("img");
-      const noSolutionText = solutionDiv.querySelector(".no-solution");
-
-      solutionImage.onerror = () => {
-        solutionImage.style.display = "none";
-        noSolutionText.style.display = "block";
-      };
-
-      button.onclick = () => {
-        solutionDiv.style.display =
-          solutionDiv.style.display === "none" ? "block" : "none";
-      };
-
-      container.appendChild(card);
-    });
-  })
-  .catch(err => {
-    console.error("Failed to load questions.json", err);
+  .then(r => r.json())
+  .then(data => {
+    QUESTIONS = data;
+    renderList();
   });
+
+search.addEventListener("input", e => {
+  FILTER = e.target.value.toLowerCase();
+  renderList();
+});
+
+function makeId({ year, paper, question }) {
+  return `${String(year % 100).padStart(2, "0")}-S${paper}-Q${question}`;
+}
+
+function renderList() {
+  listEl.innerHTML = "";
+
+  QUESTIONS
+    .filter(q => makeId(q).toLowerCase().includes(FILTER))
+    .forEach(q => {
+      const li = document.createElement("li");
+      li.textContent = makeId(q);
+
+      li.onclick = () => selectQuestion(q, li);
+      listEl.appendChild(li);
+    });
+}
+
+function selectQuestion(q, li) {
+  document
+    .querySelectorAll("#questionList li")
+    .forEach(x => x.classList.remove("active"));
+
+  li.classList.add("active");
+
+  const id = makeId(q);
+
+  const qImg =
+    `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
+  const sImg =
+    `images/solutions/${q.year}/step${q.paper}/q${q.question}.png`;
+
+  viewer.innerHTML = `
+    <h2>${id}</h2>
+
+    <img src="${qImg}" alt="Question ${id}">
+
+    <button id="toggle">Show solution</button>
+
+    <div class="solution" style="display:none;">
+      <img src="${sImg}" alt="Solution ${id}">
+      <p class="placeholder" style="display:none;">
+        Solution not available yet.
+      </p>
+    </div>
+  `;
+
+  const toggle = document.getElementById("toggle");
+  const sol = viewer.querySelector(".solution");
+  const solImg = sol.querySelector("img");
+  const fallback = sol.querySelector(".placeholder");
+
+  solImg.onerror = () => {
+    solImg.style.display = "none";
+    fallback.style.display = "block";
+  };
+
+  toggle.onclick = () => {
+    sol.style.display =
+      sol.style.display === "none" ? "block" : "none";
+  };
+}
