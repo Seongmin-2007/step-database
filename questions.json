@@ -78,6 +78,84 @@
     "file": "images/questions/2016/step2/q13.png"
   },
   {
+    "year": 2016,
+    "paper": 3,
+    "question": 1,
+    "file": "images/questions/2016/step3/q1.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 2,
+    "file": "images/questions/2016/step3/q2.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 3,
+    "file": "images/questions/2016/step3/q3.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 4,
+    "file": "images/questions/2016/step3/q4.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 5,
+    "file": "images/questions/2016/step3/q5.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 6,
+    "file": "images/questions/2016/step3/q6.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 7,
+    "file": "images/questions/2016/step3/q7.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 8,
+    "file": "images/questions/2016/step3/q8.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 9,
+    "file": "images/questions/2016/step3/q9.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 10,
+    "file": "images/questions/2016/step3/q10.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 11,
+    "file": "images/questions/2016/step3/q11.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 12,
+    "file": "images/questions/2016/step3/q12.png"
+  },
+  {
+    "year": 2016,
+    "paper": 3,
+    "question": 13,
+    "file": "images/questions/2016/step3/q13.png"
+  },
+  {
     "year": 2017,
     "paper": 2,
     "question": 1,
@@ -154,6 +232,84 @@
     "paper": 2,
     "question": 13,
     "file": "images/questions/2017/step2/q13.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 1,
+    "file": "images/questions/2017/step3/q1.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 2,
+    "file": "images/questions/2017/step3/q2.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 3,
+    "file": "images/questions/2017/step3/q3.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 4,
+    "file": "images/questions/2017/step3/q4.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 5,
+    "file": "images/questions/2017/step3/q5.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 6,
+    "file": "images/questions/2017/step3/q6.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 7,
+    "file": "images/questions/2017/step3/q7.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 8,
+    "file": "images/questions/2017/step3/q8.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 9,
+    "file": "images/questions/2017/step3/q9.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 10,
+    "file": "images/questions/2017/step3/q10.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 11,
+    "file": "images/questions/2017/step3/q11.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 12,
+    "file": "images/questions/2017/step3/q12.png"
+  },
+  {
+    "year": 2017,
+    "paper": 3,
+    "question": 13,
+    "file": "images/questions/2017/step3/q13.png"
   },
   {
     "year": 2018,
@@ -234,6 +390,84 @@
     "file": "images/questions/2018/step2/q13.png"
   },
   {
+    "year": 2018,
+    "paper": 3,
+    "question": 1,
+    "file": "images/questions/2018/step3/q1.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 2,
+    "file": "images/questions/2018/step3/q2.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 3,
+    "file": "images/questions/2018/step3/q3.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 4,
+    "file": "images/questions/2018/step3/q4.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 5,
+    "file": "images/questions/2018/step3/q5.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 6,
+    "file": "images/questions/2018/step3/q6.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 7,
+    "file": "images/questions/2018/step3/q7.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 8,
+    "file": "images/questions/2018/step3/q8.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 9,
+    "file": "images/questions/2018/step3/q9.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 10,
+    "file": "images/questions/2018/step3/q10.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 11,
+    "file": "images/questions/2018/step3/q11.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 12,
+    "file": "images/questions/2018/step3/q12.png"
+  },
+  {
+    "year": 2018,
+    "paper": 3,
+    "question": 13,
+    "file": "images/questions/2018/step3/q13.png"
+  },
+  {
     "year": 2019,
     "paper": 2,
     "question": 1,
@@ -306,6 +540,78 @@
     "file": "images/questions/2019/step2/q12.png"
   },
   {
+    "year": 2019,
+    "paper": 3,
+    "question": 1,
+    "file": "images/questions/2019/step3/q1.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 2,
+    "file": "images/questions/2019/step3/q2.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 3,
+    "file": "images/questions/2019/step3/q3.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 4,
+    "file": "images/questions/2019/step3/q4.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 5,
+    "file": "images/questions/2019/step3/q5.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 6,
+    "file": "images/questions/2019/step3/q6.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 7,
+    "file": "images/questions/2019/step3/q7.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 8,
+    "file": "images/questions/2019/step3/q8.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 9,
+    "file": "images/questions/2019/step3/q9.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 10,
+    "file": "images/questions/2019/step3/q10.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 11,
+    "file": "images/questions/2019/step3/q11.png"
+  },
+  {
+    "year": 2019,
+    "paper": 3,
+    "question": 12,
+    "file": "images/questions/2019/step3/q12.png"
+  },
+  {
     "year": 2020,
     "paper": 2,
     "question": 1,
@@ -376,6 +682,78 @@
     "paper": 2,
     "question": 12,
     "file": "images/questions/2020/step2/q12.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 1,
+    "file": "images/questions/2020/step3/q1.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 2,
+    "file": "images/questions/2020/step3/q2.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 3,
+    "file": "images/questions/2020/step3/q3.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 4,
+    "file": "images/questions/2020/step3/q4.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 5,
+    "file": "images/questions/2020/step3/q5.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 6,
+    "file": "images/questions/2020/step3/q6.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 7,
+    "file": "images/questions/2020/step3/q7.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 8,
+    "file": "images/questions/2020/step3/q8.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 9,
+    "file": "images/questions/2020/step3/q9.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 10,
+    "file": "images/questions/2020/step3/q10.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 11,
+    "file": "images/questions/2020/step3/q11.png"
+  },
+  {
+    "year": 2020,
+    "paper": 3,
+    "question": 12,
+    "file": "images/questions/2020/step3/q12.png"
   },
   {
     "year": 2021,
