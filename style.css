@@ -1,0 +1,53 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  max-width: 900px;
+  margin: auto;
+  padding: 1.5rem;
+  background: #fafafa;
+}
+
+h1 {
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.question-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.question-card h3 {
+  margin-top: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  margin: 1rem auto;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.solution {
+  margin-top: 1rem;
+  border-top: 1px solid #ddd;
+  padding-top: 1rem;
+}
+
+.no-solution {
+  color: #777;
+  font-style: italic;
+}
