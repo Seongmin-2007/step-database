@@ -8,49 +8,95 @@ import {
   signOut
 } from "./firebase.js";
 
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const statusText = document.getElementById("auth-status");
+const loginBtn = document.getElementById("login-btn");
+const userMenu = document.getElementById("user-menu");
+const avatarBtn = document.getElementById("user-avatar");
+const dropdown = document.getElementById("dropdown");
+const logoutBtn = document.getElementById("logout-btn");
+const profileBtn = document.getElementById("profile-btn");
 
-document.getElementById("signup").onclick = async () => {
-  try {
-    await createUserWithEmailAndPassword(
-      auth,
-      emailInput.value,
-      passwordInput.value
-    );
-    statusText.textContent = "Signed up!";
-  } catch (e) {
-    statusText.textContent = e.message;
+// --- Auth state handling ---
+onAuthStateChanged(auth, user => {
+  if (user) {
+    loginBtn.classList.add("hidden");
+    userMenu.classList.remove("hidden");
+  } else {
+    loginBtn.classList.remove("hidden");
+    userMenu.classList.add("hidden");
+    dropdown.classList.add("hidden");
   }
+});
+
+avatarBtn.onclick = () => {
+  dropdown.classList.toggle("hidden");
 };
 
-document.getElementById("login").onclick = async () => {
-  try {
-    await signInWithEmailAndPassword(
-      auth,
-      emailInput.value,
-      passwordInput.value
-    );
-    statusText.textContent = "Logged in!";
-  } catch (e) {
-    statusText.textContent = e.message;
+document.addEventListener("click", e => {
+  if (!e.target.closest(".user-menu")) {
+    dropdown.classList.add("hidden");
   }
-};
+});
 
-document.getElementById("logout").onclick = async () => {
+logoutBtn.onclick = async () => {
   await signOut(auth);
 };
 
-onAuthStateChanged(auth, user => {
-  if (user) {
-    document.getElementById("logout").style.display = "inline";
-    statusText.textContent = `Logged in as ${user.email}`;
-  } else {
-    document.getElementById("logout").style.display = "none";
-    statusText.textContent = "Not logged in";
-  }
-});
+loginBtn.onclick = () => {
+  window.location.href = "/login.html";
+};
+
+loginBtn.onclick = () => {
+  document.getElementById("auth").scrollIntoView({ behavior: "smooth" });
+};
+
+profileBtn.onclick = () => {
+  alert("Profile page coming soon!");
+};
+
+
+// const emailInput = document.getElementById("email");
+// const passwordInput = document.getElementById("password");
+// const statusText = document.getElementById("auth-status");
+
+// document.getElementById("signup").onclick = async () => {
+//   try {
+//     await createUserWithEmailAndPassword(
+//       auth,
+//       emailInput.value,
+//       passwordInput.value
+//     );
+//     statusText.textContent = "Signed up!";
+//   } catch (e) {
+//     statusText.textContent = e.message;
+//   }
+// };
+
+// document.getElementById("login").onclick = async () => {
+//   try {
+//     await signInWithEmailAndPassword(
+//       auth,
+//       emailInput.value,
+//       passwordInput.value
+//     );
+//     statusText.textContent = "Logged in!";
+//   } catch (e) {
+//     statusText.textContent = e.message;
+//   }
+// };
+
+// document.getElementById("logout").onclick = async () => {
+//   await signOut(auth);
+// };
+
+// onAuthStateChanged(auth, user => {
+//   if (user) {
+//     document.getElementById("logout").style.display = "inline";
+//     statusText.textContent = `Logged in as ${user.email}`;
+//   } else {
+//     document.getElementById("logout").style.display = "none";
+//     statusText.textContent = "Not logged in";
+//   }
+// });
 
 let QUESTIONS = [];
 let FILTER = "";

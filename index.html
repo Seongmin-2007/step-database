@@ -31,7 +31,28 @@
     </div>
   </main>
 
-  <aside class="login">
+  <header class="topbar">
+  <div class="auth-area">
+    <!-- Logged out -->
+    <button id="login-btn" class="auth-button">
+      Log in
+    </button>
+
+    <!-- Logged in -->
+    <div id="user-menu" class="user-menu hidden">
+      <button id="user-avatar" class="avatar">
+        👤
+      </button>
+
+      <div id="dropdown" class="dropdown hidden">
+        <button id="profile-btn">Profile</button>
+        <button id="logout-btn">Log out</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- <aside class="login">
     <div id="auth">
     <input id="email" type="email" placeholder="Email">
     <input id="password" type="password" placeholder="Password">
@@ -42,7 +63,7 @@
 
     <p id="auth-status"></p>
     </div>
-  </aside>
+  </aside> -->
 
 </div>
 
