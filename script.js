@@ -1,57 +1,102 @@
 console.log("SCRIPT LOADED");
 
+
 import {
   auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
+  signOut,
+  onAuthStateChanged
 } from "./firebase.js";
 
+// Buttons
 const loginBtn = document.getElementById("login-btn");
+const signupBtn = document.getElementById("signup-btn");
+const authButtons = document.getElementById("auth-buttons");
 const userMenu = document.getElementById("user-menu");
-const avatarBtn = document.getElementById("user-avatar");
-const dropdown = document.getElementById("dropdown");
-const logoutBtn = document.getElementById("logout-btn");
-const profileBtn = document.getElementById("profile-btn");
 
-// --- Auth state handling ---
+// Modals
+const loginModal = document.getElementById("login-modal");
+const signupModal = document.getElementById("signup-modal");
+
+// Inputs
+const loginEmail = document.getElementById("login-email");
+const loginPassword = document.getElementById("login-password");
+const signupEmail = document.getElementById("signup-email");
+const signupPassword = document.getElementById("signup-password");
+
+// Profile
+const profileBtn = document.getElementById("profile-btn");
+const dropdown = document.getElementById("profile-dropdown");
+const logoutBtn = document.getElementById("logout-btn");
+
+// --- Modal open / close ---
+loginBtn.onclick = () => loginModal.classList.remove("hidden");
+signupBtn.onclick = () => signupModal.classList.remove("hidden");
+
+document.querySelectorAll(".close-modal").forEach(btn => {
+  btn.onclick = () => {
+    loginModal.classList.add("hidden");
+    signupModal.classList.add("hidden");
+  };
+});
+
+// --- Signup ---
+document.getElementById("signup-submit").onclick = async () => {
+  try {
+    await createUserWithEmailAndPassword(
+      auth,
+      signupEmail.value,
+      signupPassword.value
+    );
+    signupModal.classList.add("hidden");
+  } catch (e) {
+    alert(e.message);
+  }
+};
+
+// --- Login ---
+document.getElementById("login-submit").onclick = async () => {
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      loginEmail.value,
+      loginPassword.value
+    );
+    loginModal.classList.add("hidden");
+  } catch (e) {
+    alert(e.message);
+  }
+};
+
+// --- Auth state UI ---
 onAuthStateChanged(auth, user => {
   if (user) {
-    loginBtn.classList.add("hidden");
+    authButtons.classList.add("hidden");
     userMenu.classList.remove("hidden");
+    loginModal.classList.add("hidden");
+    signupModal.classList.add("hidden");
   } else {
-    loginBtn.classList.remove("hidden");
+    authButtons.classList.remove("hidden");
     userMenu.classList.add("hidden");
     dropdown.classList.add("hidden");
   }
 });
 
-avatarBtn.onclick = () => {
+// --- Profile dropdown ---
+profileBtn.onclick = () => {
   dropdown.classList.toggle("hidden");
 };
-
-document.addEventListener("click", e => {
-  if (!e.target.closest(".user-menu")) {
-    dropdown.classList.add("hidden");
-  }
-});
 
 logoutBtn.onclick = async () => {
   await signOut(auth);
 };
 
-loginBtn.onclick = () => {
-  window.location.href = "/login.html";
-};
-
-loginBtn.onclick = () => {
-  document.getElementById("auth").scrollIntoView({ behavior: "smooth" });
-};
-
-profileBtn.onclick = () => {
-  alert("Profile page coming soon!");
-};
+document.addEventListener("click", e => {
+  if (!e.target.closest("#user-menu")) {
+    dropdown.classList.add("hidden");
+  }
+});
 
 
 // const emailInput = document.getElementById("email");
