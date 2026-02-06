@@ -7,16 +7,31 @@
 </head>
 <body>
 
-<h1>📘 STEP Question Database</h1>
+<div class="layout">
 
-<select id="paperFilter">
-  <option value="All">All Papers</option>
-  <option value="STEP 1">STEP 1</option>
-  <option value="STEP 2">STEP 2</option>
-  <option value="STEP 3">STEP 3</option>
-</select>
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <h2>STEP Questions</h2>
 
-<div id="questions"></div>
+    <input
+      type="text"
+      id="search"
+      placeholder="Search (e.g. 21 S2 Q5)"
+    >
+
+    <ul id="questionList"></ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+    <div id="viewer">
+      <p class="placeholder">
+        Select a question from the list.
+      </p>
+    </div>
+  </main>
+
+</div>
 
 <script src="script.js"></script>
 </body>
