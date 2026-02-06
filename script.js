@@ -1,4 +1,18 @@
-console.log("SCRIPT LOADED 112345678910");
+fetch("build.json", { cache: "no-store" })
+  .then(r => r.json())
+  .then(b => {
+    const tag = document.createElement("div");
+    tag.textContent = `Deployed ${b.commit.slice(0,7)} @ ${b.time}`;
+    tag.style.cssText = `
+      position:fixed;
+      bottom:6px;
+      right:8px;
+      font-size:11px;
+      opacity:0.6;
+      z-index:9999;
+    `;
+    document.body.appendChild(tag);
+  });
 
 import {
   doc,
