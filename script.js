@@ -1,4 +1,4 @@
-console.log("SCRIPT LOADED 1");
+console.log("SCRIPT LOADED 11");
 
 // import {
 //   doc,
@@ -145,194 +145,6 @@ function renderList() {
     });
 }
 
-// async function selectQuestion(q, li) {
-//   // Highlight selected question
-//   document
-//     .querySelectorAll("#questionList li")
-//     .forEach(x => x.classList.remove("active"));
-
-//   li.classList.add("active");
-
-//   const id = makeId(q);
-
-//   const qImg =
-//     `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-
-//   viewer.innerHTML = `
-//     <h2>${id}</h2>
-
-//     <img src="${qImg}" alt="Question ${id}">
-
-//     <!-- PROGRESS PANEL -->
-//     <div id="progress-panel" class="progress-panel">
-//       <div class="status-row">
-//         <label>Status:</label>
-//         <select id="status">
-//           <option value="not_started">Not started</option>
-//           <option value="attempted">Attempted</option>
-//           <option value="completed">Completed</option>
-//           <option value="revision">Needs revision</option>
-//         </select>
-//       </div>
-
-//       <div class="time-row">
-//         <label>Time (minutes):</label>
-//         <input id="time" type="number" min="0" placeholder="optional">
-//       </div>
-
-//       <div class="difficulty-row">
-//         <label>Difficulty:</label>
-//         <div id="stars" class="stars">
-//           ${[1,2,3,4,5].map(i => `<span data-star="${i}">☆</span>`).join("")}
-//         </div>
-//       </div>
-
-//       <div class="notes-row">
-//         <label>Notes:</label>
-//         <textarea id="notes" rows="3" placeholder="optional"></textarea>
-//       </div>
-
-//       <div id="save-status" class="save-status"></div>
-//     </div>
-
-//     <button id="toggle">Show solution</button>
-
-//     <div class="solution" id="solution-container" style="display:none;">
-//       <p class="placeholder" style="display:none;">
-//         Solution not available yet.
-//       </p>
-//     </div>
-//   `;
-
-//   const toggle = document.getElementById("toggle");
-//   const solutionContainer = document.getElementById("solution-container");
-//   const placeholder = solutionContainer.querySelector(".placeholder");
-
-//   // Load all solution images automatically
-//   let i = 1;
-//   let foundAny = false;
-
-//   while (true) {
-//     const imgPath =
-//       `images/solutions/${q.year}/step${q.paper}/q${q.question}-${i}.jpg`;
-
-//     try {
-//       const res = await fetch(imgPath, { method: "HEAD" });
-//       if (!res.ok) break;
-
-//       const img = document.createElement("img");
-//       img.src = imgPath;
-//       img.alt = `Solution ${id} (${i})`;
-
-//       solutionContainer.appendChild(img);
-//       foundAny = true;
-//       i++;
-//     } catch {
-//       console.log("Error: " + i);
-//       break;
-//     }
-//   }
-
-//   if (!foundAny) {
-//     placeholder.style.display = "block";
-//   }
-  
-//   const statusEl = document.getElementById("status");
-//   const timeEl = document.getElementById("time");
-//   const notesEl = document.getElementById("notes");
-//   const starsEl = document.getElementById("stars");
-//   const saveStatus = document.getElementById("save-status");
-
-//   let currentDifficulty = 0;
-//   let saveTimeout = null;
-
-//   const questionId = `${q.year}-step${q.paper}-q${q.question}`;
-
-//   // Toggle visibility
-//   toggle.onclick = () => {
-//     solutionContainer.style.display =
-//       solutionContainer.style.display === "none" ? "block" : "none";
-//   };
-
-//   async function loadProgress() {
-//     const user = auth.currentUser;
-//     if (!user) {
-//       saveStatus.textContent = "Log in to track progress";
-//       return;
-//     }
-
-//     const ref = doc(db, "users", user.uid, "progress", questionId);
-//     const snap = await getDoc(ref);
-
-//     if (!snap.exists()) return;
-
-//     const data = snap.data();
-
-//     statusEl.value = data.status ?? "not_started";
-//     timeEl.value = data.timeMinutes ?? "";
-//     notesEl.value = data.notes ?? "";
-
-//     currentDifficulty = data.difficulty ?? 0;
-//     updateStars();
-//   }
-
-//   loadProgress();
-
-//   function scheduleSave() {
-//     clearTimeout(saveTimeout);
-//     saveStatus.textContent = "Saving…";
-
-//     saveTimeout = setTimeout(saveProgress, 500);
-//   }
-
-//   async function saveProgress() {
-//     const user = auth.currentUser;
-//     if (!user) return;
-
-//     const ref = doc(db, "users", user.uid, "progress", questionId);
-
-//     await setDoc(ref, {
-//       questionId,
-//       status: statusEl.value,
-//       timeMinutes: timeEl.value ? Number(timeEl.value) : null,
-//       difficulty: currentDifficulty || null,
-//       notes: notesEl.value || "",
-//       updatedAt: serverTimestamp(),
-//       ...(statusEl.value === "completed" && {
-//         completedAt: serverTimestamp()
-//       })
-//     }, { merge: true });
-
-//     saveStatus.textContent = "Saved ✓";
-//   }
-
-//   statusEl.onchange = saveProgress;
-//   timeEl.oninput = scheduleSave;
-//   notesEl.oninput = scheduleSave;
-
-//   function updateStars() {
-//     starsEl.querySelectorAll("span").forEach(span => {
-//       const n = Number(span.dataset.star);
-//       span.textContent = n <= currentDifficulty ? "★" : "☆";
-//       span.classList.toggle("active", n <= currentDifficulty);
-//     });
-//   }
-
-//   starsEl.onclick = e => {
-//     if (!e.target.dataset.star) return;
-
-//     const n = Number(e.target.dataset.star);
-//     currentDifficulty = (currentDifficulty === n) ? 0 : n;
-//     updateStars();
-//     saveProgress();
-//   };
-
-//   onAuthStateChanged(auth, user => {
-//     const disabled = !user;
-//     [statusEl, timeEl, notesEl].forEach(el => el.disabled = disabled);
-//   });
-// }
-
 // ==============================
 // QUESTION SELECTION
 // ==============================
@@ -430,28 +242,51 @@ export async function selectQuestion(q, li) {
     updateStars();
   }
 
-  // ----- Save progress -----
+  // // ----- Save progress -----
+  // async function saveProgress() {
+  //   const user = auth.currentUser;
+  //   if (!user) return;
+
+  //   saveStatus.textContent = "Saving…";
+
+  //   const ref = doc(db, "users", user.uid, "progress", questionId);
+
+  //   await setDoc(ref, {
+  //     questionId,
+  //     status: statusEl.value,
+  //     timeMinutes: timeEl.value ? Number(timeEl.value) : null,
+  //     difficulty: difficulty || null,
+  //     notes: notesEl.value || "",
+  //     updatedAt: serverTimestamp(),
+  //     ...(statusEl.value === "completed" && {
+  //       completedAt: serverTimestamp()
+  //     })
+  //   }, { merge: true });
+
+  //   saveStatus.textContent = "Saved ✓";
+  // }
+
   async function saveProgress() {
     const user = auth.currentUser;
     if (!user) return;
 
-    saveStatus.textContent = "Saving…";
-
     const ref = doc(db, "users", user.uid, "progress", questionId);
 
-    await setDoc(ref, {
-      questionId,
-      status: statusEl.value,
-      timeMinutes: timeEl.value ? Number(timeEl.value) : null,
-      difficulty: difficulty || null,
-      notes: notesEl.value || "",
-      updatedAt: serverTimestamp(),
-      ...(statusEl.value === "completed" && {
-        completedAt: serverTimestamp()
-      })
-    }, { merge: true });
+    try {
+      await setDoc(ref, {
+        questionId,
+        status: statusEl.value,
+        timeMinutes: timeEl.value ? Number(timeEl.value) : null,
+        difficulty: currentDifficulty || null,
+        notes: notesEl.value || "",
+        updatedAt: serverTimestamp(),
+      }, { merge: true });
 
-    saveStatus.textContent = "Saved ✓";
+      saveStatus.textContent = "Saved ✓";
+    } catch (err) {
+      console.error("SAVE FAILED:", err);
+      saveStatus.textContent = "Save failed ❌";
+    }
   }
 
   function scheduleSave() {
