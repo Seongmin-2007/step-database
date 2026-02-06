@@ -1,4 +1,4 @@
-console.log("SCRIPT LOADED 1123456");
+console.log("SCRIPT LOADED 11234567");
 
 import {
   doc,
@@ -232,10 +232,14 @@ export async function selectQuestion(q, li) {
     const ref = doc(db, "users", user.uid, "progress", questionId);
     const snap = await getDoc(ref);
 
-    if (!snap.exists()) return;
+    if (!snap.exists()) {
+      console.log("No such data exists?!");
+      return;
+    }
 
     console.log("Data retrieved?");
     const data = snap.data();
+    console.log(Object.entries(data));
     statusEl.value = data.status ?? "not_started";
     timeEl.value = data.timeMinutes ?? "";
     notesEl.value = data.notes ?? "";
