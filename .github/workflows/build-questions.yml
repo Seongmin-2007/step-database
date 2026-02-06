@@ -2,12 +2,10 @@ name: Build Questions JSON
 
 permissions:
   contents: write
-  
+
 on:
   push:
-    paths:
-      - 'images/questions/**'   # only run when question images change
-  workflow_dispatch:          # also allow manual run
+    branches: [ main ]
 
 jobs:
   build:
