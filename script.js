@@ -1,4 +1,4 @@
-console.log("SCRIPT LOADED 112345678");
+console.log("SCRIPT LOADED 1123456789");
 
 import {
   doc,
@@ -313,7 +313,7 @@ export async function selectQuestion(q, li) {
   }
 
   starsEl.onclick = e => {
-    if (!e.target.dataset.star || statusEl.disabled) return;
+    if (!e.target.dataset.star || statusEl.disabled) return console.log("H");
 
     const n = Number(e.target.dataset.star);
     difficulty = (difficulty === n) ? 0 : n;
