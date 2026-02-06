@@ -121,42 +121,127 @@ document.addEventListener("click", e => {
 
 
 
+// let QUESTIONS = [];
+// let FILTER = "";
+
+// const listEl = document.getElementById("questionList");
+// const viewer = document.getElementById("viewer");
+// const search = document.getElementById("search");
+
+// fetch("questions.json")
+//   .then(r => r.json())
+//   .then(data => {
+//     QUESTIONS = data;
+//     renderList();
+//   });
+
+// search.addEventListener("input", e => {
+//   FILTER = e.target.value.toLowerCase();
+//   renderList();
+// });
+
+// function makeId({ year, paper, question }) {
+//   return `${String(year % 100).padStart(2, "0")}-S${paper}-Q${question}`;
+// }
+
+// function renderList() {
+//   listEl.innerHTML = "";
+
+//   QUESTIONS
+//     .filter(q => makeId(q).toLowerCase().includes(FILTER))
+//     .forEach(q => {
+//       const li = document.createElement("li");
+//       li.textContent = makeId(q);
+
+//       li.onclick = () => selectQuestion(q, li);
+//       listEl.appendChild(li);
+//     });
+// }
+
 let QUESTIONS = [];
+let QUESTION_TAGS = {};  // <-- store tags
 let FILTER = "";
+let TAG_FILTER = "";
 
 const listEl = document.getElementById("questionList");
 const viewer = document.getElementById("viewer");
 const search = document.getElementById("search");
+const tagSearch = document.getElementById("tagSearch"); // new input for tag filtering
 
-fetch("questions.json")
-  .then(r => r.json())
-  .then(data => {
-    QUESTIONS = data;
-    renderList();
-  });
+// -----------------------
+// Load questions + tags
+// -----------------------
+Promise.all([
+  fetch("questions.json").then(r => r.json()),
+  fetch("question_tags.json").then(r => r.json())
+]).then(([questionsData, tagsData]) => {
+  QUESTIONS = questionsData;
+  QUESTION_TAGS = tagsData;
+  renderList();
+});
 
+// -----------------------
+// Event listeners
+// -----------------------
 search.addEventListener("input", e => {
   FILTER = e.target.value.toLowerCase();
   renderList();
 });
 
+if (tagSearch) {
+  tagSearch.addEventListener("input", e => {
+    TAG_FILTER = e.target.value.toLowerCase();
+    renderList();
+  });
+}
+
+// -----------------------
+// Helper to make ID
+// -----------------------
 function makeId({ year, paper, question }) {
   return `${String(year % 100).padStart(2, "0")}-S${paper}-Q${question}`;
 }
 
+// -----------------------
+// Render question list
+// -----------------------
 function renderList() {
   listEl.innerHTML = "";
 
   QUESTIONS
     .filter(q => makeId(q).toLowerCase().includes(FILTER))
+    .filter(q => {
+      if (!TAG_FILTER) return true; // no tag filter, include all
+      const qPath = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
+      const tags = QUESTION_TAGS[qPath] || [];
+      return tags.some(t => t.toLowerCase().includes(TAG_FILTER));
+    })
     .forEach(q => {
       const li = document.createElement("li");
       li.textContent = makeId(q);
+
+      // display tags below question
+      const qPath = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
+      const tags = QUESTION_TAGS[qPath] || [];
+      if (tags.length) {
+        const tagDiv = document.createElement("div");
+        tagDiv.style.fontSize = "0.8em";
+        tagDiv.style.color = "#555";
+        tagDiv.textContent = "Tags: " + tags.join(", ");
+        li.appendChild(tagDiv);
+      }
 
       li.onclick = () => selectQuestion(q, li);
       listEl.appendChild(li);
     });
 }
+
+
+
+
+
+
+
 
 // ==============================
 // QUESTION SELECTION
