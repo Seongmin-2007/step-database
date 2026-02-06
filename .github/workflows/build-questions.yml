@@ -1,5 +1,8 @@
 name: Build Questions JSON
 
+permissions:
+  contents: write
+  
 on:
   push:
     paths:
