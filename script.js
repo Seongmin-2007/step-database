@@ -217,6 +217,18 @@ function renderList() {
     .forEach(q => {
       const li = document.createElement("li");
       li.textContent = makeId(q);
+
+      // display tags below question
+      const qPath = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
+      const tags = QUESTION_TAGS[qPath] || [];
+      if (tags.length) {
+        const tagDiv = document.createElement("div");
+        tagDiv.style.fontSize = "0.8em";
+        tagDiv.style.color = "#555";
+        tagDiv.textContent = "Tags: " + tags.join(", ");
+        li.appendChild(tagDiv);
+      }
+
       li.onclick = () => selectQuestion(q, li);
       listEl.appendChild(li);
     });
