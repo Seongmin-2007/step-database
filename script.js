@@ -1,3 +1,5 @@
+console.log("SCRIPT LOADED");
+
 import {
   auth,
   createUserWithEmailAndPassword,
@@ -39,8 +41,6 @@ document.getElementById("login").onclick = async () => {
 document.getElementById("logout").onclick = async () => {
   await signOut(auth);
 };
-
-console.log("SCRIPT LOADED");
 
 onAuthStateChanged(auth, user => {
   if (user) {
