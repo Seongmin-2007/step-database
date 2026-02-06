@@ -1,4 +1,4 @@
-console.log("SCRIPT LOADED");
+console.log("SCRIPT LOADED 1");
 
 // import {
 //   doc,
