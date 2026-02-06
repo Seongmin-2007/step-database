@@ -1,13 +1,11 @@
-console.log("SCRIPT LOADED 11");
+console.log("SCRIPT LOADED 112");
 
-// import {
-//   doc,
-//   getDoc,
-//   setDoc,
-//   serverTimestamp
-// } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-// import { auth, db } from "./firebase.js";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 import {
   auth,
