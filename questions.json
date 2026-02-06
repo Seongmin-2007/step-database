@@ -2,99 +2,361 @@
   {
     "year": 2021,
     "paper": 2,
-    "question": 1
-  }, {
+    "question": 1,
+    "file": "images/questions/2021/step2/q1.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 2
-  }, {
+    "question": 2,
+    "file": "images/questions/2021/step2/q2.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 3
-  }, {
+    "question": 3,
+    "file": "images/questions/2021/step2/q3.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 4
-  }, {
+    "question": 4,
+    "file": "images/questions/2021/step2/q4.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 5
-  }, {
+    "question": 5,
+    "file": "images/questions/2021/step2/q5.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 6
-  }, {
+    "question": 6,
+    "file": "images/questions/2021/step2/q6.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 7
-  }, {
+    "question": 7,
+    "file": "images/questions/2021/step2/q7.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 8
-  }, {
+    "question": 8,
+    "file": "images/questions/2021/step2/q8.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 9
-  }, {
+    "question": 9,
+    "file": "images/questions/2021/step2/q9.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 10
-  }, {
+    "question": 10,
+    "file": "images/questions/2021/step2/q10.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 11
-  }, {
+    "question": 11,
+    "file": "images/questions/2021/step2/q11.png"
+  },
+  {
     "year": 2021,
     "paper": 2,
-    "question": 12
+    "question": 12,
+    "file": "images/questions/2021/step2/q12.png"
   },
   {
     "year": 2021,
     "paper": 3,
-    "question": 1
-  }, {
+    "question": 1,
+    "file": "images/questions/2021/step3/q1.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 2
-  }, {
+    "question": 2,
+    "file": "images/questions/2021/step3/q2.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 3
-  }, {
+    "question": 3,
+    "file": "images/questions/2021/step3/q3.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 4
-  }, {
+    "question": 4,
+    "file": "images/questions/2021/step3/q4.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 5
-  }, {
+    "question": 5,
+    "file": "images/questions/2021/step3/q5.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 6
-  }, {
+    "question": 6,
+    "file": "images/questions/2021/step3/q6.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 7
-  }, {
+    "question": 7,
+    "file": "images/questions/2021/step3/q7.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 8
-  }, {
+    "question": 8,
+    "file": "images/questions/2021/step3/q8.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 9
-  }, {
+    "question": 9,
+    "file": "images/questions/2021/step3/q9.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 10
-  }, {
+    "question": 10,
+    "file": "images/questions/2021/step3/q10.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 11
-  }, {
+    "question": 11,
+    "file": "images/questions/2021/step3/q11.png"
+  },
+  {
     "year": 2021,
     "paper": 3,
-    "question": 12
+    "question": 12,
+    "file": "images/questions/2021/step3/q12.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 1,
+    "file": "images/questions/2022/step2/q1.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 2,
+    "file": "images/questions/2022/step2/q2.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 3,
+    "file": "images/questions/2022/step2/q3.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 4,
+    "file": "images/questions/2022/step2/q4.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 5,
+    "file": "images/questions/2022/step2/q5.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 6,
+    "file": "images/questions/2022/step2/q6.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 7,
+    "file": "images/questions/2022/step2/q7.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 8,
+    "file": "images/questions/2022/step2/q8.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 9,
+    "file": "images/questions/2022/step2/q9.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 10,
+    "file": "images/questions/2022/step2/q10.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 11,
+    "file": "images/questions/2022/step2/q11.png"
+  },
+  {
+    "year": 2022,
+    "paper": 2,
+    "question": 12,
+    "file": "images/questions/2022/step2/q12.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 1,
+    "file": "images/questions/2023/step2/q1.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 2,
+    "file": "images/questions/2023/step2/q2.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 3,
+    "file": "images/questions/2023/step2/q3.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 4,
+    "file": "images/questions/2023/step2/q4.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 5,
+    "file": "images/questions/2023/step2/q5.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 6,
+    "file": "images/questions/2023/step2/q6.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 7,
+    "file": "images/questions/2023/step2/q7.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 8,
+    "file": "images/questions/2023/step2/q8.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 9,
+    "file": "images/questions/2023/step2/q9.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 10,
+    "file": "images/questions/2023/step2/q10.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 11,
+    "file": "images/questions/2023/step2/q11.png"
+  },
+  {
+    "year": 2023,
+    "paper": 2,
+    "question": 12,
+    "file": "images/questions/2023/step2/q12.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 1,
+    "file": "images/questions/2024/step2/q1.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 2,
+    "file": "images/questions/2024/step2/q2.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 3,
+    "file": "images/questions/2024/step2/q3.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 4,
+    "file": "images/questions/2024/step2/q4.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 5,
+    "file": "images/questions/2024/step2/q5.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 6,
+    "file": "images/questions/2024/step2/q6.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 7,
+    "file": "images/questions/2024/step2/q7.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 8,
+    "file": "images/questions/2024/step2/q8.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 9,
+    "file": "images/questions/2024/step2/q9.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 10,
+    "file": "images/questions/2024/step2/q10.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 11,
+    "file": "images/questions/2024/step2/q11.png"
+  },
+  {
+    "year": 2024,
+    "paper": 2,
+    "question": 22,
+    "file": "images/questions/2024/step2/q22.png"
   }
 ]
