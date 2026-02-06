@@ -86,6 +86,7 @@ async function selectQuestion(q, li) {
       foundAny = true;
       i++;
     } catch {
+      console.log("Error: " + i);
       break;
     }
   }
