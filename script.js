@@ -1,3 +1,55 @@
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "./firebase.js";
+
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const statusText = document.getElementById("auth-status");
+
+document.getElementById("signup").onclick = async () => {
+  try {
+    await createUserWithEmailAndPassword(
+      auth,
+      emailInput.value,
+      passwordInput.value
+    );
+    statusText.textContent = "Signed up!";
+  } catch (e) {
+    statusText.textContent = e.message;
+  }
+};
+
+document.getElementById("login").onclick = async () => {
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      emailInput.value,
+      passwordInput.value
+    );
+    statusText.textContent = "Logged in!";
+  } catch (e) {
+    statusText.textContent = e.message;
+  }
+};
+
+document.getElementById("logout").onclick = async () => {
+  await signOut(auth);
+};
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    document.getElementById("logout").style.display = "inline";
+    statusText.textContent = `Logged in as ${user.email}`;
+  } else {
+    document.getElementById("logout").style.display = "none";
+    statusText.textContent = "Not logged in";
+  }
+});
+
 let QUESTIONS = [];
 let FILTER = "";
 
