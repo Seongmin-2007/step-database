@@ -69,6 +69,7 @@ async function selectQuestion(q, li) {
   // Load all solution images automatically
   let i = 1;
   let foundAny = false;
+  console.log("1");
 
   while (true) {
     const imgPath =
@@ -92,11 +93,13 @@ async function selectQuestion(q, li) {
   }
 
   if (!foundAny) {
+    console.log("2");
     placeholder.style.display = "block";
   }
 
   // Toggle visibility
   toggle.onclick = () => {
+    console.log("3");
     solutionContainer.style.display =
       solutionContainer.style.display === "none" ? "block" : "none";
   };
