@@ -23,13 +23,6 @@ import {
 // QUESTION SELECTION
 // ==============================
 export async function selectQuestion(q, li, questionTags) {
-  notify({
-    message: "Attempt saved.",
-    type: "success",
-    timeout: 2000
-  });
-
-
   // Highlight selected question
   document
     .querySelectorAll("#questionList li")
@@ -285,7 +278,14 @@ export async function selectQuestion(q, li, questionTags) {
   // Cloud upload
   async function commitCompletedAttempt(questionId) {
     const user = auth.currentUser;
-    if (!user) return;
+    if (!user) {
+      notify({
+        title: "Not signed in",
+        message: "Sign in to save completed attempts to the cloud.",
+        type: "warning"
+      });
+      return;
+    }
 
     if (timerInterval) {
       clearInterval(timerInterval);
@@ -308,6 +308,12 @@ export async function selectQuestion(q, li, questionTags) {
       collection(db, "users", user.uid, "questions", questionId, "attempts"),
       attempt
     );
+
+    notify({
+      message: "Attempt saved.",
+      type: "success",
+      timeout: 2000
+    });
 
     // Clear local draft
     localStorage.removeItem(localDraftKey(questionId));
@@ -388,16 +394,7 @@ export async function selectQuestion(q, li, questionTags) {
         clearTimeout(armTimeout);
 
         try {
-          await deleteDoc(
-            doc(
-              db,
-              "users",
-              user.uid,
-              "questions",
-              questionId,
-              "attempts" // ← Firestore document ID
-            )
-          );
+          await deleteDoc(collection(db, "users", user.uid, "questions", questionId, "attempts"));
 
           // Remove from UI
           li.remove();
