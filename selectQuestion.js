@@ -395,8 +395,7 @@ export async function selectQuestion(q, li, questionTags) {
               user.uid,
               "questions",
               questionId,
-              "attempts",
-              d.id   // ← Firestore document ID
+              "attempts" // ← Firestore document ID
             )
           );
 
