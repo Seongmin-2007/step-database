@@ -129,16 +129,15 @@ window.addEventListener('load', () => {
 
   // --- Initialize The "Swarm" ---
   let particles = [];
+  let hue = Math.random() * 360;
 
   for (let i = 0; i < LINE_COUNT; i++) {
     particles.push({
       // The "Butterfly Effect": 
-      // Start them all at 0.1, but add a tiny, tiny variance (0.001)
-      x: 0.1 + (i * 0.005), 
+      x: 0.1 + (Math.random() * i * 0.005), 
       y: 0,
       z: 0,
-      // Give each line a unique color across the rainbow
-      color: `hsl(${(360 / LINE_COUNT) * i}, 100%, 60%)` 
+      color: `hsl(${hue}, ${Math.random() * 0.05 * i + 0.5}%, ${30 * Math.random() + 40}%)` 
     });
   }
 
