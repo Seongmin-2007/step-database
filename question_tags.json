@@ -1,10 +1,9 @@
 {
   "images/questions/2022/step3/q11.png": [
     "Probability",
-    "Binomial Distribution",
-    "Expected Value",
     "Combinatorics",
-    "Series Summation"
+    "Expectation",
+    "Binomial distribution"
   ],
   "images/questions/2022/step3/q10.png": [
     "Mechanics",
@@ -16,8 +15,8 @@
     "Probability",
     "Geometry",
     "Calculus",
-    "Expected Value",
-    "Trigonometry"
+    "Trigonometry",
+    "Expected Value"
   ],
   "images/questions/2022/step3/q8.png": [
     "Trigonometry",
@@ -32,11 +31,10 @@
     "Restitution"
   ],
   "images/questions/2022/step3/q7.png": [
-    "Vector Algebra",
-    "Geometric Transformations",
-    "Cross Product",
-    "Dot Product",
-    "Linear Algebra"
+    "Vectors",
+    "Linear algebra",
+    "Geometric transformations",
+    "Cross product"
   ],
   "images/questions/2022/step3/q6.png": [
     "Calculus",
@@ -47,10 +45,10 @@
   ],
   "images/questions/2022/step3/q4.png": [
     "Hyperbolic trigonometry",
+    "Mathematical induction",
     "Maclaurin series",
-    "Proof by induction",
-    "Infinite products",
-    "Limits"
+    "Limits",
+    "Products"
   ],
   "images/questions/2022/step3/q5.png": [
     "Integration",
@@ -1458,5 +1456,162 @@
     "Calculus",
     "Polynomials",
     "Roots of equations"
+  ],
+  "images/questions/2013/step2/q11.png": [
+    "Mechanics",
+    "Collisions",
+    "Coefficient of restitution",
+    "Conservation of momentum"
+  ],
+  "images/questions/2013/step2/q10.png": [
+    "Projectile Motion",
+    "Kinematics",
+    "Trigonometry"
+  ],
+  "images/questions/2013/step2/q12.png": [
+    "Probability",
+    "Statistics",
+    "Poisson Distribution",
+    "Series Expansion",
+    "Expected Value"
+  ],
+  "images/questions/2013/step2/q13.png": [
+    "Probability",
+    "Discrete Probability",
+    "Inequalities",
+    "Algebra"
+  ],
+  "images/questions/2013/step2/q8.png": [
+    "Calculus",
+    "Optimization",
+    "Inequalities",
+    "Coordinate Geometry"
+  ],
+  "images/questions/2013/step2/q9.png": [
+    "Mechanics",
+    "Statics",
+    "Forces",
+    "Friction",
+    "Equilibrium"
+  ],
+  "images/questions/2013/step2/q7.png": [
+    "Number theory",
+    "Algebra",
+    "Diophantine equations"
+  ],
+  "images/questions/2013/step2/q6.png": [
+    "Sequences and series",
+    "Calculus",
+    "Proof by induction",
+    "Limits"
+  ],
+  "images/questions/2013/step2/q4.png": [
+    "Coordinate Geometry",
+    "Algebra",
+    "Locus"
+  ],
+  "images/questions/2013/step2/q5.png": [
+    "Calculus",
+    "Differentiation",
+    "Functions",
+    "Curve sketching",
+    "Equations and inequalities"
+  ],
+  "images/questions/2013/step2/q1.png": [
+    "Calculus",
+    "Logarithms",
+    "Inequalities",
+    "Curve sketching"
+  ],
+  "images/questions/2013/step2/q2.png": [
+    "Integration",
+    "Recurrence Relations",
+    "Factorials",
+    "Trigonometry"
+  ],
+  "images/questions/2013/step2/q3.png": [
+    "Algebra",
+    "Calculus",
+    "Roots of polynomials",
+    "Cubic equations"
+  ],
+  "images/questions/2014/step2/q11.png": [
+    "Classical mechanics",
+    "Newtonian mechanics",
+    "Kinematics",
+    "Dynamics",
+    "Trigonometry"
+  ],
+  "images/questions/2014/step2/q10.png": [
+    "Projectile motion",
+    "Kinematics",
+    "Calculus",
+    "Coordinate geometry"
+  ],
+  "images/questions/2014/step2/q12.png": [
+    "Probability",
+    "Calculus",
+    "Differential equations",
+    "Statistics"
+  ],
+  "images/questions/2014/step2/q13.png": [
+    "Probability",
+    "Expected value",
+    "Discrete random variables",
+    "Combinatorics"
+  ],
+  "images/questions/2014/step2/q8.png": [
+    "Algebra",
+    "Binomial theorem",
+    "Number theory",
+    "Inequalities"
+  ],
+  "images/questions/2014/step2/q9.png": [
+    "Mechanics",
+    "Statics",
+    "Equilibrium",
+    "Friction",
+    "Trigonometry"
+  ],
+  "images/questions/2014/step2/q7.png": [
+    "Absolute values",
+    "Graphing",
+    "Equations",
+    "Coordinate geometry"
+  ],
+  "images/questions/2014/step2/q6.png": [
+    "Trigonometry",
+    "Calculus",
+    "Series",
+    "Differentiation"
+  ],
+  "images/questions/2014/step2/q4.png": [
+    "Integration",
+    "Calculus",
+    "Algebra",
+    "Logarithms",
+    "Trigonometry"
+  ],
+  "images/questions/2014/step2/q5.png": [
+    "Differential equations",
+    "Substitution",
+    "Homogeneous equations"
+  ],
+  "images/questions/2014/step2/q1.png": [
+    "Trigonometry",
+    "Geometry",
+    "Quadratic equations"
+  ],
+  "images/questions/2014/step2/q2.png": [
+    "Calculus",
+    "Inequalities",
+    "Integration",
+    "Differentiation"
+  ],
+  "images/questions/2014/step2/q3.png": [
+    "Calculus",
+    "Differential equations",
+    "Coordinate geometry",
+    "Geometry"
   ]
 }
