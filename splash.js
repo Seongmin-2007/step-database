@@ -15,7 +15,7 @@ function startChaos(mode = "splash") {
   // --- Constants ---
   const LINE_COUNT = mode === "saver" ? 15 : 10; // More lines for screensaver
   const ZOOM = 13;
-  const SPEED = 8;
+  const SPEED = mode === "saver" ? 5 : 8;
   const LINE_WIDTH = 1.0;
   
   // Canvas Setup
@@ -59,7 +59,7 @@ function startChaos(mode = "splash") {
     // This makes old lines slowly fade away, preventing clutter.
     if (mode === "saver") {
       ctx.globalCompositeOperation = "source-over";
-      ctx.fillStyle = "rgba(0, 0, 0, 0.03)"; // 3% opacity black per frame
+      ctx.fillStyle = "rgba(0, 0, 0, 0.02)"; // 3% opacity black per frame
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "lighter"; // Makes overlapping lines glow
     }
