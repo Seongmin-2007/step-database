@@ -34,6 +34,8 @@ async function loadDashboard() {
     });
   }
 
+  console.log(attempts.toString());
+
   // 3️⃣ Compute stats
   const stats = computeStats(attempts);
   renderStats(stats);
