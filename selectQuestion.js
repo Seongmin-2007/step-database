@@ -60,7 +60,7 @@ export async function selectQuestion(q, li, questionTags) {
           <div class="time-control">
             <button id="startTimer">Start</button>
             <button id="stopTimer" disabled>Stop</button>
-            <span id="timeDisplay">00:00</span>
+            <span id="timeDisplay">00min 00sec</span>
           </div>
 
           <div>
@@ -132,16 +132,16 @@ export async function selectQuestion(q, li, questionTags) {
     placeholder.style.display = "block";
   }
 
-    // ==============================
-    // SOLUTION TOGGLE
-    // ==============================
-    const toggle = document.getElementById("toggle");
-    const solution = viewer.querySelector(".solution");
+  // ==============================
+  // SOLUTION TOGGLE
+  // ==============================
+  const toggle = document.getElementById("toggle");
+  const solution = viewer.querySelector(".solution");
 
-    toggle.onclick = () => {
-      solution.style.display =
-        solution.style.display === "none" ? "block" : "none";
-    };
+  toggle.onclick = () => {
+    solution.style.display =
+      solution.style.display === "none" ? "block" : "none";
+  };
 
   // ==============================
   // PROGRESS LOGIC
@@ -210,6 +210,7 @@ export async function selectQuestion(q, li, questionTags) {
     timerInterval = setInterval(() => {
       elapsedSeconds++;
       timeDisplay.textContent = formatTime(elapsedSeconds);
+      saveLocalDraft(questionId);
     }, 1000);
   });
 
@@ -328,7 +329,7 @@ export async function selectQuestion(q, li, questionTags) {
         <div class="past-attempt">
           <div class="past-meta">
             Date: ${a.date}<br>
-            Time taken: ${formatTime(a.time)}<br>
+            Time taken: ${a.time == 0 ? "N/A" : formatTime(a.time)}<br>
             Difficulty: ${"★".repeat(a.difficulty ?? 0)}<br>
             Notes:
           </div>
