@@ -221,19 +221,34 @@ function renderList() {
       // display tags below question
       const qPath = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
       const tags = QUESTION_TAGS[qPath] || [];
+
       if (tags.length) {
-        const tagDiv = document.createElement("div");
-        tagDiv.style.fontSize = "0.8em";
-        tagDiv.style.color = "#555";
-        tagDiv.textContent = "Tags: " + tags.join(", ");
-        li.appendChild(tagDiv);
+        const tagContainer = document.createElement("div");
+        tagContainer.className = "tag-container";
+
+        tags.forEach(tag => {
+          const tagEl = document.createElement("span");
+          tagEl.className = "tag-chip";
+          tagEl.textContent = tag;
+
+          // (optional) click to search by tag
+          tagEl.onclick = e => {
+            e.stopPropagation(); // don't trigger question click
+            search.value = tag;
+            FILTER = tag.toLowerCase();
+            renderList();
+          };
+
+          tagContainer.appendChild(tagEl);
+        });
+
+        li.appendChild(tagContainer);
       }
 
       li.onclick = () => selectQuestion(q, li);
       listEl.appendChild(li);
     });
 }
-
 
 
 
