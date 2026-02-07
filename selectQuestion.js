@@ -269,9 +269,9 @@ export async function selectQuestion(q, li, questionTags) {
       li.innerHTML = `
         <div class="past-attempt">
           <div class="past-meta">
-            Date: ${a.date}
-            Time taken: ${a.time + " mins" ?? "N/A"}
-            Difficulty: ${"★".repeat(a.difficulty ?? 0)}
+            Date: ${a.date}<br>
+            Time taken: ${a.time + " mins" ?? "N/A"}<br>
+            Difficulty: ${"★".repeat(a.difficulty ?? 0)}<br>
             Notes: ${a.notes ?? "None"}
           </div>
           <div class="past-notes">
