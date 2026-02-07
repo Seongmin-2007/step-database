@@ -24,7 +24,8 @@ async function loadDashboard() {
   const attempts = [];
 
   // 1️⃣ Get all questions for this user
-  const questionsSnap = await getDocs(collection(db, "users", user.uid, "questions"));
+//   const questionsSnap = await getDocs(collection(db, "users", user.uid, "questions"));
+  const questionsSnap = await getDocs(collection(db, "users", user.uid));
   console.log("Questions snapshot size:", questionsSnap.size);
   for (const qDoc of questionsSnap.docs) {
     const questionId = qDoc.id;
