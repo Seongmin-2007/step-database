@@ -21,25 +21,22 @@ async function loadDashboard() {
   }
 
   console.log("User ID:", user.uid);
+    //    But filter ONLY for this user.
+  const q = query(
+    collection(db, "attempts"),
+    where("userID", "==", user.uid),
+    orderBy("createdAt", "desc") // optional: most recent first
+  );
+
+  const querySnapshot = await getDocs(q);
   const attempts = [];
 
-  // 1️⃣ Get all questions for this user
-//   const questionsSnap = await getDocs(collection(db, "users", user.uid, "questions"));
-  const questionsSnap = await getDocs(collection(db, "users", user.uid, "questions"));
-  console.log("Questions snapshot size:", questionsSnap.size);
-  for (const qDoc of questionsSnap.docs) {
-    const questionId = qDoc.id;
-
-    // 2️⃣ Get all attempts under each question
-    const attemptsSnap = await getDocs(collection(qDoc.ref, "attempts"));
-    attemptsSnap.docs.forEach(aDoc => {
-      attempts.push({
-        id: aDoc.id,
-        questionId,
-        ...aDoc.data()
-      });
+  querySnapshot.forEach((doc) => {
+    attempts.push({
+      id: doc.id,
+      ...doc.data()
     });
-  }
+  });
 
   console.log("Attempts array:", attempts);
   console.table(attempts);

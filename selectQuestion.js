@@ -300,7 +300,8 @@ export async function selectQuestion(q, li, questionTags) {
       status: statusEl.value,           // usually "completed"
       time: elapsedSeconds,
       difficulty: difficulty,
-      notes: note
+      notes: note,
+      userID: user.uid
     };
 
     await addDoc(
