@@ -173,6 +173,15 @@ export async function selectQuestion(q, li, questionTags) {
     notesEl.addEventListener(evt, () => saveLocalDraft(questionId));
   });
 
+  starsEl.onclick = e => {
+    if (!e.target.dataset.star || statusEl.disabled) return;
+
+    const n = Number(e.target.dataset.star);
+    difficulty = (difficulty === n) ? 0 : n;
+    updateStarsUI();
+    saveLocalDraft(questionId);
+  };
+
   loadLocalDraft(questionId);
 
 
@@ -199,6 +208,7 @@ export async function selectQuestion(q, li, questionTags) {
     notesEl.value = "";
 
     // Refresh sidebar
+    loadLocalDraft(questionId);
     await loadCompletedAttempts(user.uid, questionId);
   }
 
@@ -226,6 +236,20 @@ export async function selectQuestion(q, li, questionTags) {
 
     if (snap.empty) {
       list.innerHTML = "<li>No completed attempts yet</li>";
+      
+      // testing (get rid of this pls)
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <div class="past-attempt">
+          <div class="past-meta">
+            Difficulty: ${"★".repeat(5)}
+          </div>
+          <div class="past-notes">
+            ${"hello xro"}
+          </div>
+        </div>
+      `;
+      list.appendChild(li);
       return;
     }
 
