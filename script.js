@@ -45,6 +45,7 @@ const signupPassword = document.getElementById("signup-password");
 const profileBtn = document.getElementById("profile-btn");
 const dropdown = document.getElementById("profile-dropdown");
 const logoutBtn = document.getElementById("logout-btn");
+const dashboardBtn = document.getElementById("open-dashboard");
 
 // --- Modal open / close ---
 loginBtn.onclick = () => loginModal.classList.remove("hidden");
@@ -106,6 +107,10 @@ profileBtn.onclick = () => {
 
 logoutBtn.onclick = async () => {
   await signOut(auth);
+};
+
+dashboardBtn.onclick = () => {
+  window.location.href = "dashboard.html";
 };
 
 document.addEventListener("click", e => {
