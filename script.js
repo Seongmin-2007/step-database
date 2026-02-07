@@ -115,46 +115,8 @@ document.addEventListener("click", e => {
 });
 
 
-
-// let QUESTIONS = [];
-// let FILTER = "";
-
-// const listEl = document.getElementById("questionList");
-// const viewer = document.getElementById("viewer");
-// const search = document.getElementById("search");
-
-// fetch("questions.json")
-//   .then(r => r.json())
-//   .then(data => {
-//     QUESTIONS = data;
-//     renderList();
-//   });
-
-// search.addEventListener("input", e => {
-//   FILTER = e.target.value.toLowerCase();
-//   renderList();
-// });
-
-// function makeId({ year, paper, question }) {
-//   return `${String(year % 100).padStart(2, "0")}-S${paper}-Q${question}`;
-// }
-
-// function renderList() {
-//   listEl.innerHTML = "";
-
-//   QUESTIONS
-//     .filter(q => makeId(q).toLowerCase().includes(FILTER))
-//     .forEach(q => {
-//       const li = document.createElement("li");
-//       li.textContent = makeId(q);
-
-//       li.onclick = () => selectQuestion(q, li);
-//       listEl.appendChild(li);
-//     });
-// }
-
 let QUESTIONS = [];
-let QUESTION_TAGS = {};  // <-- store tags
+let questionTags = {};  // <-- store tags
 let FILTER = "";
 let TAG_FILTER = "";
 
@@ -170,7 +132,7 @@ Promise.all([
   fetch("question_tags.json").then(r => r.json())
 ]).then(([questionsData, tagsData]) => {
   QUESTIONS = questionsData;
-  QUESTION_TAGS = tagsData;
+  questionTags = tagsData;
   renderList();
 });
 
@@ -240,7 +202,7 @@ function renderList() {
         li.appendChild(tagContainer);
       }
 
-      li.onclick = () => selectQuestion(q, li);
+      li.onclick = () => selectQuestion(q, li, questionTags);
       listEl.appendChild(li);
     });
 }

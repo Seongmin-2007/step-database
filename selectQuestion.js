@@ -20,7 +20,7 @@ import {
 // ==============================
 // QUESTION SELECTION
 // ==============================
-export async function selectQuestion(q, li, uid="") {
+export async function selectQuestion(q, li, qustionTags) {
   // Highlight selected question
   document
     .querySelectorAll("#questionList li")
@@ -30,7 +30,7 @@ export async function selectQuestion(q, li, uid="") {
 
   const questionId = `${q.year}-step${q.paper}-q${q.question}`;
   const qImg = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-  const tags = QUESTION_TAGS[qImg] || [];
+  const tags = questionTags[qImg] || [];
   
   // ------------------------------
   // Render question + progress UI
