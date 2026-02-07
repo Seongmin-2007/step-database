@@ -162,7 +162,7 @@ window.addEventListener("load", () => {
 
 // 2. Button Click
 document.getElementById("easteregg").onclick = () => {
-  startChaos(auth.currentUser != null && auth.currentUser.uid == "xc1CIaOlAzcF0PvouZpR8WxwaDG3" ? "splash" : "saver");
+  startChaos(auth.currentUser != null && auth.currentUser.uid == "xc1CIaOlAzcF0PvouZpR8WxwaDG3" && Math.round(Math.random()) == 0 ? "splash" : "saver");
 };
 
 // 3. Resize Handler
