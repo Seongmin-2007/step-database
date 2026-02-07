@@ -269,10 +269,6 @@ export async function selectQuestion(q, li, questionTags) {
       const li = document.createElement("li");
       li.innerHTML = `
         <div class="past-attempt">
-          // <div class="past-actions">
-          //   <button class="btn btn-danger delete-btn">×</button>
-          // </div>
-        
           <div class="past-meta">
             Date: ${a.date}<br>
             Time taken: ${(a.time ?? "N/A") + " mins"}<br>
