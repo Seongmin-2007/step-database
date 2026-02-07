@@ -30,7 +30,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-console.log("Current User: " + auth.currentUser.uid);
+// console.log("Current User: " + auth.currentUser.uid);
 export const db = getFirestore(app);
 
 export {
