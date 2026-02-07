@@ -394,7 +394,7 @@ export async function selectQuestion(q, li, questionTags) {
         clearTimeout(armTimeout);
 
         try {
-          await deleteDoc(collection(db, "users", user.uid, "questions", questionId, "attempts"));
+          await deleteDoc(doc.ref);
 
           // Remove from UI
           li.remove();
