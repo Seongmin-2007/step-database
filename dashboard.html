@@ -6,18 +6,32 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <div class="dashboard-layout">
     <header class="dashboard-header">
-      <h1>Progress Dashboard</h1>
+      <h1>Dashboard</h1>
       <button onclick="history.back()">Back</button>
     </header>
 
     <section class="dashboard-grid">
-      <div class="dashboard-card" id="card-attempted"></div>
-      <div class="dashboard-card" id="card-completed"></div>
-      <div class="dashboard-card" id="card-avg-time"></div>
-      <div class="dashboard-card" id="card-hardest"></div>
+      <div class="dashboard-card" id="stat-attempted"></div>
+      <div class="dashboard-card" id="stat-completed"></div>
+      <div class="dashboard-card" id="stat-avg-time"></div>
+      <div class="dashboard-card" id="stat-avg-difficulty"></div>
+    </section>
+
+    <section class="dashboard-section">
+      <h2>Priority list</h2>
+      <ul id="priorityList"></ul>
+    </section>
+
+    <section class="dashboard-section">
+      <h2>Time spent over attempts</h2>
+      <canvas id="timeChart" width="600" height="200"></canvas>
+    </section>
+
+    <section class="dashboard-section">
+      <h2>Difficulty trend</h2>
+      <canvas id="difficultyChart" width="600" height="200"></canvas>
     </section>
   </div>
 
