@@ -66,7 +66,11 @@ function startChaos(mode = "splash") {
     // This makes old lines slowly fade away, preventing clutter.
     if (mode === "saver") {
       ctx.globalCompositeOperation = "source-over";
-      ctx.fillStyle = "rgba(0, 0, 0, 0.03)"; // 3% opacity black per frame
+      if (Math.random() < 0.1) { 
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Hard wipe 10% of the time
+      } else {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.02)"; // Soft fade 90% of the time
+      }
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "lighter"; // Makes overlapping lines glow
     }
