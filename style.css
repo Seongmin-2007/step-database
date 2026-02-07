@@ -208,3 +208,20 @@ button {
 .tag-chip:hover {
   background: #e0e7ff;
 }
+
+
+
+.past-attempt {
+  margin-bottom: 8px;
+  padding: 6px;
+  border-left: 3px solid #ddd;
+}
+
+.past-meta {
+  font-size: 0.75em;
+  color: #666;
+}
+
+.past-notes {
+  font-size: 0.85em;
+}
