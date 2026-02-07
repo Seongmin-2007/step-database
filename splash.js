@@ -4,8 +4,8 @@ window.addEventListener('load', () => {
   const splash = document.getElementById('splash-screen');
 
   // --- Configuration ---
-  const ZOOM = 15;          // Bigger number = Bigger shape
-  const SPEED = 30;         // Higher number = Faster drawing
+  const ZOOM = 20;          // Bigger number = Bigger shape
+  const SPEED = 10;         // Higher number = Faster drawing
   const LINE_WIDTH = 1.5;   // Thickness of the line
   const PRE_WARM_STEPS = 200; // Skip the boring "center spin" part
   
@@ -101,5 +101,4 @@ window.addEventListener('resize', () => {
     const c = document.getElementById('chaos-canvas');
     c.width = window.innerWidth;
     c.height = window.innerHeight;
-    // Note: Resizing will clear the canvas (normal browser behavior)
 });
