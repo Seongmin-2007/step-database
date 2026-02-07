@@ -434,56 +434,14 @@ button:disabled {
 
 
 
-/* ================================
-    Dashboard
-    ================================ */
-.dashboard-layout {
-  padding: 24px;
-}
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-.dashboard-card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow-sm);
-}
-
-.dashboard-card h3 {
-  margin: 0 0 6px;
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.dashboard-card .value {
-  font-size: 28px;
-  font-weight: 600;
-}
-
-
-
-
-/* --- Elegant Background --- */
+/* --- Background & Container --- */
 #splash-screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  /* Deep, rich dark grey gradient */
+  /* Elegant dark gradient */
   background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
   display: flex;
   justify-content: center;
@@ -506,47 +464,48 @@ button:disabled {
 
 /* --- Typography --- */
 .splash-title {
-  font-family: 'Playfair Display', 'Times New Roman', serif; /* Elegant Serif */
+  font-family: 'Playfair Display', 'Times New Roman', serif;
   color: #ffffff;
   font-size: 2.5rem;
-  letter-spacing: 4px; /* Wide spacing = Luxury */
-  margin-top: 20px;
-  margin-bottom: 5px;
+  letter-spacing: 3px;
+  margin-top: 15px;
   opacity: 0;
-  animation: fadeUp 1s ease-out 0.5s forwards;
+  /* Slide up and fade in */
+  animation: fadeUp 1s ease-out 1s forwards; 
 }
 
 .splash-subtitle {
   font-family: 'Helvetica Neue', sans-serif;
   color: #888;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 2px;
   opacity: 0;
-  animation: fadeUp 1s ease-out 0.8s forwards;
+  animation: fadeUp 1s ease-out 1.3s forwards;
 }
 
-/* --- SVG Drawing Animation --- */
+/* --- Drawing Animations --- */
 .draw-circle {
-  stroke-dasharray: 283; /* Circumference of r=45 circle */
+  stroke-dasharray: 283; /* 2 * pi * 45 */
   stroke-dashoffset: 283;
+  /* Rotated -90deg so it starts at the top */
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
   animation: drawStroke 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  transform-origin: center;
-  transform: rotate(-90deg); /* Start from top */
 }
 
-.draw-sigma {
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  animation: drawStroke 1.5s ease-out 0.5s forwards; /* Starts after 0.5s */
+.draw-integral {
+  stroke-dasharray: 100; /* Approximate length of the line */
+  stroke-dashoffset: 100; /* Hide line initially */
+  /* Starts drawing after 0.5s delay */
+  animation: drawStroke 1.5s ease-out 0.5s forwards; 
 }
 
-/* --- Animations --- */
 @keyframes drawStroke {
   to { stroke-dashoffset: 0; }
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
