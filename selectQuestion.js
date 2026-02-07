@@ -176,6 +176,7 @@ export async function selectQuestion(q, li, questionTags) {
       timeEl.value = "";
       notesEl.value = "";
       updateStarsUI();
+      updateCommitButton();
       return;
     }
 
@@ -272,7 +273,7 @@ export async function selectQuestion(q, li, questionTags) {
             Date: ${a.date}<br>
             Time taken: ${a.time + " mins" ?? "N/A"}<br>
             Difficulty: ${"★".repeat(a.difficulty ?? 0)}<br>
-            Notes: ${a.notes ?? "None"}
+            Notes:
           </div>
           <div class="past-notes">
             ${a.notes}
