@@ -1,3 +1,7 @@
+import {
+  auth
+} from "./firebase.js";
+
 // Global variables to control the engine
 let animationId = null;
 let isScreensaverActive = false;
@@ -158,7 +162,7 @@ window.addEventListener("load", () => {
 
 // 2. Button Click
 document.getElementById("easteregg").onclick = () => {
-  startChaos("saver");
+  startChaos(auth.currentUser != null && auth.currentUser.uid == "xc1CIaOlAzcF0PvouZpR8WxwaDG3" ? "splash" : "saver");
 };
 
 // 3. Resize Handler
@@ -167,161 +171,3 @@ window.addEventListener("resize", () => {
     c.width = window.innerWidth;
     c.height = window.innerHeight;
 });
-
-
-
-
-
-// // Global variables
-// let animationId = null;
-// let isScreensaverActive = false;
-
-// // --- The Chaos Engine ---
-// function startChaos(mode = "splash") {
-//   if (animationId) cancelAnimationFrame(animationId);
-
-//   const canvas = document.getElementById("chaos-canvas");
-//   const ctx = canvas.getContext("2d");
-//   const splash = document.getElementById("splash-screen");
-
-//   splash.style.display = "flex";
-//   splash.classList.remove("hidden");
-
-//   // --- Dynamic Configuration ---
-//   // 1. Calculate ZOOM based on screen size so it fits perfectly on Mobile OR Desktop
-//   // Divide smallest screen dimension by 60 to ensure the attractor fits
-//   const minDim = Math.min(window.innerWidth, window.innerHeight);
-//   const ZOOM = minDim / 55; 
-  
-//   const LINE_COUNT = mode === "saver" ? 20 : 10;
-//   const SPEED = mode === "saver" ? 5 : 8;
-//   const LINE_WIDTH = 1.5; // Slightly thicker for visibility
-
-//   // Canvas Setup
-//   canvas.width = window.innerWidth;
-//   canvas.height = window.innerHeight;
-  
-//   // 2. We need cx/cy to be updating variables, not constants
-//   let cx = canvas.width / 2;
-//   let cy = canvas.height / 2;
-
-//   // Lorenz Constants
-//   const sigma = 10;
-//   const rho = 28;
-//   const beta = 8/3;
-//   const dt = 0.008;
-
-//   // --- Initialize The Swarm ---
-//   let particles = [];
-//   let hue = Math.random() * 360;
-
-//   for (let i = 0; i < LINE_COUNT; i++) {
-//     let s = 20 * Math.random() + 80;
-//     let l = 30 * Math.random() + 40;
-
-//     particles.push({
-//       x: 0.1 + (i * 0.01), 
-//       y: 0,
-//       // 3. Start Z at 25 so it explodes from the CENTER, not the top
-//       z: 25, 
-//       h: hue, 
-//       s: s, l: l,
-//       color: `hsl(${hue}, ${s}%, ${l}%)`
-//     });
-//   }
-
-//   // Clear background
-//   ctx.fillStyle = "#000";
-//   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-//   // --- Animation Loop ---
-//   function drawChaos() {
-//     if (splash.classList.contains("hidden") && !isScreensaverActive) return;
-
-//     // Fade Logic
-//     if (mode === "saver") {
-//       ctx.globalCompositeOperation = "source-over";
-//       // Use slightly stronger fade (0.06) to prevent "gray smear" buildup
-//       ctx.fillStyle = "rgba(0, 0, 0, 0.06)"; 
-//       ctx.fillRect(0, 0, canvas.width, canvas.height);
-//       ctx.globalCompositeOperation = "lighter"; 
-//     }
-
-//     for (let s = 0; s < SPEED; s++) {
-//       particles.forEach(p => {
-//         ctx.beginPath();
-//         ctx.lineWidth = LINE_WIDTH;
-//         ctx.strokeStyle = p.color;
-        
-//         // Draw using current cx/cy and dynamic ZOOM
-//         let startX = cx + (p.x * ZOOM);
-//         let startY = cy + (p.z * ZOOM) - (25 * ZOOM);
-//         ctx.moveTo(startX, startY);
-
-//         // Math
-//         let dx = (sigma * (p.y - p.x)) * dt;
-//         let dy = (p.x * (rho - p.z) - p.y) * dt;
-//         let dz = (p.x * p.y - beta * p.z) * dt;
-
-//         p.x += dx; p.y += dy; p.z += dz;
-
-//         let nextX = cx + (p.x * ZOOM);
-//         let nextY = cy + (p.z * ZOOM) - (25 * ZOOM);
-        
-//         ctx.lineTo(nextX, nextY);
-//         ctx.stroke();
-//       });
-//     }
-    
-//     // Color Shift
-//     if(mode === "saver") {
-//         particles.forEach((p, index) => {
-//             p.h = p.h + 0.1;
-//             p.color = `hsl(${p.h + (index*5)}, ${p.s}%, ${p.l}%)`; 
-//         });
-//     }
-
-//     animationId = requestAnimationFrame(drawChaos);
-//   }
-
-//   drawChaos();
-
-//   // --- Exit Logic ---
-//   if (mode === "splash") {
-//     setTimeout(() => stopChaos(), 5500);
-//   } else {
-//     // Small delay before enabling click-to-exit
-//     setTimeout(() => {
-//         splash.onclick = () => {
-//             stopChaos();
-//             splash.onclick = null;
-//         };
-//     }, 500);
-//   }
-
-//   // --- 4. The Fixed Resize Handler ---
-//   // This needs to be defined INSIDE startChaos to access 'cx' and 'cy' variables
-//   // OR we simply update the canvas and the loop picks up the new dimensions
-//   window.onresize = () => {
-//       canvas.width = window.innerWidth;
-//       canvas.height = window.innerHeight;
-//       cx = canvas.width / 2;
-//       cy = canvas.height / 2;
-//       // Re-fill black to prevent white flash
-//       ctx.fillStyle = "#000";
-//       ctx.fillRect(0, 0, canvas.width, canvas.height);
-//   };
-// }
-
-// function stopChaos() {
-//   const splash = document.getElementById("splash-screen");
-//   if (animationId) cancelAnimationFrame(animationId);
-//   isScreensaverActive = false;
-//   splash.classList.add("hidden");
-//   window.onresize = null; // Clean up resize listener
-//   setTimeout(() => { splash.style.display = "none"; }, 1000);
-// }
-
-// // Event Listeners
-// window.addEventListener("load", () => startChaos("splash"));
-// document.getElementById("easteregg").onclick = () => startChaos("saver");
