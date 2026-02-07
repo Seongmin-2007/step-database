@@ -15,9 +15,9 @@ window.addEventListener('load', () => {
 
   // --- Chaos Variables ---
   // Start slightly off-center to ensure movement
-  let x = 0.1; 
-  let y = 0;
-  let z = 0;
+  let x = 0.05 - Math.random() * 0.1; 
+  let y = 0.05 - Math.random() * 0.1;
+  let z = 0.05 - Math.random() * 0.1;
 
   // Lorenz Constants
   const sigma = 10;
@@ -79,7 +79,7 @@ window.addEventListener('load', () => {
     ctx.stroke();
 
     // Color Cycle
-    hue += 0.5;
+    hue += 0.1;
 
     requestAnimationFrame(drawChaos);
   }
