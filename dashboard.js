@@ -89,3 +89,5 @@ function renderDashboard(data) {
     <div class="value">${data.hardestTag}</div>
   `;
 }
+
+loadDashboard();
