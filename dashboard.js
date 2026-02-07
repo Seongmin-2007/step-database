@@ -8,6 +8,15 @@ import {
 
 import { auth, db } from "./firebase.js";
 
+// If they don't have the pass, kick them out
+if (!sessionStorage.getItem("authorized")) {
+  window.location.href = "index.html";
+}
+
+// Optional: Revoke the pass immediately so a Refresh kicks them out
+sessionStorage.removeItem("authorized");
+
+
 auth.onAuthStateChanged(user => {
   if (user) {
     loadDashboard();

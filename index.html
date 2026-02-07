@@ -7,6 +7,16 @@
 </head>
 <body>
 
+<div id="splash-screen">
+  <div class="splash-content">
+    <div class="math-symbol">∑</div>
+    <h1 class="logo-text">Math<span class="logo-highlight">DB</span></h1>
+    <div class="loading-bar-container">
+      <div class="chalk-line"></div>
+    </div>
+  </div>
+</div>
+
 <div class="layout">
 
   <!-- LEFT SIDEBAR -->
@@ -81,6 +91,22 @@
 <!-- Notifications -->
 <div id="notifications"></div>
 
+<script>
+  window.addEventListener('load', () => {
+    const splash = document.getElementById('splash-screen');
+    
+    // Wait 2 seconds for the "chalk line" animation to finish
+    setTimeout(() => {
+      splash.classList.add('hidden');
+      
+      // Optional: Remove it from the DOM entirely after fading out
+      setTimeout(() => {
+          splash.style.display = 'none'; 
+      }, 600); // Matches the 0.6s CSS transition
+      
+    }, 2000); 
+  });
+</script>
 <script type="module" src="firebase.js"></script>
 <script type="module" src="script.js"></script>
 </body>

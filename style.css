@@ -472,3 +472,85 @@ button:disabled {
   font-size: 28px;
   font-weight: 600;
 }
+
+
+
+
+
+/* --- Splash Screen Container --- */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #2c3e50; /* Matte Blackboard Color */
+  color: #ecf0f1;            /* Chalk White */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;             /* Always on top */
+  transition: opacity 0.6s ease-out, visibility 0.6s;
+}
+
+/* Class to hide it smoothly */
+#splash-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* --- Content Styling --- */
+.splash-content {
+  text-align: center;
+  font-family: 'Times New Roman', serif; /* Serif looks more like math text */
+}
+
+.math-symbol {
+  font-size: 80px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  animation: float 3s ease-in-out infinite;
+  text-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.logo-text {
+  font-size: 40px;
+  margin: 0;
+  letter-spacing: 2px;
+  font-weight: normal;
+}
+
+.logo-highlight {
+  font-weight: bold;
+  color: #3498db; /* Optional: A splash of blue chalk color */
+}
+
+/* --- Loading Animation --- */
+.loading-bar-container {
+  width: 200px;
+  height: 4px;
+  background-color: rgba(255,255,255,0.1); /* Faint track */
+  margin: 20px auto 0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.chalk-line {
+  height: 100%;
+  width: 0%;
+  background-color: #ecf0f1;
+  box-shadow: 0 0 8px rgba(255,255,255,0.6); /* Glow effect */
+  animation: drawLine 2s ease-in-out forwards;
+}
+
+/* --- Keyframes --- */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes drawLine {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}

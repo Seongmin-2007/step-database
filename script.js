@@ -109,7 +109,9 @@ logoutBtn.onclick = async () => {
   await signOut(auth);
 };
 
+// Opens dashboard
 dashboardBtn.onclick = () => {
+  sessionStorage.setItem("authorized", "true");
   window.location.href = "dashboard.html";
 };
 
