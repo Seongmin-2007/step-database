@@ -79,7 +79,7 @@ window.addEventListener('load', () => {
     ctx.stroke();
 
     // Color Cycle
-    hue += 0.1;
+    hue += 0.01;
 
     requestAnimationFrame(drawChaos);
   }

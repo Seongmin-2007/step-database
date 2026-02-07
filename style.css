@@ -465,43 +465,6 @@ button:disabled {
   opacity: 0.8;
 }
 
-/* --- Typography --- */
-.chaos-text-container {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  /* subtle glass effect */
-  background: rgba(0, 0, 0, 0.3);
-  padding: 20px 40px;
-  border-radius: 10px;
-  backdrop-filter: blur(2px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.chaos-title {
-  font-family: 'Courier New', Courier, monospace; /* Monospace = Code/Math */
-  color: #fff;
-  font-size: 3rem;
-  letter-spacing: 0.2em;
-  margin: 0;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  animation: flicker 3s infinite alternate;
-}
-
-.chaos-highlight {
-  color: #00ffcc; /* Cyberpunk Teal */
-  font-weight: bold;
-}
-
-.chaos-subtitle {
-  color: #888;
-  font-family: sans-serif;
-  font-size: 0.8rem;
-  margin-top: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
 @keyframes flicker {
   0% { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
   50% { opacity: 0.8; text-shadow: 0 0 5px rgba(255,255,255,0.2); }
