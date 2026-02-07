@@ -22,6 +22,16 @@ import {
 // QUESTION SELECTION
 // ==============================
 export async function selectQuestion(q, li, questionTags) {
+  if (timerInterval) {
+    const ok = confirm(
+      "The timer is still running. Stop and switch question?"
+    );
+    if (!ok) return;
+
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
   // Highlight selected question
   document
     .querySelectorAll("#questionList li")
@@ -381,7 +391,7 @@ export async function selectQuestion(q, li, questionTags) {
 
         try {
           await deleteDoc(
-            docRef(
+            doc(
               db,
               "users",
               user.uid,
