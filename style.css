@@ -184,3 +184,27 @@ button {
   font-size: 12px;
   color: #666;
 }
+
+
+
+
+.tag-container {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag-chip {
+  background: #eef2ff;
+  color: #3730a3;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.75em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tag-chip:hover {
+  background: #e0e7ff;
+}
