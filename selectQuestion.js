@@ -30,7 +30,7 @@ export async function selectQuestion(q, li, questionTags) {
 
   li.classList.add("active");
 
-  const questionId = `${q.year}-step${q.paper}-q${q.question}`;
+  const questionID = `${q.year}-step${q.paper}-q${q.question}`;
   const qImg = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
   const tags = questionTags[qImg] || [];
   
@@ -38,7 +38,7 @@ export async function selectQuestion(q, li, questionTags) {
   // Render question + progress UI
   // ------------------------------
   viewer.innerHTML = `
-    <h2>${questionId}</h2>
+    <h2>${questionID}</h2>
     <div style="margin-top:10px; font-size:0.9em; color:#555;">
       <strong>Tags:</strong> ${tags.length ? tags.join(", ") : "No tags available"}
     </div>
@@ -46,7 +46,7 @@ export async function selectQuestion(q, li, questionTags) {
     <div class="question-layout">
       <!-- LEFT: main content -->
       <div class="question-main">
-        <img src="${qImg}" alt="Question ${questionId}">
+        <img src="${qImg}" alt="Question ${questionID}">
 
         <div class="progress-panel">
           <div>
@@ -120,7 +120,7 @@ export async function selectQuestion(q, li, questionTags) {
 
       const img = document.createElement("img");
       img.src = imgPath;
-      img.alt = `Solution ${questionId} (${i})`;
+      img.alt = `Solution ${questionID} (${i})`;
 
       solutionContainer.appendChild(img);
       foundAny = true;
@@ -181,8 +181,8 @@ export async function selectQuestion(q, li, questionTags) {
 
 
   ["input", "change"].forEach(evt => {
-    statusEl.addEventListener(evt, () => saveLocalDraft(questionId));
-    notesEl.addEventListener(evt, () => saveLocalDraft(questionId));
+    statusEl.addEventListener(evt, () => saveLocalDraft(questionID));
+    notesEl.addEventListener(evt, () => saveLocalDraft(questionID));
   });
 
   starsEl.onclick = e => {
@@ -192,7 +192,7 @@ export async function selectQuestion(q, li, questionTags) {
     difficulty = (difficulty === n) ? 0 : n;
     updateStarsUI();
     updateCommitButton();
-    saveLocalDraft(questionId);
+    saveLocalDraft(questionID);
   };
   
   
@@ -219,7 +219,7 @@ export async function selectQuestion(q, li, questionTags) {
     timerInterval = setInterval(() => {
       elapsedSeconds++;
       timeDisplay.textContent = formatTime(elapsedSeconds);
-      saveLocalDraft(questionId);
+      saveLocalDraft(questionID);
     }, 1000);
   });
 
@@ -239,9 +239,9 @@ export async function selectQuestion(q, li, questionTags) {
     return `draft:${qid}`;
   }
 
-  function saveLocalDraft(questionId) {
+  function saveLocalDraft(questionID) {
     localStorage.setItem(
-      localDraftKey(questionId),
+      localDraftKey(questionID),
       JSON.stringify({
         status: statusEl.value,
         time: elapsedSeconds,
@@ -251,8 +251,8 @@ export async function selectQuestion(q, li, questionTags) {
     );
   }
 
-  function loadLocalDraft(questionId) {
-    const raw = localStorage.getItem(localDraftKey(questionId));
+  function loadLocalDraft(questionID) {
+    const raw = localStorage.getItem(localDraftKey(questionID));
     if (!raw) {
       statusEl.value = "not_started";
       difficulty = 0;
@@ -275,7 +275,7 @@ export async function selectQuestion(q, li, questionTags) {
   
 
   // Cloud upload
-  async function commitCompletedAttempt(questionId) {
+  async function commitCompletedAttempt(questionID) {
     const user = auth.currentUser;
     if (!user) {
       notify({
@@ -300,12 +300,13 @@ export async function selectQuestion(q, li, questionTags) {
       status: statusEl.value,           // usually "completed"
       time: elapsedSeconds,
       difficulty: difficulty,
+      questionID: questionID,
       notes: note,
       userID: user.uid
     };
 
     await addDoc(
-      collection(db, "users", user.uid, "questions", questionId, "attempts"),
+      collection(db, "users", user.uid, "questions", questionID, "attempts"),
       attempt
     );
 
@@ -316,18 +317,18 @@ export async function selectQuestion(q, li, questionTags) {
     });
 
     // Clear local draft
-    localStorage.removeItem(localDraftKey(questionId));
+    localStorage.removeItem(localDraftKey(questionID));
 
     // Resets the elements
-    loadLocalDraft(questionId);
+    loadLocalDraft(questionID);
 
     // Refresh sidebar
-    await loadCompletedAttempts(questionId);
+    await loadCompletedAttempts(questionID);
   }
 
 
   // Cloud download
-  async function loadCompletedAttempts(questionId) {
+  async function loadCompletedAttempts(questionID) {
     const user = auth.currentUser;
     if(!user) {
       saveStatus.textContent = "Log in to track progress";
@@ -336,7 +337,7 @@ export async function selectQuestion(q, li, questionTags) {
     }
 
     const q = query(
-      collection(db, "users", user.uid, "questions", questionId, "attempts"),
+      collection(db, "users", user.uid, "questions", questionID, "attempts"),
       where("status", "==", "completed"),
       orderBy("createdAt", "desc")
     );
@@ -410,7 +411,7 @@ export async function selectQuestion(q, li, questionTags) {
   }
 
   // Load it at start
-  loadLocalDraft(questionId);
-  document.getElementById("commitAttempt").onclick = () => commitCompletedAttempt(questionId);
-  loadCompletedAttempts(questionId);
+  loadLocalDraft(questionID);
+  document.getElementById("commitAttempt").onclick = () => commitCompletedAttempt(questionID);
+  loadCompletedAttempts(questionID);
 }
