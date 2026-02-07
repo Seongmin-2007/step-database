@@ -6,7 +6,11 @@ import {
 import { auth, db } from "./firebase.js";
 
 auth.onAuthStateChanged(user => {
-  if (user) loadDashboard();
+  if (user) {
+    loadDashboard();
+  } else {
+    console.log("User not logged in");
+  }
 });
 
 async function loadDashboard() {
@@ -16,10 +20,12 @@ async function loadDashboard() {
     return;
   }
 
+  console.log("User ID:", user.uid);
   const attempts = [];
 
   // 1️⃣ Get all questions for this user
   const questionsSnap = await getDocs(collection(db, "users", user.uid, "questions"));
+  console.log("Questions snapshot size:", questionsSnap.size);
   for (const qDoc of questionsSnap.docs) {
     const questionId = qDoc.id;
 
@@ -34,8 +40,9 @@ async function loadDashboard() {
     });
   }
 
-  console.log(attempts.toString());
-
+  console.log("Attempts array:", attempts);
+  console.table(attempts);
+  
   // 3️⃣ Compute stats
   const stats = computeStats(attempts);
   renderStats(stats);
@@ -44,7 +51,7 @@ async function loadDashboard() {
   const priority = computePriorityList(attempts);
   renderPriorityList(priority);
 
-// 5️⃣ Render charts
+  // 5️⃣ Render charts
   renderTimeChart(attempts);
   renderDifficultyChart(attempts);
 }
