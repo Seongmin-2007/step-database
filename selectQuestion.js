@@ -169,11 +169,17 @@ export async function selectQuestion(q, li, questionTags) {
 
   function loadLocalDraft(questionId) {
     const raw = localStorage.getItem(localDraftKey(questionId));
-    if (!raw) return;
+    if (!raw) {
+      statusEl.value = "not_started";
+      difficulty = 0;
+      notesEl.value = "";
+      updateStarsUI();
+      return;
+    }
 
     const d = JSON.parse(raw);
     statusEl.value = d.status ?? "not_started";
-    difficulty = d.difficulty ?? null;
+    difficulty = d.difficulty ?? 0;
     notesEl.value = d.notes ?? "";
     updateStarsUI();
   }
@@ -215,10 +221,11 @@ export async function selectQuestion(q, li, questionTags) {
 
     // Clear local draft
     localStorage.removeItem(localDraftKey(questionId));
-    notesEl.value = "";
+
+    // Resets the elements
+    loadLocalDraft(questionId);
 
     // Refresh sidebar
-    loadLocalDraft(questionId);
     await loadCompletedAttempts(user.uid, questionId);
   }
 
@@ -273,6 +280,13 @@ export async function selectQuestion(q, li, questionTags) {
   function disableInputs(disabled) {
     [statusEl, timeEl, notesEl].forEach(el => el.disabled = disabled);
   }
+
+  function updateCommitButton() {
+    document.getElementById("commitAttempt").disabled = statusEl.value !== "completed";
+  }
+
+  statusEl.addEventListener("change", updateCommitButton);
+  updateCommitButton();
 
   // ==============================
   // SOLUTION TOGGLE
