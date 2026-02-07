@@ -4,6 +4,8 @@ let isScreensaverActive = false;
 
 // --- The Chaos Engine ---
 function startChaos(mode = "splash") {
+  if (animationId) cancelAnimationFrame(animationId);
+
   const canvas = document.getElementById("chaos-canvas");
   const ctx = canvas.getContext("2d");
   const splash = document.getElementById("splash-screen");
@@ -35,13 +37,18 @@ function startChaos(mode = "splash") {
   let hue = Math.random() * 360; // Base color
 
   for (let i = 0; i < LINE_COUNT; i++) {
+    let s = 20 * Math.random() + 80;
+    let l = 30 * Math.random() + 40;
+
     particles.push({
       // Start slightly different for butterfly effect
       x: 0.1 + (Math.random() * i * 0.005), 
       y: 0,
       z: 0,
-      // Random variation of the base color
-      color: `hsl(${hue}, ${20 * Math.random() + 80}%, ${30 * Math.random() + 40}%)` 
+      h: hue, 
+      s: s,
+      l: l,
+      color: `hsl(${hue}, ${s}%, ${l}%)`
     });
   }
 
@@ -59,10 +66,9 @@ function startChaos(mode = "splash") {
     // This makes old lines slowly fade away, preventing clutter.
     if (mode === "saver") {
       ctx.globalCompositeOperation = "source-over";
-      ctx.fillStyle = "rgba(0, 0, 0, 0.02)"; // 3% opacity black per frame
+      ctx.fillStyle = "rgba(0, 0, 0, 0.03)"; // 3% opacity black per frame
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "lighter"; // Makes overlapping lines glow
-      hue += 0.01;
     }
 
     // Run Math Loop
@@ -95,10 +101,12 @@ function startChaos(mode = "splash") {
     
     // Screensaver: Slowly shift color over time
     if(mode === "saver") {
-       particles.forEach(p => {
-           // Parse current HSL, shift hue, rebuild string (Simple version: just reassign)
-           // ideally we"d shift hue, but keeping it simple:
-       });
+        particles.forEach((p, index) => {
+            p.h = p.h + 0.1;
+            // We add (index * 5) so each line is a slightly different color 
+            // creating a "rainbow ribbon" effect rather than one solid block of color
+            p.color = `hsl(${p.h}, ${p.s}%, ${p.l}%)`; 
+        });
     }
 
     animationId = requestAnimationFrame(drawChaos);
