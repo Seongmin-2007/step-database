@@ -166,7 +166,7 @@ function renderList() {
       const qId = makeId(q).toLowerCase();
 
       const qPath = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-      const tags = (QUESTION_TAGS[qPath] || []).map(t => t.toLowerCase()); // lowercase for search
+      const tags = (questionTags[qPath] || []).map(t => t.toLowerCase()); // lowercase for search
 
       // Search matches question ID OR any tag
       return qId.includes(filter) || tags.some(t => t.includes(filter));
@@ -177,7 +177,7 @@ function renderList() {
 
       // display tags below question
       const qPath = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-      const tags = QUESTION_TAGS[qPath] || [];
+      const tags = questionTags[qPath] || [];
 
       if (tags.length) {
         const tagContainer = document.createElement("div");
