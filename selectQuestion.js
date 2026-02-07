@@ -198,7 +198,7 @@ export async function selectQuestion(q, li, questionTags) {
   function formatTime(seconds) {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
-    return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    return `${String(m).padStart(2, "0")}min ${String(s).padStart(2, "0")}sec`;
   }
 
   startBtn.addEventListener("click", () => {
@@ -258,6 +258,7 @@ export async function selectQuestion(q, li, questionTags) {
     statusEl.value = d.status ?? "not_started";
     difficulty = d.difficulty ?? 0;
     notesEl.value = d.notes ?? "";
+    elapsedSeconds = d.time ?? 0;
     timeDisplay.value = formatTime(elapsedSeconds);
     updateStarsUI();
   }
@@ -327,7 +328,7 @@ export async function selectQuestion(q, li, questionTags) {
         <div class="past-attempt">
           <div class="past-meta">
             Date: ${a.date}<br>
-            Time taken: ${(a.time ?? "N/A") + " mins"}<br>
+            Time taken: ${formatTime(a.time)}<br>
             Difficulty: ${"★".repeat(a.difficulty ?? 0)}<br>
             Notes:
           </div>
