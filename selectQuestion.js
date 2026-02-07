@@ -20,7 +20,7 @@ import {
 // ==============================
 // QUESTION SELECTION
 // ==============================
-export async function selectQuestion(q, li, qustionTags) {
+export async function selectQuestion(q, li, questionTags) {
   // Highlight selected question
   document
     .querySelectorAll("#questionList li")
