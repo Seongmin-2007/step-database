@@ -7,23 +7,10 @@ function startChaos(mode = "splash") {
   const canvas = document.getElementById("chaos-canvas");
   const ctx = canvas.getContext("2d");
   const splash = document.getElementById("splash-screen");
-  const splashText = document.getElementById("splash-text");
-  const saverHint = document.getElementById("saver-hint");
 
   // Show the container
   splash.style.display = "flex";
   splash.classList.remove("hidden");
-
-  // --- Mode Configuration ---
-  if (mode === "saver") {
-    splashText.style.display = "none"; // Hide logo
-    saverHint.classList.remove("hidden"); // Show "Click to exit"
-    isScreensaverActive = true;
-  } else {
-    splashText.style.display = "block";
-    saverHint.classList.add("hidden");
-    isScreensaverActive = false;
-  }
 
   // --- Constants ---
   const LINE_COUNT = mode === "saver" ? 15 : 10; // More lines for screensaver
