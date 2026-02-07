@@ -161,6 +161,7 @@ export async function selectQuestion(q, li, questionTags) {
       localDraftKey(questionId),
       JSON.stringify({
         status: statusEl.value,
+        time: timeEl.value,
         difficulty: difficulty,
         notes: notesEl.value
       })
@@ -172,6 +173,7 @@ export async function selectQuestion(q, li, questionTags) {
     if (!raw) {
       statusEl.value = "not_started";
       difficulty = 0;
+      timeEl.value = "";
       notesEl.value = "";
       updateStarsUI();
       return;
@@ -187,6 +189,7 @@ export async function selectQuestion(q, li, questionTags) {
   ["input", "change"].forEach(evt => {
     statusEl.addEventListener(evt, () => saveLocalDraft(questionId));
     notesEl.addEventListener(evt, () => saveLocalDraft(questionId));
+    timeEl.addEventListener(evt, () => saveLocalDraft(questionId));
   });
 
   starsEl.onclick = e => {
@@ -209,7 +212,9 @@ export async function selectQuestion(q, li, questionTags) {
     const note = notesEl.value.trim();
     const attempt = {
       createdAt: serverTimestamp(),
+      date: (new Date()).toISOString().slice(0, 10),
       status: statusEl.value,           // usually "completed"
+      time: timeEl.value,
       difficulty: difficulty,
       notes: note
     };
@@ -264,7 +269,10 @@ export async function selectQuestion(q, li, questionTags) {
       li.innerHTML = `
         <div class="past-attempt">
           <div class="past-meta">
+            Date: ${a.date}
+            Time taken: ${a.time + " mins" ?? "N/A"}
             Difficulty: ${"★".repeat(a.difficulty ?? 0)}
+            Notes: ${a.notes ?? "None"}
           </div>
           <div class="past-notes">
             ${a.notes}
