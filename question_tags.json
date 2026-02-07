@@ -1613,5 +1613,779 @@
     "Differential equations",
     "Coordinate geometry",
     "Geometry"
+  ],
+  "images/questions/2015/step2/q11.png": [
+    "Classical mechanics",
+    "Kinematics",
+    "Collisions",
+    "Conservation of energy"
+  ],
+  "images/questions/2015/step2/q10.png": [
+    "Classical Mechanics",
+    "Dynamics",
+    "Kinematics",
+    "Trigonometry"
+  ],
+  "images/questions/2015/step2/q12.png": [
+    "Probability",
+    "Stochastic processes",
+    "Game theory",
+    "Conditional probability"
+  ],
+  "images/questions/2015/step2/q13.png": [
+    "Probability",
+    "Statistics",
+    "Calculus",
+    "Optimization"
+  ],
+  "images/questions/2015/step2/q8.png": [
+    "Vector Geometry",
+    "Euclidean Geometry",
+    "Circles",
+    "Geometric Transformations"
+  ],
+  "images/questions/2015/step2/q9.png": [
+    "Rotational Mechanics",
+    "Conservation Of Energy",
+    "Trigonometry",
+    "Equilibrium"
+  ],
+  "images/questions/2015/step2/q7.png": [
+    "Coordinate Geometry",
+    "Algebra",
+    "Circle Geometry"
+  ],
+  "images/questions/2015/step2/q6.png": [
+    "Trigonometry",
+    "Integration",
+    "Calculus",
+    "Definite Integrals"
+  ],
+  "images/questions/2015/step2/q4.png": [
+    "Inverse trigonometric functions",
+    "Continuity",
+    "Graphing functions",
+    "Calculus"
+  ],
+  "images/questions/2015/step2/q5.png": [
+    "Trigonometry",
+    "Mathematical induction",
+    "Series",
+    "Geometry"
+  ],
+  "images/questions/2015/step2/q1.png": [
+    "Calculus",
+    "Inequalities",
+    "Series",
+    "Logarithmic Functions"
+  ],
+  "images/questions/2015/step2/q2.png": [
+    "Geometry",
+    "Trigonometry",
+    "Algebra"
+  ],
+  "images/questions/2015/step2/q3.png": [
+    "Combinatorics",
+    "Discrete Mathematics",
+    "Proof By Induction",
+    "Sequences And Series"
+  ],
+  "images/questions/2012/step2/q11.png": [
+    "Mechanics",
+    "Collisions",
+    "Kinetic energy",
+    "Series"
+  ],
+  "images/questions/2012/step2/q10.png": [
+    "Statics",
+    "Friction",
+    "Equilibrium",
+    "Mechanics"
+  ],
+  "images/questions/2012/step2/q12.png": [
+    "Probability",
+    "Conditional probability",
+    "Bayes' theorem",
+    "Binomial distribution"
+  ],
+  "images/questions/2012/step2/q13.png": [
+    "Probability Theory",
+    "Poisson Process",
+    "Integration",
+    "Expected Value and Variance"
+  ],
+  "images/questions/2012/step2/q8.png": [
+    "Sequences and series",
+    "Recurrence relations",
+    "Inequalities",
+    "Proof"
+  ],
+  "images/questions/2012/step2/q9.png": [
+    "Kinematics",
+    "Projectiles",
+    "Trigonometry",
+    "Inequalities"
+  ],
+  "images/questions/2012/step2/q7.png": [
+    "Vector Algebra",
+    "Euclidean Geometry",
+    "Analytic Geometry",
+    "Scalar Product"
+  ],
+  "images/questions/2012/step2/q6.png": [
+    "Geometry",
+    "Trigonometry",
+    "Algebra"
+  ],
+  "images/questions/2012/step2/q4.png": [
+    "Calculus",
+    "Series",
+    "Logarithms",
+    "Inequalities",
+    "Limits"
+  ],
+  "images/questions/2012/step2/q5.png": [
+    "Calculus",
+    "Functions",
+    "Graph sketching",
+    "Stationary points",
+    "Differentiation"
+  ],
+  "images/questions/2012/step2/q1.png": [
+    "Binomial Theorem",
+    "Power Series",
+    "Generating Functions"
+  ],
+  "images/questions/2012/step2/q2.png": [
+    "Polynomials",
+    "Functions"
+  ],
+  "images/questions/2012/step2/q3.png": [
+    "Integration",
+    "Substitution Method",
+    "Hyperbolic Functions",
+    "Trigonometric Identities",
+    "Definite Integrals"
+  ],
+  "images/questions/2013/step3/q11.png": [
+    "Mechanics",
+    "Statics",
+    "Energy Conservation",
+    "Trigonometry",
+    "Elasticity"
+  ],
+  "images/questions/2013/step3/q10.png": [
+    "Mechanics",
+    "Rotational dynamics",
+    "Moment of inertia",
+    "Collisions",
+    "Optimization"
+  ],
+  "images/questions/2013/step3/q12.png": [
+    "Probability",
+    "Statistics",
+    "Combinatorics"
+  ],
+  "images/questions/2013/step3/q13.png": [
+    "Probability",
+    "Calculus",
+    "Inequalities"
+  ],
+  "images/questions/2013/step3/q8.png": [
+    "Complex numbers",
+    "Geometry",
+    "Series",
+    "Conic sections"
+  ],
+  "images/questions/2013/step3/q9.png": [
+    "Calculus",
+    "Differential equations",
+    "Fluid mechanics",
+    "Oscillations"
+  ],
+  "images/questions/2013/step3/q7.png": [
+    "Differential Equations",
+    "Calculus",
+    "Hyperbolic Trigonometry",
+    "Inequalities"
+  ],
+  "images/questions/2013/step3/q6.png": [
+    "Complex numbers",
+    "Inequalities",
+    "Algebra"
+  ],
+  "images/questions/2013/step3/q4.png": [
+    "Complex numbers",
+    "Polynomials",
+    "Trigonometry",
+    "Roots of unity",
+    "Algebra"
+  ],
+  "images/questions/2013/step3/q5.png": [
+    "Number Theory",
+    "Prime Factorization",
+    "Divisibility",
+    "Rational And Irrational Numbers"
+  ],
+  "images/questions/2013/step3/q1.png": [
+    "Differentiation",
+    "Trigonometry",
+    "Integration",
+    "Definite Integrals",
+    "Reduction Formulae"
+  ],
+  "images/questions/2013/step3/q2.png": [
+    "Calculus",
+    "Differential Equations",
+    "Maclaurin Series",
+    "Series Expansion"
+  ],
+  "images/questions/2013/step3/q3.png": [
+    "Vectors",
+    "Geometry",
+    "Algebra",
+    "Dot Product"
+  ],
+  "images/questions/2014/step3/q11.png": [
+    "Classical mechanics",
+    "Dynamics",
+    "Circular motion",
+    "Trigonometry",
+    "Geometry"
+  ],
+  "images/questions/2014/step3/q10.png": [
+    "Differential Equations",
+    "Classical Mechanics",
+    "Simple Harmonic Motion",
+    "Dynamics"
+  ],
+  "images/questions/2014/step3/q12.png": [
+    "Probability Theory",
+    "Statistical Distributions",
+    "Calculus",
+    "Random Variables"
+  ],
+  "images/questions/2014/step3/q13.png": [
+    "Probability",
+    "Generating functions",
+    "Stochastic processes",
+    "Recurrence relations"
+  ],
+  "images/questions/2014/step3/q8.png": [
+    "Calculus",
+    "Series",
+    "Number theory",
+    "Inequalities"
+  ],
+  "images/questions/2014/step3/q9.png": [
+    "Differential Equations",
+    "Vector Calculus",
+    "Trigonometry",
+    "Hyperbolic Trigonometry"
+  ],
+  "images/questions/2014/step3/q7.png": [
+    "Geometry",
+    "Vector Algebra",
+    "Euclidean Geometry",
+    "Circle Geometry"
+  ],
+  "images/questions/2014/step3/q6.png": [
+    "Calculus",
+    "Trigonometry",
+    "Hyperbolic trigonometry",
+    "Inequalities"
+  ],
+  "images/questions/2014/step3/q4.png": [
+    "Integration",
+    "Differential Equations",
+    "Calculus",
+    "Trigonometry"
+  ],
+  "images/questions/2014/step3/q5.png": [
+    "Complex numbers",
+    "Geometry",
+    "Quadrilaterals",
+    "Squares",
+    "Parallelograms"
+  ],
+  "images/questions/2014/step3/q1.png": [
+    "Algebra",
+    "Power series",
+    "Symmetric polynomials"
+  ],
+  "images/questions/2014/step3/q2.png": [
+    "Integration",
+    "Hyperbolic trigonometry",
+    "Substitution",
+    "Definite integrals"
+  ],
+  "images/questions/2014/step3/q3.png": [
+    "Coordinate geometry",
+    "Calculus",
+    "Parabola",
+    "Distance formula",
+    "Circle"
+  ],
+  "images/questions/2015/step3/q11.png": [
+    "Rotational Mechanics",
+    "Moments",
+    "Forces",
+    "Trigonometry"
+  ],
+  "images/questions/2015/step3/q10.png": [
+    "Classical mechanics",
+    "Kinematics",
+    "Differential equations",
+    "Rigid body dynamics"
+  ],
+  "images/questions/2015/step3/q12.png": [
+    "Probability",
+    "Generating functions",
+    "Number theory"
+  ],
+  "images/questions/2015/step3/q13.png": [
+    "Probability",
+    "Statistics",
+    "Calculus",
+    "Integration",
+    "Random Variables"
+  ],
+  "images/questions/2015/step3/q8.png": [
+    "Differential Equations",
+    "Polar Coordinates",
+    "Calculus",
+    "Coordinate Geometry"
+  ],
+  "images/questions/2015/step3/q9.png": [
+    "Mechanics",
+    "Differential equations",
+    "Approximation",
+    "Integration"
+  ],
+  "images/questions/2015/step3/q7.png": [
+    "Calculus",
+    "Differential Operators",
+    "Polynomials",
+    "Combinatorics"
+  ],
+  "images/questions/2015/step3/q6.png": [
+    "Complex numbers",
+    "Polynomials",
+    "Algebra",
+    "Inequalities"
+  ],
+  "images/questions/2015/step3/q4.png": [
+    "Algebra",
+    "Complex numbers",
+    "Trigonometry"
+  ],
+  "images/questions/2015/step3/q5.png": [
+    "Number Theory",
+    "Proofs",
+    "Algebra"
+  ],
+  "images/questions/2015/step3/q1.png": [
+    "Integration",
+    "Recurrence relations",
+    "Integral calculus"
+  ],
+  "images/questions/2015/step3/q2.png": [
+    "Sequences",
+    "Big O notation",
+    "Discrete mathematics",
+    "Mathematical proof"
+  ],
+  "images/questions/2015/step3/q3.png": [
+    "Polar Coordinates",
+    "Analytic Geometry",
+    "Curve Sketching",
+    "Integration"
+  ],
+  "images/questions/2012/step3/q11.png": [
+    "Mechanics",
+    "Energy Conservation",
+    "Calculus",
+    "Dynamics"
+  ],
+  "images/questions/2012/step3/q10.png": [
+    "Classical Mechanics",
+    "Energy Conservation",
+    "Dynamics",
+    "Trigonometry"
+  ],
+  "images/questions/2012/step3/q12.png": [
+    "Probability",
+    "Statistics",
+    "Integration",
+    "Geometry"
+  ],
+  "images/questions/2012/step3/q13.png": [
+    "Probability",
+    "Statistics",
+    "Normal distribution",
+    "Expectation",
+    "Variance"
+  ],
+  "images/questions/2012/step3/q8.png": [
+    "Sequences and series",
+    "Number theory",
+    "Trigonometry"
+  ],
+  "images/questions/2012/step3/q9.png": [
+    "Rotational dynamics",
+    "Newtonian mechanics",
+    "Pulley systems",
+    "Friction"
+  ],
+  "images/questions/2012/step3/q7.png": [
+    "Differential equations",
+    "Linear algebra",
+    "Series",
+    "Initial value problems"
+  ],
+  "images/questions/2012/step3/q6.png": [
+    "Complex Numbers",
+    "Quadratic Equations",
+    "Root Locus",
+    "Analytic Geometry"
+  ],
+  "images/questions/2012/step3/q4.png": [
+    "Infinite series",
+    "Series summation",
+    "Calculus",
+    "Algebra",
+    "Exponential series"
+  ],
+  "images/questions/2012/step3/q5.png": [
+    "Number theory",
+    "Coordinate geometry",
+    "Algebra",
+    "Circles",
+    "Hyperbolas"
+  ],
+  "images/questions/2012/step3/q1.png": [
+    "Differential Equations",
+    "Calculus",
+    "Differentiation",
+    "Integration"
+  ],
+  "images/questions/2012/step3/q2.png": [
+    "Algebra",
+    "Series",
+    "Logarithms",
+    "Calculus"
+  ],
+  "images/questions/2012/step3/q3.png": [
+    "Algebra",
+    "Calculus",
+    "Coordinate geometry",
+    "Curve sketching"
+  ],
+  "images/questions/2010/step3/q11.png": [
+    "Mechanics",
+    "Kinematics",
+    "Newtonian Mechanics",
+    "Forces And Motion"
+  ],
+  "images/questions/2010/step3/q10.png": [
+    "Classical Mechanics",
+    "Trigonometry",
+    "Differential Equations",
+    "Approximation"
+  ],
+  "images/questions/2010/step3/q12.png": [
+    "Series",
+    "Probability",
+    "Expected Value",
+    "Geometric Series"
+  ],
+  "images/questions/2010/step3/q13.png": [
+    "Probability",
+    "Statistics",
+    "Random variables",
+    "Expectation",
+    "Variance"
+  ],
+  "images/questions/2010/step3/q8.png": [
+    "Calculus",
+    "Differentiation",
+    "Integration",
+    "Differential equations"
+  ],
+  "images/questions/2010/step3/q9.png": [
+    "Mechanics",
+    "Dynamics",
+    "Energy conservation",
+    "Circular motion"
+  ],
+  "images/questions/2010/step3/q7.png": [
+    "Differential Equations",
+    "Series Expansion",
+    "Differentiation",
+    "Trigonometry"
+  ],
+  "images/questions/2010/step3/q6.png": [
+    "Coordinate geometry",
+    "Rotation",
+    "Vectors",
+    "Trigonometry",
+    "Linear algebra"
+  ],
+  "images/questions/2010/step3/q4.png": [
+    "Algebra",
+    "Polynomials",
+    "Equations",
+    "Roots of unity"
+  ],
+  "images/questions/2010/step3/q5.png": [
+    "Coordinate geometry",
+    "Geometry",
+    "Straightedge construction"
+  ],
+  "images/questions/2010/step3/q1.png": [
+    "Algebra",
+    "Statistics",
+    "Inequalities"
+  ],
+  "images/questions/2010/step3/q2.png": [
+    "Hyperbolic trigonometry",
+    "Integration",
+    "Partial fractions",
+    "Improper integrals"
+  ],
+  "images/questions/2010/step3/q3.png": [
+    "Complex numbers",
+    "Polynomials",
+    "Number theory",
+    "Cyclotomic polynomials"
+  ],
+  "images/questions/2010/step2/q11.png": [
+    "Mechanics",
+    "Statics",
+    "Equilibrium",
+    "Trigonometry"
+  ],
+  "images/questions/2010/step2/q10.png": [
+    "Classical mechanics",
+    "Algebra",
+    "Logarithms",
+    "Sequences and series"
+  ],
+  "images/questions/2010/step2/q12.png": [
+    "Probability",
+    "Calculus",
+    "Statistics",
+    "Expected value",
+    "Median"
+  ],
+  "images/questions/2010/step2/q13.png": [
+    "Probability",
+    "Algebra",
+    "Inequalities"
+  ],
+  "images/questions/2010/step2/q8.png": [
+    "Calculus",
+    "Integration",
+    "Series",
+    "Trigonometry"
+  ],
+  "images/questions/2010/step2/q9.png": [
+    "Kinematics",
+    "Projectile motion",
+    "Trigonometry",
+    "Inequalities"
+  ],
+  "images/questions/2010/step2/q7.png": [
+    "Algebra",
+    "Calculus",
+    "Roots of polynomials"
+  ],
+  "images/questions/2010/step2/q6.png": [
+    "Solid geometry",
+    "Euclidean geometry",
+    "Trigonometry",
+    "Mensuration"
+  ],
+  "images/questions/2010/step2/q4.png": [
+    "Integration",
+    "Definite Integrals",
+    "Properties of Integrals",
+    "Trigonometric Functions",
+    "Logarithmic Functions"
+  ],
+  "images/questions/2010/step2/q5.png": [
+    "Vectors",
+    "Coordinate geometry",
+    "Planes and lines",
+    "3D geometry"
+  ],
+  "images/questions/2010/step2/q1.png": [
+    "Calculus",
+    "Trigonometry",
+    "Coordinate geometry",
+    "Differential geometry"
+  ],
+  "images/questions/2010/step2/q2.png": [
+    "Trigonometry",
+    "Integration",
+    "Calculus"
+  ],
+  "images/questions/2010/step2/q3.png": [
+    "Sequences and series",
+    "Algebra",
+    "Recurrence relations"
+  ],
+  "images/questions/2011/step3/q11.png": [
+    "Rigid body dynamics",
+    "Rotational equilibrium",
+    "Torque",
+    "Angular velocity"
+  ],
+  "images/questions/2011/step3/q10.png": [
+    "Mechanics",
+    "Simple harmonic motion",
+    "Elasticity",
+    "Impulse",
+    "Conservation of momentum"
+  ],
+  "images/questions/2011/step3/q12.png": [
+    "Probability",
+    "Random variables",
+    "Probability generating functions",
+    "Expected value",
+    "Variance"
+  ],
+  "images/questions/2011/step3/q13.png": [
+    "Probability",
+    "Discrete Mathematics",
+    "Statistics"
+  ],
+  "images/questions/2011/step3/q8.png": [
+    "Complex numbers",
+    "Complex analysis",
+    "Algebra",
+    "Coordinate geometry"
+  ],
+  "images/questions/2011/step3/q9.png": [
+    "Mechanics",
+    "Dynamics",
+    "Circular motion",
+    "Equilibrium"
+  ],
+  "images/questions/2011/step3/q7.png": [
+    "Algebra",
+    "Mathematical induction",
+    "Number theory",
+    "Sequences"
+  ],
+  "images/questions/2011/step3/q6.png": [
+    "Integration",
+    "Hyperbolic trigonometry",
+    "Calculus",
+    "Definite integrals",
+    "Logarithms"
+  ],
+  "images/questions/2011/step3/q4.png": [
+    "Integration",
+    "Inequalities",
+    "Calculus",
+    "Functions"
+  ],
+  "images/questions/2011/step3/q5.png": [
+    "Coordinate geometry",
+    "Parametric equations",
+    "Calculus",
+    "Integration"
+  ],
+  "images/questions/2011/step3/q1.png": [
+    "Differential Equations",
+    "First Order Differential Equations",
+    "Second Order Differential Equations",
+    "Integration"
+  ],
+  "images/questions/2011/step3/q2.png": [
+    "Algebra",
+    "Number theory",
+    "Polynomials"
+  ],
+  "images/questions/2011/step3/q3.png": [
+    "Algebra",
+    "Polynomials",
+    "Cubic equations",
+    "Complex numbers"
+  ],
+  "images/questions/2011/step2/q11.png": [
+    "Vectors",
+    "Forces",
+    "Trigonometry",
+    "Equilibrium"
+  ],
+  "images/questions/2011/step2/q10.png": [
+    "Kinematics",
+    "Projectile motion",
+    "Newtonian mechanics"
+  ],
+  "images/questions/2011/step2/q12.png": [
+    "Probability",
+    "Game theory",
+    "Algebra"
+  ],
+  "images/questions/2011/step2/q13.png": [
+    "Probability",
+    "Statistics",
+    "Calculus",
+    "Random variables"
+  ],
+  "images/questions/2011/step2/q8.png": [
+    "Calculus",
+    "Parametric equations",
+    "Area under a curve",
+    "Trigonometry"
+  ],
+  "images/questions/2011/step2/q9.png": [
+    "Mechanics",
+    "Collisions",
+    "Conservation of momentum",
+    "Coefficient of restitution"
+  ],
+  "images/questions/2011/step2/q7.png": [
+    "Sequences and Series",
+    "Summation",
+    "Number Theory",
+    "Algebra"
+  ],
+  "images/questions/2011/step2/q6.png": [
+    "Calculus",
+    "Integration",
+    "Trigonometry"
+  ],
+  "images/questions/2011/step2/q4.png": [
+    "Trigonometry",
+    "Equations",
+    "Identities"
+  ],
+  "images/questions/2011/step2/q5.png": [
+    "Vectors",
+    "Reflection",
+    "Collinearity",
+    "Dot product"
+  ],
+  "images/questions/2011/step2/q1.png": [
+    "Algebra",
+    "Coordinate geometry",
+    "Functions",
+    "Equations",
+    "Graphing"
+  ],
+  "images/questions/2011/step2/q2.png": [
+    "Algebra",
+    "Number Theory",
+    "Diophantine Equations"
+  ],
+  "images/questions/2011/step2/q3.png": [
+    "Calculus",
+    "Trigonometry",
+    "Inequalities",
+    "Differentiation"
   ]
 }
