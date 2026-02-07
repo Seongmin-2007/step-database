@@ -176,8 +176,6 @@ export async function selectQuestion(q, li, questionTags) {
 
   statusEl.addEventListener("change", updateCommitButton);
   notesEl.addEventListener("input", updateCommitButton);
-  starsEl.addEventListener("click", updateCommitButton);
-
   updateCommitButton(); // run once on load
 
 
@@ -193,6 +191,7 @@ export async function selectQuestion(q, li, questionTags) {
     const n = Number(e.target.dataset.star);
     difficulty = (difficulty === n) ? 0 : n;
     updateStarsUI();
+    updateCommitButton();
     saveLocalDraft(questionId);
   };
   
