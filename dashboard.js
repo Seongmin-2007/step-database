@@ -1,5 +1,5 @@
 import {
-  collection,
+  collectionGroup,
   query,
   where,
   orderBy,
@@ -26,7 +26,7 @@ async function loadDashboard() {
   console.log("User ID:", user.uid);
     //    But filter ONLY for this user.
   const q = query(
-    collection(db, "attempts"),
+    collectionGroup(db, "attempts"),
     where("userID", "==", user.uid),
     orderBy("createdAt", "desc") // optional: most recent first
   );
