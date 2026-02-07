@@ -137,7 +137,7 @@ window.addEventListener('load', () => {
       x: 0.1 + (Math.random() * i * 0.005), 
       y: 0,
       z: 0,
-      color: `hsl(${hue}, ${Math.random() * 0.05 * i + 0.5}%, ${30 * Math.random() + 40}%)` 
+      color: `hsl(${hue}, ${20 * Math.random() + 80}%, ${30 * Math.random() + 40}%)` 
     });
   }
 
