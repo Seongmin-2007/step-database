@@ -12,6 +12,7 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+import { notify } from "./notification.js";
 
 import {
   auth,
@@ -22,15 +23,12 @@ import {
 // QUESTION SELECTION
 // ==============================
 export async function selectQuestion(q, li, questionTags) {
-  if (timerInterval) {
-    const ok = confirm(
-      "The timer is still running. Stop and switch question?"
-    );
-    if (!ok) return;
+  notify({
+    message: "Attempt saved.",
+    type: "success",
+    timeout: 2000
+  });
 
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
 
   // Highlight selected question
   document

@@ -428,3 +428,99 @@ button:disabled {
     transform: none;
   }
 }
+
+
+
+
+
+
+/* ================================
+   NOTIFICATION SYSTEM
+   ================================ */
+
+#notifications {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+/* Base card */
+.notification {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  font-size: 13px;
+  animation: slideIn 160ms ease;
+}
+
+/* Variants */
+.notification.info {
+  border-left: 4px solid var(--accent);
+}
+
+.notification.success {
+  border-left: 4px solid #16a34a;
+}
+
+.notification.warning {
+  border-left: 4px solid #f59e0b;
+}
+
+.notification.danger {
+  border-left: 4px solid #dc2626;
+}
+
+/* Title */
+.notification-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* Message */
+.notification-message {
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Actions */
+.notification-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.notification-actions button {
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+/* Exit animation */
+.notification.closing {
+  animation: fadeOut 120ms ease forwards;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
