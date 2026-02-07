@@ -57,9 +57,10 @@ export async function selectQuestion(q, li, questionTags) {
             </select>
           </div>
 
-          <div>
-            <label>Time (min):</label>
-            <input id="time" type="number" min="0" placeholder="optional">
+          <div class="time-control">
+            <button id="startTimer">Start</button>
+            <button id="stopTimer" disabled>Stop</button>
+            <span id="timeDisplay">00:00</span>
           </div>
 
           <div>
@@ -131,11 +132,21 @@ export async function selectQuestion(q, li, questionTags) {
     placeholder.style.display = "block";
   }
 
+    // ==============================
+    // SOLUTION TOGGLE
+    // ==============================
+    const toggle = document.getElementById("toggle");
+    const solution = viewer.querySelector(".solution");
+
+    toggle.onclick = () => {
+      solution.style.display =
+        solution.style.display === "none" ? "block" : "none";
+    };
+
   // ==============================
   // PROGRESS LOGIC
   // ==============================
   const statusEl = document.getElementById("status");
-  const timeEl = document.getElementById("time");
   const notesEl = document.getElementById("notes");
   const starsEl = document.getElementById("stars");
   const saveStatus = document.getElementById("save-status");
@@ -150,47 +161,17 @@ export async function selectQuestion(q, li, questionTags) {
     });
   }
 
-
-  // Local saving
-  function localDraftKey(qid) {
-    return `draft:${qid}`;
+  function disableInputs(disabled) {
+    [statusEl, notesEl].forEach(el => el.disabled = disabled);
   }
 
-  function saveLocalDraft(questionId) {
-    localStorage.setItem(
-      localDraftKey(questionId),
-      JSON.stringify({
-        status: statusEl.value,
-        time: timeEl.value,
-        difficulty: difficulty,
-        notes: notesEl.value
-      })
-    );
-  }
-
-  function loadLocalDraft(questionId) {
-    const raw = localStorage.getItem(localDraftKey(questionId));
-    if (!raw) {
-      statusEl.value = "not_started";
-      difficulty = 0;
-      timeEl.value = "";
-      notesEl.value = "";
-      updateStarsUI();
-      updateCommitButton();
-      return;
-    }
-
-    const d = JSON.parse(raw);
-    statusEl.value = d.status ?? "not_started";
-    difficulty = d.difficulty ?? 0;
-    notesEl.value = d.notes ?? "";
-    updateStarsUI();
+  function updateCommitButton() {
+    document.getElementById("commitAttempt").disabled = statusEl.value !== "completed";
   }
 
   ["input", "change"].forEach(evt => {
     statusEl.addEventListener(evt, () => saveLocalDraft(questionId));
     notesEl.addEventListener(evt, () => saveLocalDraft(questionId));
-    timeEl.addEventListener(evt, () => saveLocalDraft(questionId));
   });
 
   starsEl.onclick = e => {
@@ -202,8 +183,85 @@ export async function selectQuestion(q, li, questionTags) {
     saveLocalDraft(questionId);
   };
 
-  loadLocalDraft(questionId);
+  statusEl.addEventListener("change", updateCommitButton);
+  updateCommitButton();
+  
+  
+  // Timer
+  let timerInterval = null;
+  let elapsedSeconds = 0;
 
+  const startBtn = document.getElementById("startTimer");
+  const stopBtn = document.getElementById("stopTimer");
+  const timeDisplay = document.getElementById("timeDisplay");
+
+  function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  }
+
+  startBtn.addEventListener("click", () => {
+    if (timerInterval) return;
+
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+
+    timerInterval = setInterval(() => {
+      elapsedSeconds++;
+      timeDisplay.textContent = formatTime(elapsedSeconds);
+    }, 1000);
+  });
+
+  stopBtn.addEventListener("click", () => {
+    clearInterval(timerInterval);
+    timerInterval = null;
+
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+  });
+
+
+
+
+  // Local saving
+  function localDraftKey(qid) {
+    return `draft:${qid}`;
+  }
+
+  function saveLocalDraft(questionId) {
+    localStorage.setItem(
+      localDraftKey(questionId),
+      JSON.stringify({
+        status: statusEl.value,
+        time: elapsedSeconds,
+        difficulty: difficulty,
+        notes: notesEl.value
+      })
+    );
+  }
+
+  function loadLocalDraft(questionId) {
+    const raw = localStorage.getItem(localDraftKey(questionId));
+    if (!raw) {
+      statusEl.value = "not_started";
+      difficulty = 0;
+      elapsedSeconds = 0;
+      timeDisplay.value = formatTime(0);
+      notesEl.value = "";
+      updateStarsUI();
+      updateCommitButton();
+      return;
+    }
+
+    const d = JSON.parse(raw);
+    statusEl.value = d.status ?? "not_started";
+    difficulty = d.difficulty ?? 0;
+    notesEl.value = d.notes ?? "";
+    timeDisplay.value = formatTime(elapsedSeconds);
+    updateStarsUI();
+  }
+  
 
   // Cloud upload
   async function commitCompletedAttempt(questionId) {
@@ -215,7 +273,7 @@ export async function selectQuestion(q, li, questionTags) {
       createdAt: serverTimestamp(),
       date: (new Date()).toISOString().slice(0, 10),
       status: statusEl.value,           // usually "completed"
-      time: timeEl.value,
+      time: elapsedSeconds,
       difficulty: difficulty,
       notes: note
     };
@@ -234,8 +292,6 @@ export async function selectQuestion(q, li, questionTags) {
     // Refresh sidebar
     await loadCompletedAttempts(questionId);
   }
-
-  document.getElementById("commitAttempt").onclick = () => commitCompletedAttempt(questionId);
 
 
   // Cloud download
@@ -281,50 +337,12 @@ export async function selectQuestion(q, li, questionTags) {
         </div>
       `;
 
-      // // Delete: permanently remove attempt
-      // li.querySelector(".delete-btn").onclick = async () => {
-      //   if (!confirm("Delete this attempt?")) return;
-
-      //   await deleteDoc(
-      //     docRef(
-      //       db,
-      //       "users",
-      //       user.uid,
-      //       "questions",
-      //       questionId,
-      //       "attempts",
-      //       attemptId
-      //     )
-      //   );
-
-      //   loadCompletedAttempts(questionId);
-      // };
-
       list.appendChild(li);
     });
   }
 
+  // Load it at start
+  loadLocalDraft(questionId);
+  document.getElementById("commitAttempt").onclick = () => commitCompletedAttempt(questionId);
   loadCompletedAttempts(questionId);
-
-  function disableInputs(disabled) {
-    [statusEl, timeEl, notesEl].forEach(el => el.disabled = disabled);
-  }
-
-  function updateCommitButton() {
-    document.getElementById("commitAttempt").disabled = statusEl.value !== "completed";
-  }
-
-  statusEl.addEventListener("change", updateCommitButton);
-  updateCommitButton();
-
-  // ==============================
-  // SOLUTION TOGGLE
-  // ==============================
-  const toggle = document.getElementById("toggle");
-  const solution = viewer.querySelector(".solution");
-
-  toggle.onclick = () => {
-    solution.style.display =
-      solution.style.display === "none" ? "block" : "none";
-  };
 }
