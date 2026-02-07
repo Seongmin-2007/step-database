@@ -66,14 +66,14 @@ function computeStats(attempts) {
   let diffCount = 0;
 
   attempts.forEach(a => {
-    attempted.add(a.questionId);
+    attempted.add(a.questionID);
 
     if (a.status === "completed") {
-      completed.add(a.questionId);
+      completed.add(a.questionID);
     }
 
-    if (a.timeSeconds) {
-      totalTime += a.timeSeconds;
+    if (a.time) {
+      totalTime += a.time;
       timeCount++;
     }
 
@@ -119,8 +119,8 @@ function computePriorityList(attempts) {
   const byQuestion = {};
 
   attempts.forEach(a => {
-    byQuestion[a.questionId] ??= [];
-    byQuestion[a.questionId].push(a);
+    byQuestion[a.questionID] ??= [];
+    byQuestion[a.questionID].push(a);
   });
 
   const priorities = [];
@@ -139,7 +139,7 @@ function computePriorityList(attempts) {
 
     if (score > 0) {
       priorities.push({
-        questionId: qid,
+        questionID: qid,
         score,
         latest
       });
@@ -160,7 +160,7 @@ function renderPriorityList(list) {
 
   list.slice(0, 10).forEach(item => {
     const li = document.createElement("li");
-    li.textContent = `${item.questionId} — priority ${item.score}`;
+    li.textContent = `${item.questionID} — Priority ${item.score}`;
     ul.appendChild(li);
   });
 }
