@@ -211,17 +211,61 @@ button {
 
 
 
-.past-attempt {
-  margin-bottom: 8px;
-  padding: 6px;
-  border-left: 3px solid #ddd;
+/* Two-column layout */
+.question-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  align-items: start;
 }
 
+/* Sidebar */
+.question-sidebar {
+  border-left: 1px solid #e5e7eb;
+  padding-left: 12px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.question-sidebar h3 {
+  margin-top: 0;
+  font-size: 1em;
+}
+
+/* List reset */
+#pastNotesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Individual attempt boxes */
+.past-attempt {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.past-attempt:hover {
+  background: #f3f4f6;
+}
+
+/* Metadata (difficulty, later date) */
 .past-meta {
   font-size: 0.75em;
-  color: #666;
+  color: #6b7280;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
 }
 
+/* Notes text */
 .past-notes {
   font-size: 0.85em;
+  color: #111827;
+  line-height: 1.3;
 }
