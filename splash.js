@@ -62,6 +62,7 @@ function startChaos(mode = "splash") {
       ctx.fillStyle = "rgba(0, 0, 0, 0.02)"; // 3% opacity black per frame
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "lighter"; // Makes overlapping lines glow
+      hue += 0.01;
     }
 
     // Run Math Loop
