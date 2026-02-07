@@ -434,20 +434,19 @@ button:disabled {
 
 
 
-/* --- Background & Container --- */
+/* --- The Void Background --- */
 #splash-screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  /* Elegant dark gradient */
-  background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+  background-color: #050505; /* Pure black is too harsh, use 'Almost Black' */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  transition: opacity 0.8s ease-in-out, visibility 0.8s;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s;
 }
 
 #splash-screen.hidden {
@@ -456,56 +455,85 @@ button:disabled {
 }
 
 .splash-container {
-  text-align: center;
+  position: relative;
+  width: 300px;
+  height: 300px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
+/* --- The Spiral Animation --- */
+.fibonacci-svg {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+}
+
+.spiral-path {
+  stroke-dasharray: 180; /* Length of the curve */
+  stroke-dashoffset: 180; /* Hidden initially */
+  animation: 
+    drawSpiral 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards,
+    rotateSpiral 10s linear infinite;
+  opacity: 0.9;
+}
+
 /* --- Typography --- */
-.splash-title {
-  font-family: 'Playfair Display', 'Times New Roman', serif;
-  color: #ffffff;
+.text-container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 20px; /* Adjust based on optical centering */
+}
+
+.elegant-title {
+  font-family: 'Didot', 'Playfair Display', serif; /* High-fashion serif */
+  color: #fff;
   font-size: 2.5rem;
-  letter-spacing: 3px;
-  margin-top: 15px;
+  letter-spacing: 0.3em; /* WIDE spacing = Luxury */
+  margin: 0;
+  font-weight: 400;
   opacity: 0;
-  /* Slide up and fade in */
-  animation: fadeUp 1s ease-out 1s forwards; 
+  transform: translateY(10px);
+  animation: fadeUp 1.5s ease-out 1.5s forwards; /* Delays until spiral is half drawn */
 }
 
-.splash-subtitle {
-  font-family: 'Helvetica Neue', sans-serif;
-  color: #888;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  opacity: 0;
-  animation: fadeUp 1s ease-out 1.3s forwards;
+.thin {
+  font-weight: 100;
+  color: #a8a8a8;
 }
 
-/* --- Drawing Animations --- */
-.draw-circle {
-  stroke-dasharray: 283; /* 2 * pi * 45 */
-  stroke-dashoffset: 283;
-  /* Rotated -90deg so it starts at the top */
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-  animation: drawStroke 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+/* --- The Loading Line --- */
+.loading-line {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #bf953f, transparent);
+  margin: 15px auto 0;
+  opacity: 0.5;
+  animation: expandLine 2s ease-out 2s forwards;
 }
 
-.draw-integral {
-  stroke-dasharray: 100; /* Approximate length of the line */
-  stroke-dashoffset: 100; /* Hide line initially */
-  /* Starts drawing after 0.5s delay */
-  animation: drawStroke 1.5s ease-out 0.5s forwards; 
+/* --- Animations --- */
+@keyframes drawSpiral {
+  0% { stroke-dashoffset: 180; }
+  100% { stroke-dashoffset: 0; }
 }
 
-@keyframes drawStroke {
-  to { stroke-dashoffset: 0; }
+@keyframes rotateSpiral {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(5deg); } /* Very subtle rotation */
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes expandLine {
+  to { width: 60px; }
 }
