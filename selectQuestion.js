@@ -166,8 +166,19 @@ export async function selectQuestion(q, li, questionTags) {
   }
 
   function updateCommitButton() {
-    document.getElementById("commitAttempt").disabled = statusEl.value !== "completed";
+    const btn = document.getElementById("commitAttempt");
+
+    const valid = statusEl.value === "completed" && difficulty > 0;
+    btn.disabled = !valid;
   }
+
+  statusEl.addEventListener("change", updateCommitButton);
+  notesEl.addEventListener("input", updateCommitButton);
+  starsEl.addEventListener("click", updateCommitButton);
+
+  updateCommitButton(); // run once on load
+
+
 
   ["input", "change"].forEach(evt => {
     statusEl.addEventListener(evt, () => saveLocalDraft(questionId));
@@ -182,9 +193,6 @@ export async function selectQuestion(q, li, questionTags) {
     updateStarsUI();
     saveLocalDraft(questionId);
   };
-
-  statusEl.addEventListener("change", updateCommitButton);
-  updateCommitButton();
   
   
   // Timer
@@ -248,7 +256,7 @@ export async function selectQuestion(q, li, questionTags) {
       statusEl.value = "not_started";
       difficulty = 0;
       elapsedSeconds = 0;
-      timeDisplay.value = formatTime(0);
+      timeDisplay.textContent = formatTime(0);
       notesEl.value = "";
       updateStarsUI();
       updateCommitButton();
@@ -260,7 +268,7 @@ export async function selectQuestion(q, li, questionTags) {
     difficulty = d.difficulty ?? 0;
     notesEl.value = d.notes ?? "";
     elapsedSeconds = d.time ?? 0;
-    timeDisplay.value = formatTime(elapsedSeconds);
+    timeDisplay.textContent = formatTime(elapsedSeconds);
     updateStarsUI();
   }
   
@@ -269,6 +277,13 @@ export async function selectQuestion(q, li, questionTags) {
   async function commitCompletedAttempt(questionId) {
     const user = auth.currentUser;
     if (!user) return;
+
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+    }
 
     const note = notesEl.value.trim();
     const attempt = {
@@ -344,7 +359,8 @@ export async function selectQuestion(q, li, questionTags) {
       // Delete button
       const deleteBtn = li.querySelector(".delete-attempt");
       let armed = false;
-
+      let armTimeout = null;
+      
       deleteBtn.addEventListener("click", async () => {
         if (!armed) {
           armed = true;
@@ -352,7 +368,7 @@ export async function selectQuestion(q, li, questionTags) {
           deleteBtn.textContent = "×"; // keep symbol clean
 
           // auto-cancel if user hesitates
-          setTimeout(() => {
+          armTimeout = setTimeout(() => {
             armed = false;
             deleteBtn.classList.remove("confirm");
           }, 2000);
