@@ -42,7 +42,7 @@ function startChaos(mode = "splash") {
 
     particles.push({
       // Start slightly different for butterfly effect
-      x: 0.1 + (Math.random() * i * 0.005), 
+      x: 0.1 + (Math.random() * 0.005), 
       y: 0,
       z: 25,
       h: hue, 
@@ -66,7 +66,7 @@ function startChaos(mode = "splash") {
     // This makes old lines slowly fade away, preventing clutter.
     if (mode === "saver") {
       ctx.globalCompositeOperation = "source-over";
-      if (Math.random() < 0.05) { 
+      if (Math.random() < 0.03) { 
         ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Hard wipe 10% of the time
       } else {
         ctx.fillStyle = "rgba(0, 0, 0, 0.02)"; // Soft fade 90% of the time
