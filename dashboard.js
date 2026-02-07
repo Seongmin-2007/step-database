@@ -10,20 +10,39 @@ auth.onAuthStateChanged(user => {
 });
 
 async function loadDashboard() {
-  const snap = await getDocs(collectionGroup(db, "attempts"));
+  const user = auth.currentUser;
+  if (!user) {
+    console.log("Not logged in");
+    return;
+  }
 
-  const attempts = snap.docs.map(d => ({
-    id: d.id,
-    questionId: d.ref.parent.parent.id,
-    ...d.data()
-  }));
+  const attempts = [];
 
+  // 1️⃣ Get all questions for this user
+  const questionsSnap = await getDocs(collection(db, "users", user.uid, "questions"));
+  for (const qDoc of questionsSnap.docs) {
+    const questionId = qDoc.id;
+
+    // 2️⃣ Get all attempts under each question
+    const attemptsSnap = await getDocs(collection(qDoc.ref, "attempts"));
+    attemptsSnap.docs.forEach(aDoc => {
+      attempts.push({
+        id: aDoc.id,
+        questionId,
+        ...aDoc.data()
+      });
+    });
+  }
+
+  // 3️⃣ Compute stats
   const stats = computeStats(attempts);
   renderStats(stats);
 
+  // 4️⃣ Compute priority list
   const priority = computePriorityList(attempts);
   renderPriorityList(priority);
 
+// 5️⃣ Render charts
   renderTimeChart(attempts);
   renderDifficultyChart(attempts);
 }
