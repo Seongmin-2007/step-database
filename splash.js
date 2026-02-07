@@ -19,7 +19,7 @@ window.addEventListener('load', () => {
   const beta = 8/3;
 
   // Time step
-  const dt = 0.01;
+  const dt = 0.001;
 
   // Visuals
   // Random starting color (0-360 hue)
