@@ -327,6 +327,8 @@ export async function selectQuestion(q, li, questionTags) {
       const li = document.createElement("li");
       li.innerHTML = `
         <div class="past-attempt">
+          <div class="delete-attempt" title="Delete">×</div>
+          
           <div class="past-meta">
             Date: ${a.date}<br>
             Time taken: ${a.time == 0 ? "N/A" : formatTime(a.time)}<br>
@@ -338,6 +340,49 @@ export async function selectQuestion(q, li, questionTags) {
           </div>
         </div>
       `;
+      
+      // Delete button
+      const deleteBtn = li.querySelector(".delete-attempt");
+      let armed = false;
+
+      deleteBtn.addEventListener("click", async () => {
+        if (!armed) {
+          armed = true;
+          deleteBtn.classList.add("confirm");
+          deleteBtn.textContent = "×"; // keep symbol clean
+
+          // auto-cancel if user hesitates
+          setTimeout(() => {
+            armed = false;
+            deleteBtn.classList.remove("confirm");
+          }, 2000);
+
+          return;
+        }
+
+        clearTimeout(armTimeout);
+
+        try {
+          await deleteDoc(
+            docRef(
+              db,
+              "users",
+              user.uid,
+              "questions",
+              questionId,
+              "attempts",
+              d.id   // ← Firestore document ID
+            )
+          );
+
+          // Remove from UI
+          li.remove();
+        } catch (err) {
+          console.error("Failed to delete attempt:", err);
+          deleteBtn.classList.remove("confirm");
+          armed = false;
+        }
+      });
 
       list.appendChild(li);
     });

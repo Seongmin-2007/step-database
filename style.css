@@ -343,6 +343,31 @@ button:active {
     transform var(--transition),
     box-shadow var(--transition),
     background var(--transition);
+  position: relative;
+}
+
+/* The × icon */
+.delete-attempt {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: #9ca3af; /* neutral gray */
+  user-select: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.delete-attempt:hover {
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+/* Armed state (after first click) */
+.delete-attempt.confirm {
+  color: #ef4444;
+  font-weight: 600;
 }
 
 .past-attempt:hover {
