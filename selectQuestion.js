@@ -231,7 +231,7 @@ export async function selectQuestion(q, li, questionTags) {
     loadLocalDraft(questionId);
 
     // Refresh sidebar
-    await loadCompletedAttempts(user.uid, questionId);
+    await loadCompletedAttempts(questionId);
   }
 
   document.getElementById("commitAttempt").onclick = () => commitCompletedAttempt(questionId);
