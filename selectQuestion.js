@@ -269,9 +269,13 @@ export async function selectQuestion(q, li, questionTags) {
       const li = document.createElement("li");
       li.innerHTML = `
         <div class="past-attempt">
+          // <div class="past-actions">
+          //   <button class="btn btn-danger delete-btn">×</button>
+          // </div>
+        
           <div class="past-meta">
             Date: ${a.date}<br>
-            Time taken: ${a.time + " mins" ?? "N/A"}<br>
+            Time taken: ${(a.time ?? "N/A") + " mins"}<br>
             Difficulty: ${"★".repeat(a.difficulty ?? 0)}<br>
             Notes:
           </div>
@@ -280,6 +284,26 @@ export async function selectQuestion(q, li, questionTags) {
           </div>
         </div>
       `;
+
+      // // Delete: permanently remove attempt
+      // li.querySelector(".delete-btn").onclick = async () => {
+      //   if (!confirm("Delete this attempt?")) return;
+
+      //   await deleteDoc(
+      //     docRef(
+      //       db,
+      //       "users",
+      //       user.uid,
+      //       "questions",
+      //       questionId,
+      //       "attempts",
+      //       attemptId
+      //     )
+      //   );
+
+      //   loadCompletedAttempts(questionId);
+      // };
+
       list.appendChild(li);
     });
   }

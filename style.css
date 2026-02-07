@@ -1,36 +1,78 @@
+/* ================================
+   THEME VARIABLES
+   ================================ */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --border: #e5e7eb;
+  --muted: #6b7280;
+  --text: #111827;
+
+  --accent: #2563eb;
+  --accent-soft: #dbeafe;
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow: 0 6px 16px rgba(0,0,0,0.08);
+
+  --transition: 140ms ease;
+}
+
+/* ================================
+   GLOBAL RESET
+   ================================ */
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: #f5f5f5;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* ================================
+   APP LAYOUT
+   ================================ */
 .layout {
   display: flex;
   height: 100vh;
 }
 
-/* Sidebar */
+/* ================================
+   LEFT SIDEBAR
+   ================================ */
 .sidebar {
   width: 300px;
-  background: #ffffff;
-  border-right: 1px solid #ddd;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
   padding: 1rem;
   overflow-y: auto;
 }
 
 .sidebar h2 {
   margin-top: 0;
+  font-size: 1.1rem;
 }
 
 #search {
   width: 100%;
-  padding: 0.5rem;
+  padding: 8px 10px;
   margin-bottom: 1rem;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
 }
 
 #questionList {
@@ -40,24 +82,30 @@ body {
 }
 
 #questionList li {
-  padding: 0.5rem;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  border-radius: 4px;
+  transition: background var(--transition);
 }
 
 #questionList li:hover {
-  background: #eee;
+  background: #f1f5f9;
 }
 
 #questionList li.active {
-  background: #dbeafe;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 500;
 }
 
-/* Main content */
+/* ================================
+   MAIN CONTENT
+   ================================ */
 .content {
   flex: 1;
   padding: 1.5rem;
   overflow-y: auto;
+  animation: fadeIn 160ms ease;
 }
 
 img {
@@ -66,68 +114,146 @@ img {
   margin: 1rem 0;
 }
 
-button {
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
+/* ================================
+   PROGRESS PANEL (CARD)
+   ================================ */
+.progress-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin: 16px 0;
+  box-shadow: var(--shadow-sm);
+  font-size: 13px;
+}
+
+.progress-panel > div {
+  margin-bottom: 10px;
+}
+
+.progress-panel label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.progress-panel input,
+.progress-panel select,
+.progress-panel textarea {
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.progress-panel textarea {
+  resize: vertical;
+}
+
+/* ================================
+   STARS
+   ================================ */
+.stars span {
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform var(--transition), color var(--transition);
+}
+
+.stars span:hover {
+  transform: scale(1.15);
+}
+
+.stars span.active {
+  color: #facc15;
+}
+
+/* ================================
+   TAGS
+   ================================ */
+.tag-container {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-chip {
+  background: #eef2ff;
+  color: #3730a3;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  transition: background var(--transition), transform var(--transition);
   cursor: pointer;
 }
 
+.tag-chip:hover {
+  background: #e0e7ff;
+  transform: translateY(-1px);
+}
+
+/* ================================
+   BUTTONS
+   ================================ */
+button {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+button:hover {
+  background: #f1f5f9;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* ================================
+   SOLUTION
+   ================================ */
 .solution {
   margin-top: 1rem;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--border);
   padding-top: 1rem;
 }
 
 .placeholder {
-  color: #777;
+  color: var(--muted);
   font-style: italic;
 }
 
-
-
-
-
-
-
+/* ================================
+   TOP BAR / AUTH
+   ================================ */
 .topbar {
   display: flex;
   justify-content: flex-end;
   padding: 10px 16px;
 }
 
-#auth-buttons button {
-  margin-left: 8px;
-  padding: 6px 12px;
-  cursor: pointer;
-}
-
 .profile-circle {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: none;
+  border: 1px solid var(--border);
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
 }
 
-.dropdown {
-  position: absolute;
-  right: 0;
-  top: 42px;
-  background: white;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.dropdown button {
-  padding: 8px 12px;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
+/* ================================
+   MODALS
+   ================================ */
 .modal {
   position: fixed;
   inset: 0;
@@ -138,93 +264,37 @@ button {
 }
 
 .modal-content {
-  background: white;
+  background: var(--panel);
   padding: 16px;
   width: 300px;
-  border-radius: 6px;
+  border-radius: var(--radius);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .hidden {
   display: none;
 }
 
-
-
-
-
-.progress-panel {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 12px 0;
-  font-size: 14px;
-}
-
-.progress-panel label {
-  display: inline-block;
-  width: 120px;
-}
-
-.progress-panel > div {
-  margin-bottom: 8px;
-}
-
-.stars span {
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.stars span.active {
-  color: gold;
-}
-
-.save-status {
-  font-size: 12px;
-  color: #666;
-}
-
-
-
-
-.tag-container {
-  margin-top: 4px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
-.tag-chip {
-  background: #eef2ff;
-  color: #3730a3;
-  padding: 2px 6px;
-  border-radius: 6px;
-  font-size: 0.75em;
-  cursor: pointer;
-  user-select: none;
-}
-
-.tag-chip:hover {
-  background: #e0e7ff;
-}
-
-
-
-/* Two-column layout */
+/* ================================
+   QUESTION TWO-COLUMN LAYOUT
+   ================================ */
 .question-layout {
   display: grid;
   grid-template-columns: 1fr 320px;
-  gap: 16px;
-  align-items: start;
+  gap: 20px;
 }
 
-/* Sidebar */
+/* ================================
+   RIGHT SIDEBAR (PAST ATTEMPTS)
+   ================================ */
 .question-sidebar {
-  border-left: 1px solid #e5e7eb;
-  padding-left: 12px;
+  border-left: 1px solid var(--border);
+  padding-left: 16px;
   max-height: 80vh;
   overflow-y: auto;
+  animation: fadeIn 160ms ease;
 }
 
 .question-sidebar h3 {
@@ -232,40 +302,58 @@ button {
   font-size: 1em;
 }
 
-/* List reset */
+/* ================================
+   PAST ATTEMPT BOXES
+   ================================ */
 #pastNotesList {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
-/* Individual attempt boxes */
 .past-attempt {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    background var(--transition);
 }
 
 .past-attempt:hover {
-  background: #f3f4f6;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  background: #fafafa;
 }
 
-/* Metadata (difficulty, later date) */
 .past-meta {
-  font-size: 0.75em;
-  color: #6b7280;
-  margin-bottom: 4px;
-  letter-spacing: 0.5px;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  line-height: 1.4;
 }
 
-/* Notes text */
 .past-notes {
-  font-size: 0.85em;
-  color: #111827;
-  line-height: 1.3;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ================================
+   ANIMATIONS
+   ================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
