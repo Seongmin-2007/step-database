@@ -434,19 +434,20 @@ button:disabled {
 
 
 
-/* --- The Void Background --- */
+/* --- Chaos Container --- */
 #splash-screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: #050505; /* Pure black is too harsh, use 'Almost Black' */
+  background-color: #000; /* Pure Void */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s;
+  transition: opacity 1s ease-out, visibility 1s;
+  overflow: hidden;
 }
 
 #splash-screen.hidden {
@@ -454,86 +455,55 @@ button:disabled {
   visibility: hidden;
 }
 
-.splash-container {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* --- The Spiral Animation --- */
-.fibonacci-svg {
-  width: 250px;
-  height: 250px;
+/* --- The Drawing Canvas --- */
+#chaos-canvas {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  overflow: visible;
-}
-
-.spiral-path {
-  stroke-dasharray: 180; /* Length of the curve */
-  stroke-dashoffset: 180; /* Hidden initially */
-  animation: 
-    drawSpiral 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards,
-    rotateSpiral 10s linear infinite;
-  opacity: 0.9;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
 }
 
 /* --- Typography --- */
-.text-container {
+.chaos-text-container {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   text-align: center;
-  margin-top: 20px; /* Adjust based on optical centering */
+  /* subtle glass effect */
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px 40px;
+  border-radius: 10px;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.elegant-title {
-  font-family: 'Didot', 'Playfair Display', serif; /* High-fashion serif */
+.chaos-title {
+  font-family: 'Courier New', Courier, monospace; /* Monospace = Code/Math */
   color: #fff;
-  font-size: 2.5rem;
-  letter-spacing: 0.3em; /* WIDE spacing = Luxury */
+  font-size: 3rem;
+  letter-spacing: 0.2em;
   margin: 0;
-  font-weight: 400;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp 1.5s ease-out 1.5s forwards; /* Delays until spiral is half drawn */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  animation: flicker 3s infinite alternate;
 }
 
-.thin {
-  font-weight: 100;
-  color: #a8a8a8;
+.chaos-highlight {
+  color: #00ffcc; /* Cyberpunk Teal */
+  font-weight: bold;
 }
 
-/* --- The Loading Line --- */
-.loading-line {
-  width: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #bf953f, transparent);
-  margin: 15px auto 0;
-  opacity: 0.5;
-  animation: expandLine 2s ease-out 2s forwards;
+.chaos-subtitle {
+  color: #888;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-/* --- Animations --- */
-@keyframes drawSpiral {
-  0% { stroke-dashoffset: 180; }
-  100% { stroke-dashoffset: 0; }
-}
-
-@keyframes rotateSpiral {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(5deg); } /* Very subtle rotation */
-}
-
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes expandLine {
-  to { width: 60px; }
+@keyframes flicker {
+  0% { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+  50% { opacity: 0.8; text-shadow: 0 0 5px rgba(255,255,255,0.2); }
+  100% { opacity: 1; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
 }
