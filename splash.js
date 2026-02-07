@@ -66,7 +66,7 @@ function startChaos(mode = "splash") {
     // This makes old lines slowly fade away, preventing clutter.
     if (mode === "saver") {
       ctx.globalCompositeOperation = "source-over";
-      if (Math.random() < 0.1) { 
+      if (Math.random() < 0.05) { 
         ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Hard wipe 10% of the time
       } else {
         ctx.fillStyle = "rgba(0, 0, 0, 0.02)"; // Soft fade 90% of the time
