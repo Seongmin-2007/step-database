@@ -16,7 +16,7 @@ fetch("build.json", { cache: "no-store" })
     });
 
 
-import { loadQuestion } from "./viewer.js";
+import { loadQuestion } from "./viewer/index.js";
 
 const profileBtn = document.getElementById("profile-btn");
 const dashboardBtn = document.getElementById("open-dashboard");
