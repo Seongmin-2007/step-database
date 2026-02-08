@@ -45,7 +45,10 @@ singupSubmitBtn.onclick = async () => {
         );
         signupModal.classList.add("hidden");
     } catch (e) {
-        notify(e.message, "warning");
+        notify({
+            message: e.message,
+            type: "warning"
+        });
     }
 };
 
@@ -59,14 +62,21 @@ loginSubmitBtn.onclick = async () => {
         );
         loginModal.classList.add("hidden");
     } catch (e) {
-        notify(e.message, "warning");
+        notify({
+            message: e.message,
+            type: "warning"
+        });
     }
 };
 
 // --- Logout ---
 logoutBtn.onclick = async () => {
     await signOut(auth);
-    notify("Logged out!");
+    notify({
+        message: "Logged out!",
+        type: "success",
+        timeout: 1500
+    });
     window.location.reload();
 };
 

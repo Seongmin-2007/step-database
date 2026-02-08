@@ -9,8 +9,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 import { createAttemptCard, notify } from "./ui.js";
-
+import { formatTime } from "./utils.js";
 import { auth, db } from "./config.js";
+import { onUserChange } from "./authState.js";
+
+let unsubscribeAuth = null;
 
 export async function loadQuestion(q, tags, li) {
     const viewer = document.getElementById("viewer");
@@ -178,7 +181,11 @@ export async function loadQuestion(q, tags, li) {
     notesEl.addEventListener("input", () => saveLocalDraft(questionID));
     notesEl.addEventListener("change", () => saveLocalDraft(questionID));
 
-    auth.onAuthStateChanged(user => {
+    if (unsubscribeAuth) {
+        unsubscribeAuth();
+    }
+
+    unsubscribeAuth = onUserChange(user => {
         disableInputs(!user);
     });
 
@@ -189,12 +196,6 @@ export async function loadQuestion(q, tags, li) {
     const startButton = document.getElementById("start-timer");
     const stopButton = document.getElementById("stop-timer");
     const timeDisplay = document.getElementById("time-display");
-
-    function formatTime(seconds) {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${String(m).padStart(2, "0")}min ${String(s).padStart(2, "0")}sec`;
-    }
 
     startButton.addEventListener("click", () => {
         if (timerInterval) return;

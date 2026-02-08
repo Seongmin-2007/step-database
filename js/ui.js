@@ -1,5 +1,5 @@
 import { formatTime, firebaseTimeToDate } from "./utils.js";
-import { getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 export function createAttemptCard(doc) {
     const data = doc.data();
@@ -43,7 +43,7 @@ export function createAttemptCard(doc) {
         // If second time clicking
         clearTimeout(armTimeout);
         try {
-            await getDoc(doc.ref);
+            await deleteDoc(doc.ref);
             attemptCard.remove();
         } catch (err) {
             notify({
@@ -75,8 +75,8 @@ export function notify({
     container.appendChild(notification);
 
     function close() {
-        el.classList.add("closing");
-        setTimeout(() => el.remove(), 120);
+        notification.classList.add("closing");
+        setTimeout(() => notification.remove(), 120);
     }
 
     if (timeout) {
