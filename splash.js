@@ -124,10 +124,10 @@ function startChaos(mode = "splash") {
 
   // --- Exit Logic ---
   if (mode === "splash") {
-    // Auto-exit after 5.5s
+    // Auto-exit after 3.5s
     setTimeout(() => {
       stopChaos();
-    }, 5500);
+    }, 3500);
   } else {
     // Click to exit screensaver
     splash.onclick = () => {

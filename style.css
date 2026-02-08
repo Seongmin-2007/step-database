@@ -1,59 +1,62 @@
 /* ================================
-   1. THEME VARIABLES & RESET
+   1. THEME VARIABLES
    ================================ */
 :root {
-  /* Nuanced Neutral Palette */
-  --bg: #f8fafc;           /* Very light cool gray */
+  /* Palette: Cool Grays & Academic Blue */
+  --bg: #f3f4f6;           /* Slightly cooler background */
   --panel: #ffffff;
-  --border: #e2e8f0;       /* Subtle border */
-  --text-main: #0f172a;    /* Deep dark blue-black */
-  --text-muted: #64748b;   /* Readable gray */
+  --border: #e5e7eb;
+  --text: #111827;         /* High contrast main text */
+  --muted: #6b7280;        /* Readable secondary text */
 
-  /* Accent Colors (Academic Blue) */
-  --accent: #2563eb;
+  /* Actions */
+  --accent: #2563eb;       /* Primary Blue */
   --accent-hover: #1d4ed8;
-  --accent-soft: #eff6ff;
+  --accent-soft: #eff6ff;  /* Light blue bg for active states */
   --accent-text: #1e40af;
 
-  /* State Colors */
+  /* Status Colors */
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
 
-  /* Radius & Spacing */
+  /* Shape & Depth */
   --radius-sm: 6px;
-  --radius: 12px;          /* Slightly more rounded for modern feel */
-  --radius-lg: 16px;
+  --radius: 12px;          /* Standard card radius */
+  --radius-lg: 16px;       /* Large container radius */
 
-  /* Depth */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  /* Shadows (Depth System) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 
-  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ================================
+   2. GLOBAL RESET & TYPOGRAPHY
+   ================================ */
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: var(--bg);
-  color: var(--text-main);
+  color: var(--text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
-  margin: 0 0 0.5em 0;
+h1, h2, h3 {
+  margin: 0 0 0.5em;
   font-weight: 600;
-  letter-spacing: -0.025em; /* Tighter headings look more modern */
+  letter-spacing: -0.025em;
 }
 
-a { text-decoration: none; color: inherit; }
+button, input, select, textarea { font-family: inherit; }
 
 /* ================================
-   2. APP LAYOUT (Sidebar + Main)
+   3. APP LAYOUT
    ================================ */
 .layout {
   display: flex;
@@ -61,41 +64,41 @@ a { text-decoration: none; color: inherit; }
   overflow: hidden;
 }
 
-/* Sidebar styling */
+/* Sidebar */
 .sidebar {
-  width: 280px;
+  width: 320px;
   background: var(--panel);
   border-right: 1px solid var(--border);
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  padding: 1.25rem;
   z-index: 10;
 }
 
 .sidebar h2 {
-  font-size: 1rem;
-  color: var(--text-muted);
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  color: var(--muted);
   margin-bottom: 1rem;
 }
 
-/* Search Input */
+/* Search */
 #search {
   width: 100%;
   padding: 10px 12px;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--bg);
   transition: var(--transition);
-  outline: none;
 }
 #search:focus {
+  outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent-soft);
   background: var(--panel);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 /* Question List */
@@ -104,7 +107,7 @@ a { text-decoration: none; color: inherit; }
   padding: 0;
   margin: 0;
   overflow-y: auto;
-  flex: 1; /* Fills remaining height */
+  flex: 1;
 }
 
 #questionList li {
@@ -113,41 +116,39 @@ a { text-decoration: none; color: inherit; }
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 0.95rem;
-  color: var(--text-muted);
+  color: var(--muted);
   transition: var(--transition);
   border: 1px solid transparent;
 }
 
 #questionList li:hover {
   background: var(--bg);
-  color: var(--text-main);
+  color: var(--text);
 }
 
 #questionList li.active {
   background: var(--accent-soft);
   color: var(--accent-text);
   font-weight: 500;
-  border-color: rgba(37, 99, 235, 0.1);
+  border-color: rgba(37, 99, 235, 0.15);
 }
 
-/* Main Content Area */
+/* Main Content */
 .content {
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
-  max-width: 1200px; /* Prevent lines getting too long */
-  margin: 0 auto;
-  width: 100%;
+  position: relative;
 }
 
 /* ================================
-   3. DASHBOARD (New & Overhauled)
+   4. DASHBOARD PAGE (Overhauled)
    ================================ */
 .dashboard-layout {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem;
-  animation: fadeIn 0.4s ease-out;
+  padding-bottom: 4rem;
+  animation: fadeIn 300ms ease-out;
 }
 
 .dashboard-header {
@@ -156,206 +157,139 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   margin-bottom: 2rem;
 }
+.dashboard-header h1 { font-size: 1.75rem; color: var(--text); }
 
-.dashboard-header h1 {
-  font-size: 1.8rem;
-  color: var(--text-main);
-}
-
-/* Generic Section Styles */
-.dashboard-section {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: var(--shadow-sm);
-}
-
-.dashboard-section h2 {
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  color: var(--text-main);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Stat Grid (4 Cards at top) */
+/* The Grid for Stats */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
+/* Generic White Card Container */
+.dashboard-section, 
 .dashboard-card {
   background: var(--panel);
-  padding: 1.5rem;
-  border-radius: var(--radius);
   border: 1px solid var(--border);
+  border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Stat Cards Specifics */
+.dashboard-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: transform 0.2s ease;
 }
-
 .dashboard-card:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow);
 }
 
-/* Generated via JS, but styling the contents here */
+/* Content inside Stat Cards (generated by JS) */
 .stat-value {
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 700;
-  color: var(--text-main);
-  line-height: 1.1;
-  margin-bottom: 4px;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 0.25rem;
 }
 .stat-label {
   font-size: 0.85rem;
-  color: var(--text-muted);
   font-weight: 500;
+  color: var(--muted);
 }
 
-/* Split View (Priority & Recent) */
+/* Split Layout (Priority | Recent) */
 .dashboard-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-@media (max-width: 768px) {
-  .dashboard-split { grid-template-columns: 1fr; }
-}
-
-/* Lists in Dashboard */
-.dashboard-split ul {
-  list-style: none;
+  gap: 1.5rem;
+  background: transparent; /* Remove container bg for split */
+  border: none;
+  box-shadow: none;
   padding: 0;
-  margin: 0;
+}
+.dashboard-split > div {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
 }
 
+/* Dashboard Lists */
+.dashboard-split ul { list-style: none; padding: 0; margin: 0; }
 .dashboard-split li {
-  padding: 10px 0;
+  padding: 12px 0;
   border-bottom: 1px solid var(--border);
   font-size: 0.95rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   cursor: pointer;
+  transition: color 0.15s;
 }
 .dashboard-split li:last-child { border-bottom: none; }
 .dashboard-split li:hover { color: var(--accent); }
 
-/* Heatmap Container */
+/* Charts */
+.dashboard-section canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 300px;
+}
+
+/* Heatmap Grid */
 #heatmap {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  /* Github style grid logic handled by JS generally, 
-     but visual styling for cells: */
 }
 .heat-day {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-  background-color: #ebedf0;
-}
-/* Intensity levels */
-.heat-0 { background-color: #ebedf0; }
-.heat-1 { background-color: #9be9a8; }
-.heat-2 { background-color: #40c463; }
-.heat-3 { background-color: #30a14e; }
-.heat-4 { background-color: #216e39; }
-
-/* Charts */
-canvas {
-  width: 100% !important; /* Force responsive canvas */
-  height: auto !important;
-}
-
-/* ================================
-   4. UI COMPONENTS (Buttons, Inputs)
-   ================================ */
-button {
-  background: var(--panel);
-  color: var(--text-main);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 8px 16px;
-  font-weight: 500;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-button:hover {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
   background: #f1f5f9;
-  border-color: #cbd5e1;
 }
-
-button.primary {
-  background: var(--accent);
-  color: white;
-  border: 1px solid var(--accent);
-}
-
-button.primary:hover {
-  background: var(--accent-hover);
-}
-
-/* Inputs & Textareas */
-input, select, textarea {
-  font-family: inherit;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 8px 10px;
-  transition: var(--transition);
-  background: var(--bg);
-}
-input:focus, textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-  background: var(--panel);
-}
+/* Heatmap Colors */
+.heat-0 { background: #f1f5f9; }
+.heat-1 { background: #c7d2fe; }
+.heat-2 { background: #818cf8; }
+.heat-3 { background: #4f46e5; }
+.heat-4 { background: #312e81; }
 
 /* ================================
-   5. QUESTION VIEW SPECIFICS
+   5. QUESTION VIEW & COMPONENTS
    ================================ */
+/* Layout: Question (Left) | Tools (Right) */
 .question-layout {
   display: grid;
-  grid-template-columns: 1fr 340px; /* Fixed width sidebar for tools */
-  gap: 24px;
-  height: calc(100vh - 4rem); /* Fit within view */
+  grid-template-columns: 1fr 340px;
+  gap: 2rem;
+  height: calc(100vh - 4rem);
 }
 
-/* Left side (Image/Question) */
 .question-content {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 2rem;
+  padding: 2.5rem;
   overflow-y: auto;
   box-shadow: var(--shadow-sm);
 }
 
-/* Right side (Tools) */
 .question-sidebar {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   overflow-y: auto;
-  padding-right: 4px; /* Space for scrollbar */
+  padding-right: 4px;
 }
 
-/* Progress/Input Panel */
+/* Progress Panel (Inputs) */
 .progress-panel {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -367,102 +301,122 @@ input:focus, textarea:focus {
 .progress-panel label {
   display: block;
   font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
-/* Tags */
-.tag-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
+.progress-panel input,
+.progress-panel select,
+.progress-panel textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 0.95rem;
+  background: var(--bg);
+  transition: var(--transition);
 }
-.tag-chip {
-  background: var(--accent-soft);
-  color: var(--accent-text);
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.8rem;
+.progress-panel input:focus,
+.progress-panel textarea:focus {
+  outline: none;
+  background: var(--panel);
+  border-color: var(--accent);
+}
+
+/* Buttons */
+button {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-.tag-chip:hover {
-  background: #dbeafe;
+button:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
 }
+button:active { transform: translateY(0); }
 
-/* ================================
-   6. PAST ATTEMPTS (The History)
-   ================================ */
+/* Past Attempts (Cards) */
 .past-attempt {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1rem;
+  margin-bottom: 0.75rem;
   position: relative;
   transition: var(--transition);
-  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
 }
 .past-attempt:hover {
-  box-shadow: var(--shadow-md);
-  border-color: #cbd5e1;
+  border-color: #d1d5db;
+  box-shadow: var(--shadow);
 }
+
+.delete-attempt {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  color: var(--border); /* Subtle by default */
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: 0.2s;
+}
+.past-attempt:hover .delete-attempt { color: var(--muted); }
+.delete-attempt:hover { color: var(--danger) !important; transform: scale(1.1); }
 
 .past-meta {
   font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-bottom: 8px;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
 }
 
-/* Status dots */
-.status-indicator {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 6px;
-}
-.status-completed { background: var(--success); }
-.status-attempted { background: var(--warning); }
-
-/* The X delete button */
-.delete-attempt {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: var(--border); /* Hidden until hover */
+/* Tags */
+.tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tag-chip {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 1.2rem;
-  transition: color 0.2s;
+  transition: var(--transition);
 }
-.past-attempt:hover .delete-attempt { color: var(--text-muted); }
-.delete-attempt:hover { color: var(--danger) !important; }
+.tag-chip:hover { background: #dbeafe; }
 
 /* ================================
-   7. UTILITIES & ANIMATIONS
+   6. UTILITIES & ANIMATIONS
    ================================ */
+img { max-width: 100%; height: auto; display: block; margin: 1.5rem 0; border-radius: var(--radius-sm); }
+.hidden { display: none !important; }
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
 
-.hidden { display: none !important; }
-
-/* Splash Screen (Chaos) - Preserved */
+/* Splash Screen (Preserved) */
 #splash-screen {
   position: fixed;
   inset: 0;
   background: #000;
   z-index: 9999;
   display: flex;
-  align-items: center;
   justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s;
+  align-items: center;
+  transition: opacity 1s ease-out, visibility 1s;
 }
 #splash-screen.hidden { opacity: 0; visibility: hidden; }
