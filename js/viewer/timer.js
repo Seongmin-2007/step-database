@@ -48,7 +48,9 @@ export function stop() {
 }
 
 export function setTime(seconds) {
+    const display = qs("time-display");
     elapsed = seconds;
+    display.textContent = formatTime(elapsed);
 }
 
 export function getTime() {

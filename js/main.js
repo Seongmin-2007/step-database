@@ -40,12 +40,12 @@ document.addEventListener("click", e => {
 
 
 
-let questions = [];
-let questionTags = {};  // <-- store tags
-let FILTER = "";
-
 const listEl = document.getElementById("questionList");
 const search = document.getElementById("search");
+
+let questions = [];
+let questionTags = {};  // <-- store tags
+let FILTER = search.value.toLowerCase() ?? "";
 
 // Load questions + tags
 Promise.all([

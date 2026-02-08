@@ -139,6 +139,7 @@ export async function loadQuestion(q, tags, li) {
         // reset UI
         difficulty = 0;
         notesEl.value = "";
+        statusEl.value = "not-started";
         setTime(0);
 
         [...starsEl.children].forEach(s => (s.textContent = "☆"));

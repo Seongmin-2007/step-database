@@ -287,3 +287,82 @@ img {
 .hidden {
   display: none !important;
 }
+
+
+
+/* ================================
+   PROFILE DROPDOWN MENU
+   ================================ */
+
+.auth-area {
+  position: relative; /* anchor for dropdown positioning */
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);   /* drop below profile button */
+  right: 0;
+
+  min-width: 180px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+
+  z-index: 200;
+}
+
+/* Menu items */
+.dropdown-item {
+  background: none;
+  border: none;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.dropdown-item:hover {
+  background: var(--bg);
+}
+
+/* Optional divider support */
+.dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 0;
+}
+
+/* Destructive action (logout) */
+.dropdown-item.danger {
+  color: var(--danger);
+}
+
+.dropdown-item.danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* Optional subtle animation */
+.dropdown-menu {
+  transform-origin: top right;
+  animation: dropdownFade 120ms ease-out;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
