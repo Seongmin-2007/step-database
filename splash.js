@@ -124,10 +124,10 @@ function startChaos(mode = "splash") {
 
   // --- Exit Logic ---
   if (mode === "splash") {
-    // Auto-exit after 3.5s
+    // Auto-exit after 4.5s
     setTimeout(() => {
       stopChaos();
-    }, 3500);
+    }, 4500);
   } else {
     // Click to exit screensaver
     splash.onclick = () => {
@@ -155,19 +155,45 @@ function stopChaos() {
 
 // --- Event Listeners ---
 
-// 1. Run Splash on Load
+// --- Event Listeners ---
+
+// 1. Run Splash on Load (Only once per session)
 window.addEventListener("load", () => {
-  startChaos("splash");
+  // Check if we have already shown the splash in this tab session
+  const hasSeenSplash = sessionStorage.getItem("splash_seen");
+
+  if (!hasSeenSplash) {
+    // First time opening the tab -> Run Splash
+    startChaos("splash");
+    
+    // Mark as seen for this session
+    sessionStorage.setItem("splash_seen", "true");
+  } else {
+    // If we've seen it, ensure it's hidden immediately (prevents flash of content)
+    const splash = document.getElementById("splash-screen");
+    if (splash) {
+      splash.classList.add("hidden");
+      splash.style.display = "none";
+    }
+  }
 });
 
-// 2. Button Click
+// 2. Button Click (Always runs, regardless of session)
 document.getElementById("easteregg").onclick = () => {
-  startChaos(auth.currentUser != null && auth.currentUser.uid == "xc1CIaOlAzcF0PvouZpR8WxwaDG3" && Math.round(Math.random()) == 0 ? "splash" : "saver");
+  // We don't check sessionStorage here because the user explicitly clicked it
+  const isSuperUser = auth.currentUser && auth.currentUser.uid === "xc1CIaOlAzcF0PvouZpR8WxwaDG3";
+  // Random chance of screensaver mode vs normal splash
+  const mode = (isSuperUser && Math.random() > 0.8) ? "saver" : "splash";
+  
+  startChaos(mode);
 };
 
 // 3. Resize Handler
 window.addEventListener("resize", () => {
     const c = document.getElementById("chaos-canvas");
-    c.width = window.innerWidth;
-    c.height = window.innerHeight;
+    // Only resize if the canvas exists to avoid errors
+    if (c) {
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+    }
 });

@@ -109,12 +109,6 @@ logoutBtn.onclick = async () => {
   await signOut(auth);
 };
 
-// Opens dashboard
-dashboardBtn.onclick = () => {
-  sessionStorage.setItem("authorized", "true");
-  window.location.href = "dashboard.html";
-};
-
 document.addEventListener("click", e => {
   if (!e.target.closest("#user-menu")) {
     dropdown.classList.add("hidden");

@@ -9,14 +9,6 @@ import {
 import { auth, db } from "./firebase.js";
 
 /* ================================
-   AUTH GUARD
-================================ */
-if (!sessionStorage.getItem("authorized")) {
-  window.location.href = "index.html";
-}
-sessionStorage.removeItem("authorized");
-
-/* ================================
    ENTRY POINT
 ================================ */
 auth.onAuthStateChanged(user => {
