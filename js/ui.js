@@ -94,7 +94,9 @@ export function notify({
  * @param {HTMLElement} container
  */
 export function renderMath(container) {
-    if (!container || !window.MathJax) return;
+    if (!container || !window.MathJax) return console.log("!");
+    
+    console.log("@");
     // typesetPromise ensures MathJax finishes processing asynchronously
     MathJax.typesetPromise([container]).catch((err) => {
         console.error("MathJax rendering error:", err);

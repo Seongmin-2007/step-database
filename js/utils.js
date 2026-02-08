@@ -9,9 +9,7 @@ export function firebaseTimeToDate(date) {
     try {
         return date.toDate().toISOString().slice(0, 10);
     } catch (err) {
-        console.log(err);
-        window.testVariable = date;
-        
-        return "N/A";
+        // window.testVariable = date;
+        return (new Date(date.seconds * 1000)).toISOString().slice(0, 10);
     }
 }
