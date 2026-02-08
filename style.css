@@ -473,3 +473,23 @@ button:disabled {
 
 
 
+
+#heatmap {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  max-width: 240px;
+}
+
+.heat-day {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #e5e7eb;
+  transition: background 120ms ease;
+}
+
+.heat-1 { background: #c7d2fe; }
+.heat-2 { background: #818cf8; }
+.heat-3 { background: #4f46e5; }
+.heat-4 { background: #312e81; }

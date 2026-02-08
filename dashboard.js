@@ -8,67 +8,57 @@ import {
 
 import { auth, db } from "./firebase.js";
 
-// If they don't have the pass, kick them out
+/* ================================
+   AUTH GUARD
+================================ */
 if (!sessionStorage.getItem("authorized")) {
   window.location.href = "index.html";
 }
-
-// Optional: Revoke the pass immediately so a Refresh kicks them out
 sessionStorage.removeItem("authorized");
 
-
+/* ================================
+   ENTRY POINT
+================================ */
 auth.onAuthStateChanged(user => {
-  if (user) {
-    loadDashboard();
-  } else {
-    console.log("User not logged in");
-  }
+  if (user) loadDashboard();
 });
 
+/* ================================
+   LOAD DASHBOARD
+================================ */
 async function loadDashboard() {
   const user = auth.currentUser;
-  if (!user) {
-    console.log("Not logged in");
-    return;
-  }
+  if (!user) return;
 
-  console.log("User ID:", user.uid);
-    //    But filter ONLY for this user.
   const q = query(
     collectionGroup(db, "attempts"),
     where("userID", "==", user.uid),
-    orderBy("createdAt", "desc") // optional: most recent first
+    orderBy("createdAt", "desc")
   );
 
-  const querySnapshot = await getDocs(q);
-  const attempts = [];
+  const snap = await getDocs(q);
 
-  querySnapshot.forEach((doc) => {
-    attempts.push({
-      id: doc.id,
-      ...doc.data()
-    });
-  });
+  const attempts = snap.docs.map(d => ({
+    id: d.id,
+    ...d.data()
+  }));
 
-  console.log("Attempts array:", attempts);
-  console.table(attempts);
-  
-  // 3️⃣ Compute stats
-  const stats = computeStats(attempts);
-  renderStats(stats);
-
-  // 4️⃣ Compute priority list
-  const priority = computePriorityList(attempts);
-  renderPriorityList(priority);
-
-  // 5️⃣ Render charts
+  // ---- render everything ----
+  renderStats(computeStats(attempts));
+  renderPriorityList(computePriorityList(attempts));
+  renderRecentList(computeRecentQuestions(attempts));
+  renderHeatmap(attempts);
   renderTimeChart(attempts);
   renderDifficultyChart(attempts);
 }
 
+/* ================================
+   STATS
+================================ */
 function computeStats(attempts) {
   const attempted = new Set();
   const completed = new Set();
+
   let totalTime = 0;
   let timeCount = 0;
   let totalDifficulty = 0;
@@ -81,7 +71,7 @@ function computeStats(attempts) {
       completed.add(a.questionID);
     }
 
-    if (a.time) {
+    if (typeof a.time === "number") {
       totalTime += a.time;
       timeCount++;
     }
@@ -95,7 +85,9 @@ function computeStats(attempts) {
   return {
     attempted: attempted.size,
     completed: completed.size,
-    avgTimeMin: timeCount ? Math.round(totalTime / timeCount / 60) : 0,
+    avgTimeMin: timeCount
+      ? Math.round(totalTime / timeCount / 60)
+      : 0,
     avgDifficulty: diffCount
       ? (totalDifficulty / diffCount).toFixed(1)
       : "—"
@@ -103,27 +95,22 @@ function computeStats(attempts) {
 }
 
 function renderStats(s) {
-  document.getElementById("stat-attempted").innerHTML = `
-    <h3>Attempted</h3>
-    <div class="value">${s.attempted}</div>
-  `;
+  document.getElementById("stat-attempted").innerHTML =
+    `<h3>Attempted</h3><div class="value">${s.attempted}</div>`;
 
-  document.getElementById("stat-completed").innerHTML = `
-    <h3>Completed</h3>
-    <div class="value">${s.completed}</div>
-  `;
+  document.getElementById("stat-completed").innerHTML =
+    `<h3>Completed</h3><div class="value">${s.completed}</div>`;
 
-  document.getElementById("stat-avg-time").innerHTML = `
-    <h3>Average time</h3>
-    <div class="value">${s.avgTimeMin} min</div>
-  `;
+  document.getElementById("stat-avg-time").innerHTML =
+    `<h3>Average time</h3><div class="value">${s.avgTimeMin} min</div>`;
 
-  document.getElementById("stat-avg-difficulty").innerHTML = `
-    <h3>Average difficulty</h3>
-    <div class="value">${s.avgDifficulty}</div>
-  `;
+  document.getElementById("stat-avg-difficulty").innerHTML =
+    `<h3>Average difficulty</h3><div class="value">${s.avgDifficulty}</div>`;
 }
 
+/* ================================
+   PRIORITY LIST
+================================ */
 function computePriorityList(attempts) {
   const byQuestion = {};
 
@@ -132,30 +119,26 @@ function computePriorityList(attempts) {
     byQuestion[a.questionID].push(a);
   });
 
-  const priorities = [];
+  const list = [];
 
   for (const qid in byQuestion) {
-    const list = byQuestion[qid];
-    const latest = list.sort(
+    const attemptsForQ = byQuestion[qid].sort(
       (a, b) => b.createdAt.seconds - a.createdAt.seconds
-    )[0];
+    );
 
+    const latest = attemptsForQ[0];
     let score = 0;
 
     if (latest.difficulty >= 4) score += 2;
-    if (latest.timeSeconds > 20 * 60) score += 1;
+    if (latest.time > 20 * 60) score += 1;
     if (latest.status !== "completed") score += 1;
 
     if (score > 0) {
-      priorities.push({
-        questionID: qid,
-        score,
-        latest
-      });
+      list.push({ questionID: qid, score });
     }
   }
 
-  return priorities.sort((a, b) => b.score - a.score);
+  return list.sort((a, b) => b.score - a.score);
 }
 
 function renderPriorityList(list) {
@@ -169,11 +152,83 @@ function renderPriorityList(list) {
 
   list.slice(0, 10).forEach(item => {
     const li = document.createElement("li");
-    li.textContent = `${item.questionID} — Priority ${item.score}`;
+    li.textContent = `${item.questionID} · Priority ${item.score}`;
     ul.appendChild(li);
   });
 }
 
+/* ================================
+   RECENT QUESTIONS
+================================ */
+function computeRecentQuestions(attempts) {
+  const seen = new Set();
+  const recent = [];
+
+  for (const a of attempts) {
+    if (!seen.has(a.questionID)) {
+      seen.add(a.questionID);
+      recent.push({
+        questionID: a.questionID,
+        date: a.createdAt.toDate()
+      });
+    }
+    if (recent.length >= 8) break;
+  }
+
+  return recent;
+}
+
+function renderRecentList(list) {
+  const ul = document.getElementById("recentList");
+  ul.innerHTML = "";
+
+  if (!list.length) {
+    ul.innerHTML = "<li>No recent activity</li>";
+    return;
+  }
+
+  list.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent =
+      `${item.questionID} · ${item.date.toLocaleDateString()}`;
+    ul.appendChild(li);
+  });
+}
+
+/* ================================
+   HEATMAP
+================================ */
+function renderHeatmap(attempts) {
+  const container = document.getElementById("heatmap");
+  container.innerHTML = "";
+
+  const activity = {};
+
+  attempts.forEach(a => {
+    const d = a.createdAt.toDate();
+    const key = d.toISOString().slice(0, 10);
+    activity[key] = (activity[key] || 0) + 1;
+  });
+
+  const today = new Date();
+
+  for (let i = 119; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    const count = activity[key] || 0;
+
+    const cell = document.createElement("div");
+    cell.className = `heat-day heat-${Math.min(count, 4)}`;
+    cell.title = `${key}: ${count} attempts`;
+
+    container.appendChild(cell);
+  }
+}
+
+/* ================================
+   CHARTS
+================================ */
 function drawLineChart(canvas, values, color) {
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -194,8 +249,7 @@ function drawLineChart(canvas, values, color) {
       ((v - min) / range) * (canvas.height - 20) -
       10;
 
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
   });
 
   ctx.stroke();
@@ -203,9 +257,9 @@ function drawLineChart(canvas, values, color) {
 
 function renderTimeChart(attempts) {
   const times = attempts
-    .filter(a => a.timeSeconds)
+    .filter(a => typeof a.time === "number")
     .sort((a, b) => a.createdAt.seconds - b.createdAt.seconds)
-    .map(a => a.timeSeconds / 60);
+    .map(a => a.time / 60);
 
   drawLineChart(
     document.getElementById("timeChart"),

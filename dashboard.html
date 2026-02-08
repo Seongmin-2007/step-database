@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>STEP Question Database</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <div class="dashboard-layout">
+
     <header class="dashboard-header">
       <h1>Dashboard</h1>
       <button onclick="history.back()">Back</button>
     </header>
 
+    <!-- STATS -->
     <section class="dashboard-grid">
       <div class="dashboard-card" id="stat-attempted"></div>
       <div class="dashboard-card" id="stat-completed"></div>
@@ -19,20 +22,36 @@
       <div class="dashboard-card" id="stat-avg-difficulty"></div>
     </section>
 
+    <!-- ACTIVITY HEATMAP -->
     <section class="dashboard-section">
-      <h2>Priority list</h2>
-      <ul id="priorityList"></ul>
+      <h2>Activity</h2>
+      <div id="heatmap"></div>
     </section>
 
+    <!-- PRIORITY + RECENT -->
+    <section class="dashboard-section dashboard-split">
+      <div>
+        <h2>Priority list</h2>
+        <ul id="priorityList"></ul>
+      </div>
+
+      <div>
+        <h2>Recent questions</h2>
+        <ul id="recentList"></ul>
+      </div>
+    </section>
+
+    <!-- CHARTS -->
     <section class="dashboard-section">
       <h2>Time spent over attempts</h2>
-      <canvas id="timeChart" width="600" height="200"></canvas>
+      <canvas id="timeChart" width="700" height="220"></canvas>
     </section>
 
     <section class="dashboard-section">
       <h2>Difficulty trend</h2>
-      <canvas id="difficultyChart" width="600" height="200"></canvas>
+      <canvas id="difficultyChart" width="700" height="220"></canvas>
     </section>
+
   </div>
 
   <script type="module" src="dashboard.js"></script>
