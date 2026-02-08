@@ -53,8 +53,6 @@ export function createAttemptCard(attemptDoc, questionID) {
             console.log("tryna delete");
             const attemptRef = attemptDoc.ref 
                 || doc(db, "users", attemptDoc.userID || auth.currentUser.uid, "questions", questionID, "attempts", attemptDoc.id);
-            window.tempVar = attemptDoc;
-            window.tempVar2 = attemptRef;
             await deleteDoc(attemptRef);
             console.log("Deleted");
             attemptCard.remove();
@@ -67,6 +65,12 @@ export function createAttemptCard(attemptDoc, questionID) {
             deleteButton.classList.remove("confirm");
             armed = false;
         }
+
+        const attemptRef = attemptDoc.ref 
+            || doc(db, "users", attemptDoc.userID || auth.currentUser.uid, "questions", questionID, "attempts", attemptDoc.id);
+        window.tempVar = attemptDoc;
+        window.tempVar2 = attemptRef;
+        console.log("H");
     })
 
     return attemptCard;
