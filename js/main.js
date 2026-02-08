@@ -15,7 +15,7 @@ fetch("build.json", { cache: "no-store" })
         document.body.appendChild(tag);
     });
 
-
+import "./auth.js";
 import { loadQuestion } from "./viewer/index.js";
 
 const profileBtn = document.getElementById("profile-btn");

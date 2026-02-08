@@ -7,6 +7,7 @@
 </head>
 <body>
 
+<!-- Splash screen -->
 <div class="hidden" id="splash-screen">
   <canvas id="chaos-canvas"></canvas>
 </div>
@@ -35,55 +36,58 @@
     </div>
   </main>
 
-  <header class="topbar">
-  <header class="topbar">
-    <div class="auth-area">
+</div>
 
-      <!-- Logged OUT -->
-      <div id="auth-buttons">
-        <button id="login-btn">Log in</button>
-        <button id="signup-btn">Sign up</button>
+<!-- TOP BAR (outside layout so it overlays cleanly) -->
+<header class="topbar">
+  <div class="auth-area">
+
+    <!-- Logged OUT -->
+    <div id="auth-buttons">
+      <button id="login-btn">Log in</button>
+      <button id="signup-btn">Sign up</button>
+    </div>
+
+    <!-- Logged IN -->
+    <div id="user-menu" class="hidden">
+      <button id="profile-btn" class="profile-circle">👤</button>
+
+      <div id="profile-dropdown" class="dropdown hidden">
+        <button id="open-dashboard">Dashboard</button>
+        <button id="logout-btn">Log out</button>
       </div>
-
-      <!-- Logged IN -->
-      <div id="user-menu" class="hidden">
-        <button id="profile-btn" class="profile-circle">👤</button>
-
-        <div id="profile-dropdown" class="dropdown hidden">
-          <button id="open-dashboard">Dashboard</button>
-          <button id="logout-btn">Log out</button>
-        </div>
-      </div>
-
     </div>
-  </header>
 
-  <!-- LOGIN POPUP -->
-  <div id="login-modal" class="modal hidden">
-    <div class="modal-content">
-      <h3>Log in</h3>
-      <input id="login-email" type="email" placeholder="Email">
-      <input id="login-password" type="password" placeholder="Password">
-      <button id="login-submit">Log in</button>
-      <button class="close-modal">Cancel</button>
-    </div>
   </div>
+</header>
 
-  <!-- SIGNUP POPUP -->
-  <div id="signup-modal" class="modal hidden">
-    <div class="modal-content">
-      <h3>Sign up</h3>
-      <input id="signup-email" type="email" placeholder="Email">
-      <input id="signup-password" type="password" placeholder="Password">
-      <button id="signup-submit">Create account</button>
-      <button class="close-modal">Cancel</button>
-    </div>
+<!-- LOGIN MODAL -->
+<div id="login-modal" class="modal hidden">
+  <div class="modal-content">
+    <h3>Log in</h3>
+    <input id="login-email" type="email" placeholder="Email">
+    <input id="login-password" type="password" placeholder="Password">
+    <button id="login-submit">Log in</button>
+    <button class="close-modal">Cancel</button>
   </div>
-  </header>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div id="signup-modal" class="modal hidden">
+  <div class="modal-content">
+    <h3>Sign up</h3>
+    <input id="signup-email" type="email" placeholder="Email">
+    <input id="signup-password" type="password" placeholder="Password">
+    <button id="signup-submit">Create account</button>
+    <button class="close-modal">Cancel</button>
+  </div>
 </div>
 
 <!-- Notifications -->
 <div id="notifications"></div>
 
+<!-- MAIN ENTRY POINT -->
 <script type="module" src="./js/main.js"></script>
+
+</body>
 </html>
