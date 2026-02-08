@@ -85,41 +85,42 @@ function renderList() {
 
             // Search matches question ID OR any tag
             return qId.includes(filter) || tags.some(t => t.includes(filter));
-        })
-        .forEach(q => {
-            const li = document.createElement("li");
-            li.textContent = makeId(q);
-
-            // display tags below question
-            const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
-            const tags = questionTags[qPath] || [];
-
-            if (tags.length) {
-                const tagContainer = document.createElement("div");
-                tagContainer.className = "tag-container";
-
-                tags.forEach(tag => {
-                const tagEl = document.createElement("span");
-                tagEl.className = "tag-chip";
-                tagEl.textContent = tag;
-
-                // (optional) click to search by tag
-                tagEl.onclick = e => {
-                    e.stopPropagation(); // don't trigger question click
-                    search.value = tag;
-                    FILTER = tag.toLowerCase();
-                    renderList();
-                };
-
-                tagContainer.appendChild(tagEl);
-                });
-
-                li.appendChild(tagContainer);
-            }
-
-            li.onclick = () => loadQuestion(q, tags, li);
-            listEl.appendChild(li);
         });
+
+    filtered.forEach(q => {
+        const li = document.createElement("li");
+        li.textContent = makeId(q);
+
+        // display tags below question
+        const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
+        const tags = questionTags[qPath] || [];
+
+        if (tags.length) {
+            const tagContainer = document.createElement("div");
+            tagContainer.className = "tag-container";
+
+            tags.forEach(tag => {
+            const tagEl = document.createElement("span");
+            tagEl.className = "tag-chip";
+            tagEl.textContent = tag;
+
+            // (optional) click to search by tag
+            tagEl.onclick = e => {
+                e.stopPropagation(); // don't trigger question click
+                search.value = tag;
+                FILTER = tag.toLowerCase();
+                renderList();
+            };
+
+            tagContainer.appendChild(tagEl);
+            });
+
+            li.appendChild(tagContainer);
+        }
+
+        li.onclick = () => loadQuestion(q, tags, li);
+        listEl.appendChild(li);
+    });
 
     window.__filteredQuestions = filtered;
 }
