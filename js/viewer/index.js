@@ -11,6 +11,23 @@ let difficulty = 0;
 let authListenerBound = false;
 let currentQuestionID = null;
 
+function attemptsCacheKey(questionID) {
+    return `attempts:${questionID}`;
+}
+
+function loadAttemptsFromCache(questionID) {
+    const raw = localStorage.getItem(attemptsCacheKey(questionID));
+    return raw ? JSON.parse(raw) : null;
+}
+
+function saveAttemptsToCache(questionID, docs) {
+    const data = docs.map(d => ({
+        id: d.id,
+        data: d.data()
+    }));
+    localStorage.setItem(attemptsCacheKey(questionID), JSON.stringify(data));
+}
+
 /**
  * Entry point from main.js
  */
@@ -141,6 +158,9 @@ export async function loadQuestion(q, tags, li) {
             notes: notesElement.value.trim()
         });
 
+        // Removes cached attempts
+        localStorage.removeItem(attemptsCacheKey(questionID));
+
         clearDraft(questionID);
 
         commitButton.classList.add("success");
@@ -175,25 +195,49 @@ export async function loadQuestion(q, tags, li) {
 /* -----------------------------
    Sidebar helpers
 ------------------------------ */
+let sidebarRequestToken = 0;
+let sidebarDebounceTimer = null;
+
 async function loadSidebarAttempts(questionID, list) {
+    const token = ++sidebarRequestToken;
     list.innerHTML = "";
 
-    const user = auth.currentUser;
-    if (!user) {
-        showEmptyAttempts(list);
+    const cached = loadAttemptsFromCache(questionID);
+    if (cached && cached.length) {
+        cached.forEach(item => {
+            const fakeDoc = {
+                id: item.id,
+                data: () => item.data
+            };
+            list.appendChild(createAttemptCard(fakeDoc));
+        });
         return;
     }
+    
+    clearTimeout(sidebarDebounceTimer);
 
-    const snap = await loadAttempts(user.uid, questionID);
+    sidebarDebounceTimer = setTimeout(async () => {
+        if (token !== sidebarRequestToken) return;
 
-    if (snap.empty) {
-        showEmptyAttempts(list);
-        return;
-    }
+        const user = auth.currentUser;
+        if (!user) {
+            showEmptyAttempts(list);
+            return;
+        }
 
-    snap.docs.forEach(d =>
-        list.appendChild(createAttemptCard(d))
-    );
+        const snap = await loadAttempts(user.uid, questionID);
+
+        if (snap.empty) {
+            showEmptyAttempts(list);
+            return;
+        }
+
+        snap.docs.forEach(d =>
+            list.appendChild(createAttemptCard(d))
+        );
+
+        saveAttemptsToCache(questionID, snap.docs);
+    }, 300);
 }
 
 function showEmptyAttempts(list) {
