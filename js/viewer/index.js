@@ -221,7 +221,7 @@ async function loadSidebarAttempts(questionID, list) {
     if (cached && cached.length) {
         console.log("Got cached data instead");
         cached.forEach(item => {
-            const fakeDoc = { id: item.id, data: () => item.data };
+            const fakeDoc = { id: item.id, ref: null, data: () => item.data };
             list.appendChild(createAttemptCard(fakeDoc));
         });
         return;
@@ -256,11 +256,10 @@ async function loadSidebarAttempts(questionID, list) {
 
         saveAttemptsToCache(questionID, snap.docs);
 
-    }, 1000); // debounce delay
+    }, 300); // debounce delay
 
     sidebarTimers.set(questionID, timer);
 }
-
 
 
 function showEmptyAttempts(list) {
