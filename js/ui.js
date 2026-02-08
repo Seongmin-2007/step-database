@@ -51,9 +51,10 @@ export function createAttemptCard(attemptDoc) {
         try {
             console.log("tryna delete");
             const attemptRef = attemptDoc.ref 
-                || doc(db, "users", data.userID || auth.currentUser.uid, "questions", data.questionID || questionID, "attempts", attemptDoc.id);
+                || doc(db, "users", data.userID || auth.currentUser.uid, "questions", data.questionID, "attempts", attemptDoc.id);
+            
             await deleteDoc(attemptRef);
-            console.log("Deleted");
+            localStorage.removeItem("attempts:" + questionID);
             attemptCard.remove();
         } catch (err) {
             console.log(err);
