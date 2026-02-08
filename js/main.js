@@ -40,7 +40,7 @@ document.addEventListener("click", e => {
 
 
 
-let QUESTIONS = [];
+let questions = [];
 let questionTags = {};  // <-- store tags
 let FILTER = "";
 
