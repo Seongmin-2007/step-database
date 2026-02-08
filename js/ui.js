@@ -21,7 +21,7 @@ export function createAttemptCard(doc) {
     `;
 
     // Attempts to render maths
-    renderMath(attemptCard.querySelector(".past-notes"));
+    renderMath(attemptCard);
 
     // Delete button
     const deleteButton = attemptCard.querySelector(".delete-attempt");
@@ -94,8 +94,9 @@ export function notify({
  * @param {HTMLElement} container
  */
 export function renderMath(container) {
-    if (!container) return;
-    if (window.MathJax) {
-        MathJax.typesetPromise([container]);
-    }
+    if (!container || !window.MathJax) return;
+    // typesetPromise ensures MathJax finishes processing asynchronously
+    MathJax.typesetPromise([container]).catch((err) => {
+        console.error("MathJax rendering error:", err);
+    });
 }

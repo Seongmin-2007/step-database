@@ -6,6 +6,7 @@ import { initTimer, stop as stopTimer, setTime, getTime } from "./timer.js";
 import { saveDraft, loadDraft, clearDraft } from "./draft.js";
 import { saveAttempt, loadAttempts } from "./attempts.js";
 import { initNavigation } from "./navigation.js";
+import { renderMath } from "../ui.js";
 
 let difficulty = 0;
 let authListenerBound = false;
@@ -16,7 +17,6 @@ function attemptsCacheKey(questionID) {
 }
 
 function loadAttemptsFromCache(questionID) {
-    console.log("11");
     const raw = localStorage.getItem(attemptsCacheKey(questionID));
     return raw ? JSON.parse(raw) : null;
 }
@@ -129,6 +129,17 @@ export async function loadQuestion(q, tags, li) {
 
     notesElement.oninput = persistDraft;
 
+    // Live changes to notes but only if user stops typing
+    let mathDebounce;
+    notesElement.addEventListener("input", () => {
+        persistDraft();
+
+        clearTimeout(mathDebounce);
+        mathDebounce = setTimeout(() => {
+            renderMath(notesElement.parentElement);
+        }, 500); // render 0.5s after the last keystroke
+    });
+
     // --- timer
     initTimer({ onTick: persistDraft });
 
@@ -220,6 +231,7 @@ async function loadSidebarAttempts(questionID, list) {
     // Check cache first
     const cached = loadAttemptsFromCache(questionID);
     if (cached && cached.length) {
+        console.log("11");
         cached.forEach(item => {
             const fakeDoc = { id: item.id, data: () => item.data };
             list.appendChild(createAttemptCard(fakeDoc));
