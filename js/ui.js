@@ -1,6 +1,6 @@
 import { formatTime, firebaseTimeToDate } from "./utils.js";
 import { doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { db } from "./config.js";
+import { auth, db } from "./config.js";
 
 /**
  * Creates a card element for a single attempt.
@@ -82,6 +82,7 @@ export function notify({
     type = "info", // info | success | warning | danger
     timeout = null // in ms or null
 }) {
+    console.log(message);
     const container = document.getElementById("notifications");
 
     const notification = document.createElement("div");
