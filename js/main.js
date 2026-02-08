@@ -21,6 +21,7 @@ import { loadQuestion } from "./viewer.js";
 
 const profileBtn = document.getElementById("profile-btn");
 const dashboardBtn = document.getElementById("open-dashboard");
+const dropdown = document.getElementById("profile-dropdown");
 
 // Profile dropdown
 profileBtn.onclick = () => {
