@@ -58,6 +58,7 @@ export function createAttemptCard(doc) {
         }
     })
 
+    window.tempVar = doc;
     return attemptCard;
 }
 

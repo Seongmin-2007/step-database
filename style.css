@@ -361,6 +361,18 @@ img {
    PROFILE DROPDOWN MENU
    ================================ */
 
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* spacing between toggle and auth buttons */
+  margin-left: auto; /* push to right */
+}
+
+#theme-toggle {
+  flex-shrink: 0;
+}
+
+
 .auth-area {
   position: relative; /* anchor for dropdown positioning */
 }
@@ -564,3 +576,7 @@ button.success {
   from { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
   to { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
 }
+
+
+
+

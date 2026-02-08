@@ -37,28 +37,23 @@
 
   <header class="topbar">
   <header class="topbar">
-    <div class="theme-toggle-container">
+    <div class="topbar-right">
       <button id="theme-toggle" title="Toggle dark mode">🌞</button>
-    </div>
 
-    <div class="auth-area">
+      <div class="auth-area">
+        <div id="auth-buttons">
+          <button id="login-btn">Log in</button>
+          <button id="signup-btn">Sign up</button>
+        </div>
 
-      <!-- Logged OUT -->
-      <div id="auth-buttons">
-        <button id="login-btn">Log in</button>
-        <button id="signup-btn">Sign up</button>
-      </div>
-
-      <!-- Logged IN -->
-      <div id="user-menu" class="hidden">
-        <button id="profile-btn" class="profile-circle">👤</button>
-
-        <div id="profile-dropdown" class="dropdown-menu hidden">
-          <button id="open-dashboard" class="dropdown-item">Dashboard</button>
-          <button id="logout-btn" class="dropdown-item danger">Log out</button>
+        <div id="user-menu" class="hidden">
+          <button id="profile-btn" class="profile-circle">👤</button>
+          <div id="profile-dropdown" class="dropdown-menu hidden">
+            <button id="open-dashboard" class="dropdown-item">Dashboard</button>
+            <button id="logout-btn" class="dropdown-item danger">Log out</button>
+          </div>
         </div>
       </div>
-
     </div>
   </header>
 
