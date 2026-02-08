@@ -1,495 +1,468 @@
 /* ================================
-   THEME VARIABLES
+   1. THEME VARIABLES & RESET
    ================================ */
 :root {
-  --bg: #f6f7f9;
+  /* Nuanced Neutral Palette */
+  --bg: #f8fafc;           /* Very light cool gray */
   --panel: #ffffff;
-  --border: #e5e7eb;
-  --muted: #6b7280;
-  --text: #111827;
+  --border: #e2e8f0;       /* Subtle border */
+  --text-main: #0f172a;    /* Deep dark blue-black */
+  --text-muted: #64748b;   /* Readable gray */
 
+  /* Accent Colors (Academic Blue) */
   --accent: #2563eb;
-  --accent-soft: #dbeafe;
+  --accent-hover: #1d4ed8;
+  --accent-soft: #eff6ff;
+  --accent-text: #1e40af;
 
+  /* State Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* Radius & Spacing */
   --radius-sm: 6px;
-  --radius: 10px;
-  --radius-lg: 14px;
+  --radius: 12px;          /* Slightly more rounded for modern feel */
+  --radius-lg: 16px;
 
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow: 0 6px 16px rgba(0,0,0,0.08);
+  /* Depth */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
 
-  --transition: 140ms ease;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ================================
-   GLOBAL RESET
-   ================================ */
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: var(--bg);
-  color: var(--text);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-button,
-input,
-select,
-textarea {
-  font-family: inherit;
+h1, h2, h3, h4 {
+  margin: 0 0 0.5em 0;
+  font-weight: 600;
+  letter-spacing: -0.025em; /* Tighter headings look more modern */
 }
+
+a { text-decoration: none; color: inherit; }
 
 /* ================================
-   APP LAYOUT
+   2. APP LAYOUT (Sidebar + Main)
    ================================ */
 .layout {
   display: flex;
   height: 100vh;
+  overflow: hidden;
 }
 
-/* ================================
-   LEFT SIDEBAR
-   ================================ */
+/* Sidebar styling */
 .sidebar {
-  width: 300px;
+  width: 280px;
   background: var(--panel);
   border-right: 1px solid var(--border);
-  padding: 1rem;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  z-index: 10;
 }
 
 .sidebar h2 {
-  margin-top: 0;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
 }
 
+/* Search Input */
 #search {
   width: 100%;
-  padding: 8px 10px;
-  margin-bottom: 1rem;
+  padding: 10px 12px;
+  margin-bottom: 1.5rem;
   font-size: 0.9rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
+  background: var(--bg);
+  transition: var(--transition);
+  outline: none;
+}
+#search:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+  background: var(--panel);
 }
 
+/* Question List */
 #questionList {
   list-style: none;
   padding: 0;
   margin: 0;
+  overflow-y: auto;
+  flex: 1; /* Fills remaining height */
 }
 
 #questionList li {
-  padding: 8px 10px;
+  padding: 10px 12px;
+  margin-bottom: 4px;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background var(--transition);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  transition: var(--transition);
+  border: 1px solid transparent;
 }
 
 #questionList li:hover {
-  background: #f1f5f9;
+  background: var(--bg);
+  color: var(--text-main);
 }
 
 #questionList li.active {
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 500;
+  border-color: rgba(37, 99, 235, 0.1);
 }
 
-/* ================================
-   MAIN CONTENT
-   ================================ */
+/* Main Content Area */
 .content {
   flex: 1;
-  padding: 1.5rem;
+  padding: 2rem;
   overflow-y: auto;
-  animation: fadeIn 160ms ease;
-}
-
-img {
-  max-width: 80%;
-  display: block;
-  margin: 1rem 0;
+  max-width: 1200px; /* Prevent lines getting too long */
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* ================================
-   PROGRESS PANEL (CARD)
+   3. DASHBOARD (New & Overhauled)
    ================================ */
-.progress-panel {
+.dashboard-layout {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  font-size: 1.8rem;
+  color: var(--text-main);
+}
+
+/* Generic Section Styles */
+.dashboard-section {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px;
-  margin: 16px 0;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
   box-shadow: var(--shadow-sm);
-  font-size: 13px;
 }
 
-.progress-panel > div {
-  margin-bottom: 10px;
-}
-
-.progress-panel label {
-  display: block;
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-
-.progress-panel input,
-.progress-panel select,
-.progress-panel textarea {
-  width: 100%;
-  padding: 6px 8px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  font-size: 13px;
-}
-
-.progress-panel textarea {
-  resize: vertical;
-}
-
-/* ================================
-   STARS
-   ================================ */
-.stars span {
-  font-size: 20px;
-  cursor: pointer;
-  transition: transform var(--transition), color var(--transition);
-}
-
-.stars span:hover {
-  transform: scale(1.15);
-}
-
-.stars span.active {
-  color: #facc15;
-}
-
-/* ================================
-    TIMER
-    =============================== */
-  
-
-.time-control {
+.dashboard-section h2 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--text-main);
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
 }
 
-#timeDisplay {
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-  min-width: 48px;
-  text-align: right;
+/* Stat Grid (4 Cards at top) */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-/* ================================
-   TAGS
-   ================================ */
-.tag-container {
-  margin-top: 6px;
+.dashboard-card {
+  background: var(--panel);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.2s ease;
 }
 
-.tag-chip {
-  background: #eef2ff;
-  color: #3730a3;
-  padding: 3px 8px;
-  border-radius: 999px;
-  font-size: 12px;
-  transition: background var(--transition), transform var(--transition);
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Generated via JS, but styling the contents here */
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Split View (Priority & Recent) */
+.dashboard-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-split { grid-template-columns: 1fr; }
+}
+
+/* Lists in Dashboard */
+.dashboard-split ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard-split li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   cursor: pointer;
 }
+.dashboard-split li:last-child { border-bottom: none; }
+.dashboard-split li:hover { color: var(--accent); }
 
-.tag-chip:hover {
-  background: #e0e7ff;
-  transform: translateY(-1px);
+/* Heatmap Container */
+#heatmap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  /* Github style grid logic handled by JS generally, 
+     but visual styling for cells: */
+}
+.heat-day {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: #ebedf0;
+}
+/* Intensity levels */
+.heat-0 { background-color: #ebedf0; }
+.heat-1 { background-color: #9be9a8; }
+.heat-2 { background-color: #40c463; }
+.heat-3 { background-color: #30a14e; }
+.heat-4 { background-color: #216e39; }
+
+/* Charts */
+canvas {
+  width: 100% !important; /* Force responsive canvas */
+  height: auto !important;
 }
 
 /* ================================
-   BUTTONS
+   4. UI COMPONENTS (Buttons, Inputs)
    ================================ */
 button {
   background: var(--panel);
+  color: var(--text-main);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: 6px 12px;
-  font-size: 13px;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition:
-    background var(--transition),
-    transform var(--transition),
-    box-shadow var(--transition);
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 button:hover {
   background: #f1f5f9;
-  transform: translateY(-1px);
+  border-color: #cbd5e1;
 }
 
-button:active {
-  transform: translateY(0);
+button.primary {
+  background: var(--accent);
+  color: white;
+  border: 1px solid var(--accent);
 }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+button.primary:hover {
+  background: var(--accent-hover);
 }
 
-
-/* ================================
-   SOLUTION
-   ================================ */
-.solution {
-  margin-top: 1rem;
-  border-top: 1px solid var(--border);
-  padding-top: 1rem;
-}
-
-.placeholder {
-  color: var(--muted);
-  font-style: italic;
-}
-
-/* ================================
-   TOP BAR / AUTH
-   ================================ */
-.topbar {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px 16px;
-}
-
-.profile-circle {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+/* Inputs & Textareas */
+input, select, textarea {
+  font-family: inherit;
   border: 1px solid var(--border);
-  cursor: pointer;
-  font-size: 16px;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  transition: var(--transition);
+  background: var(--bg);
 }
-
-/* ================================
-   MODALS
-   ================================ */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-content {
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
   background: var(--panel);
-  padding: 16px;
-  width: 300px;
-  border-radius: var(--radius);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.hidden {
-  display: none;
 }
 
 /* ================================
-   QUESTION TWO-COLUMN LAYOUT
+   5. QUESTION VIEW SPECIFICS
    ================================ */
 .question-layout {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 20px;
+  grid-template-columns: 1fr 340px; /* Fixed width sidebar for tools */
+  gap: 24px;
+  height: calc(100vh - 4rem); /* Fit within view */
 }
 
-/* ================================
-   RIGHT SIDEBAR (PAST ATTEMPTS)
-   ================================ */
-.question-sidebar {
-  border-left: 1px solid var(--border);
-  padding-left: 16px;
-  max-height: 80vh;
-  overflow-y: auto;
-  animation: fadeIn 160ms ease;
-}
-
-.question-sidebar h3 {
-  margin-top: 0;
-  font-size: 1em;
-}
-
-/* ================================
-   PAST ATTEMPT BOXES
-   ================================ */
-#pastNotesList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.past-attempt {
+/* Left side (Image/Question) */
+.question-content {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 12px 14px;
+  border-radius: var(--radius);
+  padding: 2rem;
+  overflow-y: auto;
   box-shadow: var(--shadow-sm);
-  transition:
-    transform var(--transition),
-    box-shadow var(--transition),
-    background var(--transition);
-  position: relative;
 }
 
-/* The × icon */
-.delete-attempt {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  color: #9ca3af; /* neutral gray */
-  user-select: none;
-  transition: color 0.15s ease, transform 0.15s ease;
+/* Right side (Tools) */
+.question-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  padding-right: 4px; /* Space for scrollbar */
 }
 
-.delete-attempt:hover {
-  color: #ef4444;
-  transform: scale(1.1);
+/* Progress/Input Panel */
+.progress-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
 }
 
-/* Armed state (after first click) */
-.delete-attempt.confirm {
-  color: #ef4444;
+.progress-panel label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
   font-weight: 600;
 }
 
-.past-attempt:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-  background: #fafafa;
+/* Tags */
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
 }
-
-/* Deleting animation */
-.past-attempt.deleting {
-  opacity: 0;
-  transform: scale(0.98);
-  height: 0;
-  margin: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  border-width: 0;
-  overflow: hidden;
-  transition:
-    opacity 160ms ease,
-    transform 160ms ease,
-    height 200ms ease,
-    margin 200ms ease,
-    padding 200ms ease,
-    border-width 200ms ease;
+.tag-chip {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
 }
-
-
-
-.past-meta {
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 6px;
-  line-height: 1.4;
-}
-
-.past-notes {
-  font-size: 13px;
-  line-height: 1.5;
+.tag-chip:hover {
+  background: #dbeafe;
 }
 
 /* ================================
-   ANIMATIONS
+   6. PAST ATTEMPTS (The History)
+   ================================ */
+.past-attempt {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  position: relative;
+  transition: var(--transition);
+  margin-bottom: 1rem;
+}
+.past-attempt:hover {
+  box-shadow: var(--shadow-md);
+  border-color: #cbd5e1;
+}
+
+.past-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Status dots */
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+.status-completed { background: var(--success); }
+.status-attempted { background: var(--warning); }
+
+/* The X delete button */
+.delete-attempt {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: var(--border); /* Hidden until hover */
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: color 0.2s;
+}
+.past-attempt:hover .delete-attempt { color: var(--text-muted); }
+.delete-attempt:hover { color: var(--danger) !important; }
+
+/* ================================
+   7. UTILITIES & ANIMATIONS
    ================================ */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
 }
 
+.hidden { display: none !important; }
 
-
-
-
-
-/* --- Chaos Container --- */
+/* Splash Screen (Chaos) - Preserved */
 #splash-screen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: #000; /* Pure Void */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  inset: 0;
+  background: #000;
   z-index: 9999;
-  transition: opacity 1s ease-out, visibility 1s;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s;
 }
-
-#splash-screen.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* --- The Drawing Canvas --- */
-#chaos-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
-}
-
-@keyframes flicker {
-  0% { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-  50% { opacity: 0.8; text-shadow: 0 0 5px rgba(255,255,255,0.2); }
-  100% { opacity: 1; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
-}
-
-
-
-
-#heatmap {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  max-width: 240px;
-}
-
-.heat-day {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: #e5e7eb;
-  transition: background 120ms ease;
-}
-
-.heat-1 { background: #c7d2fe; }
-.heat-2 { background: #818cf8; }
-.heat-3 { background: #4f46e5; }
-.heat-4 { background: #312e81; }
+#splash-screen.hidden { opacity: 0; visibility: hidden; }
