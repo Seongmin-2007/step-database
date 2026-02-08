@@ -192,32 +192,36 @@ export async function loadQuestion(q, tags, li) {
     };
 }
 
-/* -----------------------------
-   Sidebar helpers
------------------------------- */
-let sidebarRequestToken = 0;
-let sidebarDebounceTimer = null;
+// -----------------------------
+// Sidebar helpers (fixed)
+// -----------------------------
+const sidebarTokens = new Map();
+const sidebarTimers = new Map();
 
 async function loadSidebarAttempts(questionID, list) {
-    const token = ++sidebarRequestToken;
     list.innerHTML = "";
 
+    // Check cache first
     const cached = loadAttemptsFromCache(questionID);
     if (cached && cached.length) {
         cached.forEach(item => {
-            const fakeDoc = {
-                id: item.id,
-                data: () => item.data
-            };
+            const fakeDoc = { id: item.id, data: () => item.data };
             list.appendChild(createAttemptCard(fakeDoc));
         });
         return;
     }
-    
-    clearTimeout(sidebarDebounceTimer);
 
-    sidebarDebounceTimer = setTimeout(async () => {
-        if (token !== sidebarRequestToken) return console.log("Didn't do it");
+    // Increment token for this question
+    const token = (sidebarTokens.get(questionID) || 0) + 1;
+    sidebarTokens.set(questionID, token);
+
+    // Clear previous debounce timer for this question
+    if (sidebarTimers.get(questionID)) clearTimeout(sidebarTimers.get(questionID));
+
+    // Schedule request with debounce
+    const timer = setTimeout(async () => {
+        // Only proceed if token hasn't changed
+        if (sidebarTokens.get(questionID) !== token) return;
 
         const user = auth.currentUser;
         if (!user) {
@@ -232,13 +236,16 @@ async function loadSidebarAttempts(questionID, list) {
             return;
         }
 
-        snap.docs.forEach(d =>
-            list.appendChild(createAttemptCard(d))
-        );
+        snap.docs.forEach(d => list.appendChild(createAttemptCard(d)));
 
         saveAttemptsToCache(questionID, snap.docs);
-    }, 300);
+
+    }, 1000); // debounce delay
+
+    sidebarTimers.set(questionID, timer);
 }
+
+
 
 function showEmptyAttempts(list) {
     list.innerHTML = `

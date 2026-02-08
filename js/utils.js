@@ -7,7 +7,16 @@ export function formatTime(seconds) {
 
 export function firebaseTimeToDate(date) {
     if (!date) return "N/A";
-    if (date.toDate) return date.toDate().toISOString().slice(0, 10); // Firestore Timestamp
-    if (date instanceof Date) return date.toISOString().slice(0, 10);   // JS Date
+
+    // Firestore Timestamp
+    if (typeof date.toDate === "function") return date.toDate().toISOString().slice(0, 10);
+
+    // Native JS Date
+    if (date instanceof Date) return date.toISOString().slice(0, 10);
+
+    // If it’s an object we don’t recognize, return N/A
+    if (typeof date === "object") return "N/A";
+
+    // Otherwise, return as string
     return String(date);
 }
