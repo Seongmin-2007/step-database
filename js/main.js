@@ -1,75 +1,124 @@
-import { initAuthUI } from "./auth-ui.js";
-import { selectQuestion } from "./viewer.js";
-import { makeId } from "./utils.js";
-import "./splash.js"; 
+// Shows build date in bottom right corner
+fetch("build.json", { cache: "no-store" })
+    .then(r => r.json())
+    .then(b => {
+        const tag = document.createElement("div");
+        tag.textContent = `Deployed ${b.commit.slice(0,7)} @ ${b.time}`;
+        tag.style.cssText = `
+            position:fixed;
+            bottom:6px;
+            right:8px;
+            font-size:11px;
+            opacity:0.6;
+            z-index:9999;
+        `;
+        document.body.appendChild(tag);
+    });
 
-initAuthUI();
 
-// Build Info
-fetch("build.json").then(r=>r.json()).then(b=>{
-  const d = document.createElement("div");
-  d.textContent = `Ver: ${b.commit.slice(0,7)}`;
-  d.style.cssText = "position:fixed;bottom:5px;right:5px;font-size:10px;opacity:0.5;";
-  document.body.appendChild(d);
+import { auth } from "./config.js";
+import { loadQuestion } from "./viewer.js";
+
+const profileBtn = document.getElementById("profile-btn");
+const dashboardBtn = document.getElementById("open-dashboard");
+
+// Profile dropdown
+profileBtn.onclick = () => {
+    dropdown.classList.toggle("hidden");
+};
+
+document.addEventListener("click", e => {
+    if (!e.target.closest("#user-menu")) {
+        dropdown.classList.add("hidden");
+    }
 });
+
+// Opens dashboard
+// dashboardBtn.onclick = () => {
+//     window.location.href = "dashboard.html";
+// };
+
+
 
 let QUESTIONS = [];
-let TAGS = {};
-const listEl = document.getElementById("questionList");
+let questionTags = {};  // <-- store tags
+let FILTER = "";
 
-// Load Data
+const listEl = document.getElementById("questionList");
+const viewer = document.getElementById("viewer");
+const search = document.getElementById("search");
+
+// Load questions + tags
 Promise.all([
-  fetch("questions.json").then(r => r.json()),
-  fetch("question_tags.json").then(r => r.json())
-]).then(([qData, tData]) => {
-  QUESTIONS = qData;
-  TAGS = tData;
-  renderList("");
-  
-  // Check URL params for deep link (e.g. ?id=2019-step2-q1)
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-  if(id) {
-    const [year, step, qNum] = id.split("-"); // 2019, step2, q1
-    const found = QUESTIONS.find(q => 
-      q.year == year && 
-      `step${q.paper}` == step && 
-      `q${q.question}` == qNum
-    );
-    if(found) selectQuestion(found, null, TAGS);
-  }
+    fetch("questions.json").then(r => r.json()),
+    fetch("question_tags.json").then(r => r.json())
+]).then(([questionsData, tagsData]) => {
+    questions = questionsData;
+    questionTags = tagsData;
+    renderList();
 });
 
-// Search
-document.getElementById("search").addEventListener("input", (e) => renderList(e.target.value.toLowerCase()));
+// Event listeners
+search.addEventListener("input", e => {
+    const value = e.target.value.toLowerCase();
+    FILTER = value;
+    renderList();
+});
 
-function renderList(filter) {
+
+// Helper to make ID
+function makeId({ year, paper, question }) {
+    return `${String(year % 100).padStart(2, "0")}-S${paper}-Q${question}`;
+}
+
+// Render question sidebar list
+function renderList() {
   listEl.innerHTML = "";
-  QUESTIONS.filter(q => {
-    const id = makeId(q).toLowerCase(); // 19-s2-q1
-    const path = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-    const t = (TAGS[path] || []).map(x => x.toLowerCase());
-    return id.includes(filter) || t.some(tag => tag.includes(filter));
-  }).forEach(q => {
-    const li = document.createElement("li");
-    li.textContent = makeId(q);
-    
-    // Tags
-    const path = `images/questions/${q.year}/step${q.paper}/q${q.question}.png`;
-    if(TAGS[path]) {
-      const div = document.createElement("div");
-      div.className = "tag-container";
-      TAGS[path].forEach(tag => {
-        const s = document.createElement("span");
-        s.className = "tag-chip";
-        s.textContent = tag;
-        s.onclick = (e) => { e.stopPropagation(); document.getElementById("search").value = tag; renderList(tag.toLowerCase()); };
-        div.appendChild(s);
-      });
-      li.appendChild(div);
-    }
-    
-    li.onclick = () => selectQuestion(q, li, TAGS);
-    listEl.appendChild(li);
-  });
+
+  const filter = FILTER.toLowerCase(); // normalize input
+
+  QUESTIONS
+    .filter(q => {
+        const qId = makeId(q).toLowerCase();
+
+        const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
+        const tags = (questionTags[qPath] || []).map(t => t.toLowerCase()); // lowercase for search
+
+        // Search matches question ID OR any tag
+        return qId.includes(filter) || tags.some(t => t.includes(filter));
+    })
+    .forEach(q => {
+        const li = document.createElement("li");
+        li.textContent = makeId(q);
+
+        // display tags below question
+        const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
+        const tags = questionTags[qPath] || [];
+
+        if (tags.length) {
+            const tagContainer = document.createElement("div");
+            tagContainer.className = "tag-container";
+
+            tags.forEach(tag => {
+            const tagEl = document.createElement("span");
+            tagEl.className = "tag-chip";
+            tagEl.textContent = tag;
+
+            // (optional) click to search by tag
+            tagEl.onclick = e => {
+                e.stopPropagation(); // don't trigger question click
+                search.value = tag;
+                FILTER = tag.toLowerCase();
+                renderList();
+            };
+
+            tagContainer.appendChild(tagEl);
+            });
+
+            li.appendChild(tagContainer);
+        }
+
+        li.onclick = () => selectQuestion(q, li, questionTags);
+        listEl.appendChild(li);
+    });
 }
