@@ -92,7 +92,7 @@ export async function loadQuestion(q, tags, li) {
  
 
     // Loads solutions
-    const solutionContainer = document.getElementsByName("solution-container");
+    const solutionContainer = document.getElementById("solution-container");
     const placeHolder = solutionContainer.querySelector(".placeholder");
 
     let i = 1;
@@ -125,7 +125,7 @@ export async function loadQuestion(q, tags, li) {
 
     // Solution Toggle
     const solutionToggle = document.getElementById("solution-toggle");
-    const solution = viewer.querySelector(".solution");
+    const solution = solutionContainer;
 
     solutionToggle.onclick = () => {
         solution.style.display =
@@ -156,7 +156,7 @@ export async function loadQuestion(q, tags, li) {
 
         updateStarsUI();
         updateCommitButton();
-        saveLocalDraft(quesitonID);
+        saveLocalDraft(questionID);
     })
 
     function updateCommitButton() {
@@ -178,14 +178,17 @@ export async function loadQuestion(q, tags, li) {
     notesEl.addEventListener("input", () => saveLocalDraft(questionID));
     notesEl.addEventListener("change", () => saveLocalDraft(questionID));
 
+    auth.onAuthStateChanged(user => {
+        disableInputs(!user);
+    });
 
     // Timer
     let timerInterval = null;
     let elapsedSeconds = 0;
 
-    const startButton = document.getElementById("startTimer");
-    const stopButton = document.getElementById("stopTimer");
-    const timeDisplay = document.getElementById("timeDisplay");
+    const startButton = document.getElementById("start-timer");
+    const stopButton = document.getElementById("stop-timer");
+    const timeDisplay = document.getElementById("time-display");
 
     function formatTime(seconds) {
         const m = Math.floor(seconds / 60);
@@ -238,7 +241,7 @@ export async function loadQuestion(q, tags, li) {
         const raw = localStorage.getItem(localDraftKey(questionID));
         // If there is no local saved data
         if (!raw) {
-            statusEl.value = "Not started";
+            statusEl.value = "not-started";
             difficulty = 0;
             elapsedSeconds = 0;
             timeDisplay.textContent = formatTime(0);
@@ -249,7 +252,7 @@ export async function loadQuestion(q, tags, li) {
         }
 
         const d = JSON.parse(raw);
-        statusEl.value = d.status ?? "Not started";
+        statusEl.value = d.status ?? "not-started";
         difficulty = d.difficulty ?? 0;
         notesEl.value = d.notes ?? "";
         elapsedSeconds = d.time ?? 0;
@@ -264,7 +267,7 @@ export async function loadQuestion(q, tags, li) {
         const user = auth.currentUser;
         if (!user) {
             notify({
-                titla: "Not signed in",
+                title: "Not signed in",
                 message: "Sign in to save completed attempts to the cloud",
                 type: "warning"
             });
@@ -326,7 +329,7 @@ export async function loadQuestion(q, tags, li) {
         );
         const snap = await getDocs(q);
 
-        const list = document.getElementById("pastNotesList");
+        const list = document.getElementById("past-notes-list");
         list.innerHTML = "";
 
         if (snap.empty) {
@@ -337,12 +340,12 @@ export async function loadQuestion(q, tags, li) {
         snap.docs.forEach(doc => {
             // Should be returning an html element
             const attemptCard = createAttemptCard(doc);
-            list.innerHTML.appendChild(attemptCard);
+            list.appendChild(attemptCard);
         });
     }
 
     // Load it at start
     loadLocalDraft(questionID);
-    document.getElementById("commitAttempt").onclick = () => commitCompletedAttempt(questionID);
+    document.getElementById("commit-attempt").onclick = () => commitCompletedAttempt(questionID);
     loadCompletedAttempts(questionID);
 }
