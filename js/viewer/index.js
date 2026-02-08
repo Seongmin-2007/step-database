@@ -217,7 +217,7 @@ async function loadSidebarAttempts(questionID, list) {
     clearTimeout(sidebarDebounceTimer);
 
     sidebarDebounceTimer = setTimeout(async () => {
-        if (token !== sidebarRequestToken) return;
+        if (token !== sidebarRequestToken) return console.log("Didn't do it");
 
         const user = auth.currentUser;
         if (!user) {

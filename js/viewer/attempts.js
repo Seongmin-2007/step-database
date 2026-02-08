@@ -13,7 +13,7 @@ import { db } from "../config.js";
 export async function saveAttempt(uid, qid, attempt) {
     await addDoc(
         collection(db, "users", uid, "questions", qid, "attempts"),
-        { ...attempt, createdAt: serverTimestamp() }
+        { ...attempt, userID: uid, questionID: qid, createdAt: serverTimestamp() }
     );
 }
 
