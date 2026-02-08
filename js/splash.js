@@ -1,12 +1,10 @@
-import {
-  auth
-} from "./firebase.js";
+import { auth } from "./firebase.js";
 
 // Global variables to control the engine
 let animationId = null;
 let isScreensaverActive = false;
 
-// --- The Chaos Engine ---
+// --- The Chaos Engine (Lorenz Attractor) ---
 function startChaos(mode = "splash") {
   if (animationId) cancelAnimationFrame(animationId);
 
@@ -14,12 +12,14 @@ function startChaos(mode = "splash") {
   const ctx = canvas.getContext("2d");
   const splash = document.getElementById("splash-screen");
 
+  if (!canvas || !splash) return;
+
   // Show the container
   splash.style.display = "flex";
   splash.classList.remove("hidden");
 
   // --- Constants ---
-  const LINE_COUNT = mode === "saver" ? 15 : 10; // More lines for screensaver
+  const LINE_COUNT = mode === "saver" ? 15 : 10;
   const ZOOM = Math.min(window.innerWidth, window.innerHeight) / 55;
   const SPEED = mode === "saver" ? 5 : 8;
   const LINE_WIDTH = 1.0;
@@ -45,7 +45,6 @@ function startChaos(mode = "splash") {
     let l = 30 * Math.random() + 40;
 
     particles.push({
-      // Start slightly different for butterfly effect
       x: 0.1 + (Math.random() * 0.005), 
       y: 0,
       z: 25,
@@ -62,21 +61,15 @@ function startChaos(mode = "splash") {
 
   // --- Animation Loop ---
   function drawChaos() {
-    // Stop if we shouldn"t be running
     if (splash.classList.contains("hidden") && !isScreensaverActive) return;
 
-    // --- The "Delete Itself" Logic (Screensaver Mode Only) ---
-    // Instead of clearing the screen, we draw a semi-transparent black box.
-    // This makes old lines slowly fade away, preventing clutter.
+    // Screensaver Fade Effect
     if (mode === "saver") {
       ctx.globalCompositeOperation = "source-over";
-      if (Math.random() < 0.03) { 
-        ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Hard wipe 10% of the time
-      } else {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.02)"; // Soft fade 90% of the time
-      }
+      // 3% chance of hard wipe, 97% soft fade
+      ctx.fillStyle = Math.random() < 0.03 ? "rgba(0, 0, 0, 0.1)" : "rgba(0, 0, 0, 0.02)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.globalCompositeOperation = "lighter"; // Makes overlapping lines glow
+      ctx.globalCompositeOperation = "lighter"; 
     }
 
     // Run Math Loop
@@ -107,12 +100,10 @@ function startChaos(mode = "splash") {
       });
     }
     
-    // Screensaver: Slowly shift color over time
+    // Shift color over time (Screensaver only)
     if(mode === "saver") {
-        particles.forEach((p, index) => {
+        particles.forEach(p => {
             p.h = p.h + 0.1;
-            // We add (index * 5) so each line is a slightly different color 
-            // creating a "rainbow ribbon" effect rather than one solid block of color
             p.color = `hsl(${p.h}, ${p.s}%, ${p.l}%)`; 
         });
     }
@@ -132,7 +123,7 @@ function startChaos(mode = "splash") {
     // Click to exit screensaver
     splash.onclick = () => {
       stopChaos();
-      splash.onclick = null; // Clean up listener
+      splash.onclick = null;
     };
   }
 }
@@ -140,14 +131,11 @@ function startChaos(mode = "splash") {
 function stopChaos() {
   const splash = document.getElementById("splash-screen");
   
-  // Stop animation loop
   if (animationId) cancelAnimationFrame(animationId);
   isScreensaverActive = false;
 
-  // Fade out
   splash.classList.add("hidden");
   
-  // Hide completely after fade
   setTimeout(() => { 
       splash.style.display = "none"; 
   }, 1000);
@@ -155,43 +143,46 @@ function stopChaos() {
 
 // --- Event Listeners ---
 
-// --- Event Listeners ---
-
 // 1. Run Splash on Load (Only once per session)
-window.addEventListener("load", () => {
-  // Check if we have already shown the splash in this tab session
+// We use window.addEventListener because 'load' might have already fired 
+// if the script is loaded via type="module", but it's safer to check.
+if (document.readyState === "complete") {
+    checkSplash();
+} else {
+    window.addEventListener("load", checkSplash);
+}
+
+function checkSplash() {
   const hasSeenSplash = sessionStorage.getItem("splash_seen");
+  const splash = document.getElementById("splash-screen");
 
   if (!hasSeenSplash) {
-    // First time opening the tab -> Run Splash
     startChaos("splash");
-    
-    // Mark as seen for this session
     sessionStorage.setItem("splash_seen", "true");
   } else {
-    // If we've seen it, ensure it's hidden immediately (prevents flash of content)
-    const splash = document.getElementById("splash-screen");
     if (splash) {
       splash.classList.add("hidden");
       splash.style.display = "none";
     }
   }
-});
+}
 
-// 2. Button Click (Always runs, regardless of session)
-document.getElementById("easteregg").onclick = () => {
-  // We don't check sessionStorage here because the user explicitly clicked it
-  const isSuperUser = auth.currentUser && auth.currentUser.uid === "xc1CIaOlAzcF0PvouZpR8WxwaDG3";
-  // Random chance of screensaver mode vs normal splash
-  const mode = (isSuperUser && Math.random() > 0.8) ? "saver" : "splash";
-  
-  startChaos(mode);
-};
+// 2. Easter Egg / Screensaver Trigger
+// We wrap this in a check to ensure the DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+    const eggBtn = document.getElementById("easteregg");
+    if(eggBtn) {
+        eggBtn.onclick = () => {
+            const isSuperUser = auth.currentUser && auth.currentUser.uid === "xc1CIaOlAzcF0PvouZpR8WxwaDG3";
+            const mode = (isSuperUser && Math.random() > 0.8) ? "saver" : "splash";
+            startChaos(mode);
+        };
+    }
+});
 
 // 3. Resize Handler
 window.addEventListener("resize", () => {
     const c = document.getElementById("chaos-canvas");
-    // Only resize if the canvas exists to avoid errors
     if (c) {
       c.width = window.innerWidth;
       c.height = window.innerHeight;

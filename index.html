@@ -2,91 +2,81 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEP Question Database</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STEP Question Bank</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<div id="splash-screen">
-  <canvas id="chaos-canvas"></canvas>
-</div>
+  <div id="splash-screen" class="hidden">
+    <canvas id="chaos-canvas"></canvas>
+    <div id="welcome-text">STEP<br>DATABASE</div>
+  </div>
 
-<div class="layout">
-
-  <!-- LEFT SIDEBAR -->
-  <aside class="sidebar">
-    <h2 id="easteregg">STEP Questions</h2>
-
-    <input
-      type="text"
-      id="search"
-      placeholder="Search (e.g. 21 S2 Q5)"
-    >
-
-    <ul id="questionList"></ul>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <main class="content">
-    <div id="viewer">
-      <p class="placeholder">
-        Select a question from the list.
-      </p>
-    </div>
-  </main>
-
-  <header class="topbar">
-  <header class="topbar">
-    <div class="auth-area">
-
-      <!-- Logged OUT -->
-      <div id="auth-buttons">
-        <button id="login-btn">Log in</button>
-        <button id="signup-btn">Sign up</button>
+  <div class="layout">
+    <aside class="sidebar">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>STEP Database</h2>
+        <button id="easteregg" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">🌀</button>
       </div>
 
-      <!-- Logged IN -->
-      <div id="user-menu" class="hidden">
-        <button id="profile-btn" class="profile-circle">👤</button>
+      <div id="auth-buttons">
+        <button id="login-btn" style="width:100%; margin-bottom:0.5rem;">Log In</button>
+        <button id="signup-btn" style="width:100%;">Sign Up</button>
+      </div>
 
-        <div id="profile-dropdown" class="dropdown hidden">
-          <button id="open-dashboard">Dashboard</button>
-          <button id="logout-btn">Log out</button>
+      <div id="user-menu" class="hidden" style="position:relative;">
+        <button id="profile-btn" style="width:100%; text-align:left; justify-content:space-between;">
+          <span>My Profile</span> <span>▼</span>
+        </button>
+        <div id="profile-dropdown" class="hidden" style="position:absolute; top:100%; left:0; right:0; background:var(--panel); border:1px solid var(--border); border-radius:var(--radius-sm); box-shadow:var(--shadow); z-index:50; padding:0.5rem;">
+          <button id="open-dashboard" style="width:100%; margin-bottom:0.5rem;">Dashboard</button>
+          <button id="logout-btn" style="width:100%; color:var(--danger); border-color:var(--danger);">Log Out</button>
         </div>
       </div>
 
-    </div>
-  </header>
+      <hr style="border:0; border-top:1px solid var(--border); margin:1.5rem 0;">
 
-  <!-- LOGIN POPUP -->
-  <div id="login-modal" class="modal hidden">
-    <div class="modal-content">
-      <h3>Log in</h3>
-      <input id="login-email" type="email" placeholder="Email">
-      <input id="login-password" type="password" placeholder="Password">
-      <button id="login-submit">Log in</button>
-      <button class="close-modal">Cancel</button>
+      <input type="text" id="search" placeholder="Search (e.g. 19-S2-Q1 or 'calculus')...">
+      
+      <ul id="questionList"></ul>
+    </aside>
+
+    <main class="content" id="viewer">
+      <div style="text-align:center; margin-top:20vh; color:var(--muted);">
+        <h2>Select a question to begin</h2>
+        <p>Use the sidebar to search or browse.</p>
+      </div>
+    </main>
+  </div>
+
+  <div id="login-modal" class="hidden modal-overlay" style="position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; display:flex; justify-content:center; align-items:center;">
+    <div class="modal" style="background:white; padding:2rem; border-radius:var(--radius); width:300px;">
+      <h3>Log In</h3>
+      <input type="email" id="login-email" placeholder="Email" style="width:100%; margin-bottom:1rem;">
+      <input type="password" id="login-password" placeholder="Password" style="width:100%; margin-bottom:1rem;">
+      <div style="display:flex; gap:10px;">
+        <button id="login-submit" style="flex:1; background:var(--accent); color:white; border:none;">Log In</button>
+        <button class="close-modal" style="flex:1;">Cancel</button>
+      </div>
     </div>
   </div>
 
-  <!-- SIGNUP POPUP -->
-  <div id="signup-modal" class="modal hidden">
-    <div class="modal-content">
-      <h3>Sign up</h3>
-      <input id="signup-email" type="email" placeholder="Email">
-      <input id="signup-password" type="password" placeholder="Password">
-      <button id="signup-submit">Create account</button>
-      <button class="close-modal">Cancel</button>
+  <div id="signup-modal" class="hidden modal-overlay" style="position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; display:flex; justify-content:center; align-items:center;">
+    <div class="modal" style="background:white; padding:2rem; border-radius:var(--radius); width:300px;">
+      <h3>Sign Up</h3>
+      <input type="email" id="signup-email" placeholder="Email" style="width:100%; margin-bottom:1rem;">
+      <input type="password" id="signup-password" placeholder="Password" style="width:100%; margin-bottom:1rem;">
+      <div style="display:flex; gap:10px;">
+        <button id="signup-submit" style="flex:1; background:var(--accent); color:white; border:none;">Sign Up</button>
+        <button class="close-modal" style="flex:1;">Cancel</button>
+      </div>
     </div>
   </div>
-  </header>
-</div>
 
-<!-- Notifications -->
-<div id="notifications"></div>
+  <div id="notifications" style="position:fixed; bottom:20px; right:20px; z-index:9999; display:flex; flex-direction:column; gap:10px;"></div>
 
-<script type="module" src="splash.js"></script>
-<script type="module" src="firebase.js"></script>
-<script type="module" src="script.js"></script>
+  <script type="module" src="./js/main.js"></script>
 </body>
 </html>

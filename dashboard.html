@@ -1,59 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Dashboard - STEP</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
   <div class="dashboard-layout">
+    
+    <div class="dashboard-header">
+      <h1>Your Progress</h1>
+      <button onclick="window.location.href='index.html'">Back to Questions</button>
+    </div>
 
-    <header class="dashboard-header">
-      <h1>Dashboard</h1>
-      <button onclick="history.back()">Back</button>
-    </header>
+    <div class="dashboard-grid">
+      <div id="stat-attempted" class="dashboard-card"></div>
+      <div id="stat-completed" class="dashboard-card"></div>
+      <div id="stat-avg-time" class="dashboard-card"></div>
+      <div id="stat-avg-difficulty" class="dashboard-card"></div>
+    </div>
 
-    <!-- STATS -->
-    <section class="dashboard-grid">
-      <div class="dashboard-card" id="stat-attempted"></div>
-      <div class="dashboard-card" id="stat-completed"></div>
-      <div class="dashboard-card" id="stat-avg-time"></div>
-      <div class="dashboard-card" id="stat-avg-difficulty"></div>
-    </section>
+    <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="dashboard-section">
+        <h3>Time (min) per attempt</h3>
+        <canvas id="timeChart"></canvas>
+      </div>
+      <div class="dashboard-section">
+        <h3>Difficulty per attempt</h3>
+        <canvas id="difficultyChart"></canvas>
+      </div>
+    </div>
 
-    <!-- ACTIVITY HEATMAP -->
-    <section class="dashboard-section">
-      <h2>Activity</h2>
+    <div class="dashboard-section" style="margin-bottom:2rem;">
+      <h3>Activity Map</h3>
       <div id="heatmap"></div>
-    </section>
+    </div>
 
-    <!-- PRIORITY + RECENT -->
-    <section class="dashboard-section dashboard-split">
+    <div class="dashboard-split">
       <div>
-        <h2>Priority list</h2>
+        <h2>Priority Review</h2>
         <ul id="priorityList"></ul>
       </div>
 
       <div>
-        <h2>Recent activity</h2>
-        <div id="recentList" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        <h2>Recent Activity</h2>
+        <div id="recentList" style="display:flex; flex-direction:column; gap:12px;"></div>
       </div>
-    </section>
-
-    <!-- CHARTS -->
-    <section class="dashboard-section">
-      <h2>Time spent over attempts</h2>
-      <canvas id="timeChart" width="700" height="220"></canvas>
-    </section>
-
-    <section class="dashboard-section">
-      <h2>Difficulty trend</h2>
-      <canvas id="difficultyChart" width="700" height="220"></canvas>
-    </section>
+    </div>
 
   </div>
 
-  <script type="module" src="dashboard.js"></script>
+  <script type="module" src="./js/dashboard.js"></script>
 </body>
 </html>
