@@ -67,7 +67,7 @@ search.addEventListener("input", e => {
 
 // Helper to make ID
 function makeId({ year, paper, question }) {
-    return `${String(year % 100).padStart(2, "0")}-S${paper}-Q${question}`;
+    return `${year}-S${paper}-Q${question}`;
 }
 
 // Render question sidebar list
