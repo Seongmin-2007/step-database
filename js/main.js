@@ -16,7 +16,6 @@ fetch("build.json", { cache: "no-store" })
     });
 
 
-import { auth } from "./config.js";
 import { loadQuestion } from "./viewer.js";
 
 const profileBtn = document.getElementById("profile-btn");
@@ -46,7 +45,6 @@ let questionTags = {};  // <-- store tags
 let FILTER = "";
 
 const listEl = document.getElementById("questionList");
-const viewer = document.getElementById("viewer");
 const search = document.getElementById("search");
 
 // Load questions + tags
@@ -119,7 +117,7 @@ function renderList() {
             li.appendChild(tagContainer);
         }
 
-        li.onclick = () => loadQuestion(q, questionTags, li);
+        li.onclick = () => loadQuestion(q, tags, li);
         listEl.appendChild(li);
     });
 }

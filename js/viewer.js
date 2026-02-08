@@ -14,7 +14,7 @@ import { auth, db } from "./config.js";
 
 export async function loadQuestion(q, tags, li) {
     const viewer = document.getElementById("viewer");
-    const questionID = `${q.year}-step${q.paper}-q${q.question}`;
+    const questionID = `${q.year}-S${q.paper}-Q${q.question}`;
     const questionImage = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
 
     // Highlights only the selected question
@@ -99,7 +99,7 @@ export async function loadQuestion(q, tags, li) {
     let foundAny = false;
 
     while (true) {
-        const solutionImagePath = `images/solutions/${q.year}/S${q.paper}/Q${q.question}-${i}.png`;
+        const solutionImagePath = `images/solutions/${q.year}/S${q.paper}/Q${q.question}-${i}.jpg`;
         try {
             // Attempts to fetch the requested image
             const fetched = await fetch(solutionImagePath, { method: "HEAD" });
