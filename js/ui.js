@@ -1,8 +1,9 @@
 import { formatTime, firebaseTimeToDate } from "./utils.js";
-import { deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { db } from "./config.js";
 
-export function createAttemptCard(doc) {
-    const data = doc.data();
+export function createAttemptCard(d) {
+    const data = d.data();
     const attemptCard = document.createElement("li");
     attemptCard.innerHTML = `
         <div class="past-attempt">
@@ -44,7 +45,8 @@ export function createAttemptCard(doc) {
         clearTimeout(armTimeout);
         try {
             console.log("tryna delete");
-            await deleteDoc(doc.ref);
+            const docRef = doc(db, "users", data.userID, "questions", data.questionID, "attempts", doc.id);
+            await deleteDoc(docRef);
             console.log("Deleted");
             attemptCard.remove();
         } catch (err) {
