@@ -10,6 +10,8 @@ import { auth, db } from "./config.js";
  */
 export function createAttemptCard(attemptDoc, questionID) {
     const data = attemptDoc.data();
+    window.tempvar = attemptDoc;
+    window.tempvar1 = data;
     const attemptCard = document.createElement("li");
     attemptCard.innerHTML = `
         <div class="past-attempt">
