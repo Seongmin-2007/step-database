@@ -18,6 +18,28 @@ fetch("build.json", { cache: "no-store" })
 import "./auth.js";
 import { loadQuestion } from "./viewer/index.js";
 
+
+// === Dark Mode ===
+function initThemeToggle() {
+    const toggleBtn = document.createElement("button");
+    toggleBtn.textContent = "Toggle Dark Mode";
+    toggleBtn.id = "theme-toggle";
+    document.body.prepend(toggleBtn);
+
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+
+    toggleBtn.onclick = () => {
+        const current = document.documentElement.getAttribute("data-theme");
+        const next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+    };
+}
+
+// call this on page load
+initThemeToggle();
+
 const profileBtn = document.getElementById("profile-btn");
 const dashboardBtn = document.getElementById("open-dashboard");
 const dropdown = document.getElementById("profile-dropdown");
@@ -37,7 +59,6 @@ document.addEventListener("click", e => {
 // dashboardBtn.onclick = () => {
 //     window.location.href = "dashboard.html";
 // };
-
 
 
 const listEl = document.getElementById("questionList");

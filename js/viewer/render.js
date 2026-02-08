@@ -1,3 +1,5 @@
+import { renderMath } from "../ui";
+
 export function renderQuestion({ q, tags, li }) {
     const viewer = document.getElementById("viewer");
     const questionID = `${q.year}-S${q.paper}-Q${q.question}`;
@@ -113,6 +115,8 @@ export function renderQuestion({ q, tags, li }) {
     </div>
     `;
 
+    // Attempts to render any maths inside this
+    renderMath(viewer);
 
     return { questionID };
 }

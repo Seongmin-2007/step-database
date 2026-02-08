@@ -16,11 +16,13 @@ function attemptsCacheKey(questionID) {
 }
 
 function loadAttemptsFromCache(questionID) {
+    console.log("11");
     const raw = localStorage.getItem(attemptsCacheKey(questionID));
     return raw ? JSON.parse(raw) : null;
 }
 
 function saveAttemptsToCache(questionID, docs) {
+    console.log("22");
     const data = docs.map(d => ({
         id: d.id,
         data: d.data()
@@ -39,7 +41,6 @@ export async function loadQuestion(q, tags, li) {
     // --- render DOM FIRST
     const { questionID } = renderQuestion({ q, tags, li });
     currentQuestionID = questionID;
-    await loadSolutions(q, questionID);
 
     // Navigation (previous, after quickly)
     initNavigation({
@@ -50,6 +51,20 @@ export async function loadQuestion(q, tags, li) {
             loadQuestion(q.data, q.tags, q.li);
         }
     });
+
+    const questionMain = document.querySelector(".question-main");
+    const questionSidebar = document.querySelector(".question-sidebar");
+
+    // Remove any previous animation class
+    questionMain.classList.remove("show");
+    questionSidebar.classList.remove("show");
+
+    // Small timeout to trigger CSS transition
+    requestAnimationFrame(() => {
+        questionMain.classList.add("show");
+        questionSidebar.classList.add("show");
+    });
+
 
     // --- DOM refs (safe now)
     const statusElement = document.getElementById("status");
@@ -185,10 +200,11 @@ export async function loadQuestion(q, tags, li) {
     };
 
     // --- solution toggle
-    document.getElementById("solution-toggle").onclick = () => {
+    document.getElementById("solution-toggle").onclick = async () => {
+        await loadSolutions(q, questionID);
         const s = document.getElementById("solution-container");
         if (!s) return;
-        s.style.display = s.style.display === "none" ? "block" : "none";
+        s.classList.toggle("show");
     };
 }
 
