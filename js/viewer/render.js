@@ -1,4 +1,4 @@
-import { renderMath } from "../ui";
+import { renderMath } from "../ui.js";
 
 export function renderQuestion({ q, tags, li }) {
     const viewer = document.getElementById("viewer");
