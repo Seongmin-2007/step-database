@@ -1,6 +1,5 @@
 import { formatTime, firebaseTimeToDate } from "./utils.js";
 import { deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { MathJax } from "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
 
 export function createAttemptCard(doc) {
     const data = doc.data();
@@ -96,6 +95,7 @@ export function notify({
  */
 export function renderMath(container) {
     if (!container) return;
-    // MathJax typesets only the container we pass
-    MathJax.typesetPromise([container]).catch(err => console.error(err));
+    if (window.MathJax) {
+        MathJax.typesetPromise([container]);
+    }
 }
