@@ -219,7 +219,7 @@ async function loadSidebarAttempts(questionID, list) {
     // Check cache first
     const cached = loadAttemptsFromCache(questionID);
     if (cached && cached.length) {
-        console.log("11");
+        console.log("Got cached data instead");
         cached.forEach(item => {
             const fakeDoc = { id: item.id, data: () => item.data };
             list.appendChild(createAttemptCard(fakeDoc));

@@ -43,7 +43,9 @@ export function createAttemptCard(doc) {
         // If second time clicking
         clearTimeout(armTimeout);
         try {
+            console.log("tryna delete");
             await deleteDoc(doc.ref);
+            console.log("Deleted");
             attemptCard.remove();
         } catch (err) {
             notify({

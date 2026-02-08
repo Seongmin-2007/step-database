@@ -19,26 +19,27 @@ import "./auth.js";
 import { loadQuestion } from "./viewer/index.js";
 
 
-// === Dark Mode ===
-function initThemeToggle() {
-    const toggleBtn = document.createElement("button");
-    toggleBtn.textContent = "Toggle Dark Mode";
-    toggleBtn.id = "theme-toggle";
-    document.body.prepend(toggleBtn);
+const themeToggleBtn = document.getElementById("theme-toggle");
 
-    const savedTheme = localStorage.getItem("theme") || "light";
-    document.documentElement.setAttribute("data-theme", savedTheme);
-
-    toggleBtn.onclick = () => {
-        const current = document.documentElement.getAttribute("data-theme");
-        const next = current === "dark" ? "light" : "dark";
-        document.documentElement.setAttribute("data-theme", next);
-        localStorage.setItem("theme", next);
-    };
+// Load saved theme from localStorage
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+    themeToggleBtn.textContent = "🌙";
+} else {
+    themeToggleBtn.textContent = "🌞";
 }
 
-// call this on page load
-initThemeToggle();
+// Toggle on click
+themeToggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    const isDark = document.body.classList.contains("dark-mode");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+
+    themeToggleBtn.textContent = isDark ? "🌙" : "🌞";
+});
+
+
 
 const profileBtn = document.getElementById("profile-btn");
 const dashboardBtn = document.getElementById("open-dashboard");
