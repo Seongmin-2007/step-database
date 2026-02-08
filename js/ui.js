@@ -20,9 +20,6 @@ export function createAttemptCard(doc) {
         </div>
     `;
 
-    // Attempts to render maths
-    renderMath(attemptCard);
-
     // Delete button
     const deleteButton = attemptCard.querySelector(".delete-attempt");
     let armed = false;
@@ -87,18 +84,4 @@ export function notify({
     if (timeout) {
         setTimeout(close, timeout);
     }
-}
-
-/**
- * Render LaTeX inside a container
- * @param {HTMLElement} container
- */
-export function renderMath(container) {
-    if (!container || !window.MathJax) return console.log("!");
-    
-    console.log("@");
-    // typesetPromise ensures MathJax finishes processing asynchronously
-    MathJax.typesetPromise([container]).catch((err) => {
-        console.error("MathJax rendering error:", err);
-    });
 }
