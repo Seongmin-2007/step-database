@@ -5,9 +5,11 @@ import { renderQuestion, loadSolutions } from "./render.js";
 import { initTimer, stop as stopTimer, setTime, getTime } from "./timer.js";
 import { saveDraft, loadDraft, clearDraft } from "./draft.js";
 import { saveAttempt, loadAttempts } from "./attempts.js";
+import { initNavigation } from "./navigation.js";
 
 let difficulty = 0;
 let authListenerBound = false;
+let currentQuestionID = null;
 
 /**
  * Entry point from main.js
@@ -19,23 +21,34 @@ export async function loadQuestion(q, tags, li) {
 
     // --- render DOM FIRST
     const { questionID } = renderQuestion({ q, tags, li });
+    currentQuestionID = questionID;
     await loadSolutions(q, questionID);
 
+    // Navigation (previous, after quickly)
+    initNavigation({
+        getQuestions: () => window.__filteredQuestions,
+        getCurrentId: () => currentQuestionID,
+        onNavigate: (q) => {
+            // reuse existing behaviour
+            loadQuestion(q.data, q.tags, q.li);
+        }
+    });
+
     // --- DOM refs (safe now)
-    const statusEl = document.getElementById("status");
-    const notesEl = document.getElementById("notes");
-    const starsEl = document.getElementById("stars");
-    const commitBtn = document.getElementById("commit-attempt");
+    const statusElement = document.getElementById("status");
+    const notesElement = document.getElementById("notes");
+    const starsElement = document.getElementById("stars");
+    const commitButton = document.getElementById("commit-attempt");
     const pastList = document.getElementById("past-notes-list");
 
-    if (!statusEl || !notesEl || !starsEl || !commitBtn || !pastList) {
+    if (!statusElement || !notesElement || !starsElement || !commitButton || !pastList) {
         console.error("Viewer DOM not fully rendered");
         return;
     }
 
     function disableInputs(disabled) {
-        statusEl.disabled = disabled;
-        notesEl.disabled = disabled;
+        statusElement.disabled = disabled;
+        notesElement.disabled = disabled;
     }
 
     // --- auth binding (ONCE, after DOM exists)
@@ -49,21 +62,21 @@ export async function loadQuestion(q, tags, li) {
     // --- helper to save draft
     function persistDraft() {
         saveDraft(questionID, {
-            status: statusEl.value,
-            notes: notesEl.value,
+            status: statusElement.value,
+            notes: notesElement.value,
             time: getTime(),
             difficulty
         });
     }
 
     // --- stars (difficulty)
-    starsEl.onclick = e => {
-        if (!e.target.dataset.star || statusEl.disabled) return;
+    starsElement.onclick = e => {
+        if (!e.target.dataset.star || statusElement.disabled) return;
 
         const n = Number(e.target.dataset.star);
         difficulty = difficulty === n ? 0 : n;
 
-        [...starsEl.children].forEach(s => {
+        [...starsElement.children].forEach(s => {
             s.textContent =
                 Number(s.dataset.star) <= difficulty ? "★" : "☆";
         });
@@ -74,15 +87,15 @@ export async function loadQuestion(q, tags, li) {
 
     // --- commit button enable logic
     function updateCommitButton() {
-        commitBtn.disabled = !(statusEl.value === "completed" && difficulty > 0);
+        commitButton.disabled = !(statusElement.value === "completed" && difficulty > 0);
     }
 
-    statusEl.onchange = () => {
+    statusElement.onchange = () => {
         updateCommitButton();
         persistDraft();
     };
 
-    notesEl.oninput = persistDraft;
+    notesElement.oninput = persistDraft;
 
     // --- timer
     initTimer({ onTick: persistDraft });
@@ -90,12 +103,12 @@ export async function loadQuestion(q, tags, li) {
     // --- load local draft
     const draft = loadDraft(questionID);
     if (draft) {
-        statusEl.value = draft.status ?? "not-started";
-        notesEl.value = draft.notes ?? "";
+        statusElement.value = draft.status ?? "not-started";
+        notesElement.value = draft.notes ?? "";
         difficulty = draft.difficulty ?? 0;
         setTime(draft.time ?? 0);
 
-        [...starsEl.children].forEach(s => {
+        [...starsElement.children].forEach(s => {
             s.textContent =
                 Number(s.dataset.star) <= difficulty ? "★" : "☆";
         });
@@ -109,7 +122,7 @@ export async function loadQuestion(q, tags, li) {
     await loadSidebarAttempts(questionID, pastList);
 
     // --- commit completed attempt
-    commitBtn.onclick = async () => {
+    commitButton.onclick = async () => {
         const user = auth.currentUser;
         if (!user) {
             notify({
@@ -125,24 +138,27 @@ export async function loadQuestion(q, tags, li) {
             status: "completed",
             time: getTime(),
             difficulty,
-            notes: notesEl.value.trim()
+            notes: notesElement.value.trim()
         });
 
         clearDraft(questionID);
 
-        notify({
-            message: "Attempt saved",
-            type: "success",
-            timeout: 1500
-        });
+        commitButton.classList.add("success");
+        commitButton.textContent = "Saved ✓";
+
+        setTimeout(() => {
+            commitButton.classList.remove("success");
+            commitButton.textContent = "Save as completed attempt";
+        }, 1200);
+
 
         // reset UI
         difficulty = 0;
-        notesEl.value = "";
-        statusEl.value = "not-started";
+        notesElement.value = "";
+        statusElement.value = "not-started";
         setTime(0);
 
-        [...starsEl.children].forEach(s => (s.textContent = "☆"));
+        [...starsElement.children].forEach(s => (s.textContent = "☆"));
         updateCommitButton();
 
         await loadSidebarAttempts(questionID, pastList);

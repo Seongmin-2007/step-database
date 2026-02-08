@@ -72,52 +72,54 @@ function makeId({ year, paper, question }) {
 
 // Render question sidebar list
 function renderList() {
-  listEl.innerHTML = "";
+    listEl.innerHTML = "";
 
-  const filter = FILTER.toLowerCase(); // normalize input
+    const filter = FILTER.toLowerCase(); // normalize input
 
-  questions
-    .filter(q => {
-        const qId = makeId(q).toLowerCase();
+    const filtered = questions
+        .filter(q => {
+            const qId = makeId(q).toLowerCase();
 
-        const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
-        const tags = (questionTags[qPath] || []).map(t => t.toLowerCase()); // lowercase for search
+            const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
+            const tags = (questionTags[qPath] || []).map(t => t.toLowerCase()); // lowercase for search
 
-        // Search matches question ID OR any tag
-        return qId.includes(filter) || tags.some(t => t.includes(filter));
-    })
-    .forEach(q => {
-        const li = document.createElement("li");
-        li.textContent = makeId(q);
+            // Search matches question ID OR any tag
+            return qId.includes(filter) || tags.some(t => t.includes(filter));
+        })
+        .forEach(q => {
+            const li = document.createElement("li");
+            li.textContent = makeId(q);
 
-        // display tags below question
-        const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
-        const tags = questionTags[qPath] || [];
+            // display tags below question
+            const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
+            const tags = questionTags[qPath] || [];
 
-        if (tags.length) {
-            const tagContainer = document.createElement("div");
-            tagContainer.className = "tag-container";
+            if (tags.length) {
+                const tagContainer = document.createElement("div");
+                tagContainer.className = "tag-container";
 
-            tags.forEach(tag => {
-            const tagEl = document.createElement("span");
-            tagEl.className = "tag-chip";
-            tagEl.textContent = tag;
+                tags.forEach(tag => {
+                const tagEl = document.createElement("span");
+                tagEl.className = "tag-chip";
+                tagEl.textContent = tag;
 
-            // (optional) click to search by tag
-            tagEl.onclick = e => {
-                e.stopPropagation(); // don't trigger question click
-                search.value = tag;
-                FILTER = tag.toLowerCase();
-                renderList();
-            };
+                // (optional) click to search by tag
+                tagEl.onclick = e => {
+                    e.stopPropagation(); // don't trigger question click
+                    search.value = tag;
+                    FILTER = tag.toLowerCase();
+                    renderList();
+                };
 
-            tagContainer.appendChild(tagEl);
-            });
+                tagContainer.appendChild(tagEl);
+                });
 
-            li.appendChild(tagContainer);
-        }
+                li.appendChild(tagContainer);
+            }
 
-        li.onclick = () => loadQuestion(q, tags, li);
-        listEl.appendChild(li);
-    });
+            li.onclick = () => loadQuestion(q, tags, li);
+            listEl.appendChild(li);
+        });
+
+    window.__filteredQuestions = filtered;
 }
