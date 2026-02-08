@@ -55,6 +55,8 @@ export function createAttemptCard(doc) {
             armed = false;
         }
     })
+
+    return attemptCard;
 }
 
 export function notify({
