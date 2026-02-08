@@ -6,12 +6,9 @@ import { auth, db } from "./config.js";
  * Creates a card element for a single attempt.
  * @param {Object} attemptDoc - Firestore doc or cached object.
  *   Should have: { id, ref?, data: ()=>object, userID?, questionID? }
- * @param {string} questionID - Needed if cached object doesn't have ref.
  */
-export function createAttemptCard(attemptDoc, questionID) {
+export function createAttemptCard(attemptDoc) {
     const data = attemptDoc.data();
-    window.tempvar = attemptDoc;
-    window.tempvar1 = data;
     const attemptCard = document.createElement("li");
     attemptCard.innerHTML = `
         <div class="past-attempt">
@@ -54,7 +51,7 @@ export function createAttemptCard(attemptDoc, questionID) {
         try {
             console.log("tryna delete");
             const attemptRef = attemptDoc.ref 
-                || doc(db, "users", data.userID || auth.currentUser.uid, "questions", data.questionID || questionID, "attempts", data.id);
+                || doc(db, "users", data.userID || auth.currentUser.uid, "questions", data.questionID || questionID, "attempts", attemptDoc.id);
             await deleteDoc(attemptRef);
             console.log("Deleted");
             attemptCard.remove();
