@@ -1,99 +1,101 @@
-import { auth } from "../config.js";
-import { notify, createAttemptCard } from "../ui.js";
+import { auth, db } from "../config.js";
+import { addDoc, collection, query, where, orderBy, getDocs, serverTimestamp } 
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-import { renderQuestion, loadSolutions } from "./render.js";
-import { initTimer, stop as stopTimer, setTime, getTime } from "./timer.js";
-import { saveDraft, loadDraft, clearDraft } from "./draft.js";
-import { saveAttempt, loadAttempts } from "./attempts.js";
+import { renderQuestion } from "./render.js";
+import { initTimer, getElapsedSeconds, resetTimer } from "./timer.js";
+import { loadDraft, saveDraft, clearDraft } from "./draft.js";
+import { createAttemptCard, notify } from "../ui.js";
 
-let difficulty = 0;
-let authListenerBound = false;
-
-/**
- * Entry point called from main.js
- */
+/* -------------------------
+   Public entry point
+-------------------------- */
 export async function loadQuestion(q, tags, li) {
-    // --- teardown from previous question (DOM-safe)
-    stopTimer();
-    difficulty = 0;
+    const questionID = `${q.year}-step${q.paper}-q${q.question}`;
 
-    // --- render DOM first (CRITICAL)
-    const { questionID } = renderQuestion({ q, tags, li });
-    await loadSolutions(q, questionID);
+    // highlight selected question
+    document.querySelectorAll("#questionList li")
+        .forEach(x => x.classList.remove("active"));
+    li.classList.add("active");
 
-    // --- grab DOM references AFTER render
+    // render UI
+    renderQuestion(q, tags, questionID);
+
+    // DOM refs (SAFE: after render)
     const statusEl = document.getElementById("status");
     const notesEl = document.getElementById("notes");
     const starsEl = document.getElementById("stars");
-    const pastList = document.getElementById("past-notes-list");
     const commitBtn = document.getElementById("commit-attempt");
+    const pastList = document.getElementById("past-notes-list");
 
-    // --- defensive check (should never fail now)
-    if (!statusEl || !notesEl || !starsEl || !commitBtn || !pastList) {
-        console.error("Viewer DOM missing critical elements");
-        return;
-    }
+    let difficulty = 0;
 
-    function disableInputs(disabled) {
-        statusEl.disabled = disabled;
-        notesEl.disabled = disabled;
-    }
-
-    // --- bind auth listener ONCE, AFTER DOM exists
-    if (!authListenerBound) {
-        authListenerBound = true;
-        auth.onAuthStateChanged(user => {
-            disableInputs(!user);
+    /* -------------------------
+       Difficulty stars
+    -------------------------- */
+    function updateStars() {
+        starsEl.querySelectorAll("span").forEach(s => {
+            const n = Number(s.dataset.star);
+            s.textContent = n <= difficulty ? "★" : "☆";
+            s.classList.toggle("active", n <= difficulty);
         });
     }
 
-    // --- persistence helper
-    function persistDraft() {
-        saveDraft(questionID, {
-            status: statusEl.value,
-            notes: notesEl.value,
-            time: getTime(),
-            difficulty
-        });
-    }
-
-    // --- stars (difficulty)
     starsEl.onclick = e => {
-        if (!e.target.dataset.star) return;
-
+        if (!e.target.dataset.star || statusEl.disabled) return;
         const n = Number(e.target.dataset.star);
-        difficulty = difficulty === n ? 0 : n;
-
-        [...starsEl.children].forEach(s => {
-            s.textContent =
-                Number(s.dataset.star) <= difficulty ? "★" : "☆";
-        });
-
-        persistDraft();
+        difficulty = (difficulty === n) ? 0 : n;
+        updateStars();
+        updateCommitButton();
+        saveDraft(questionID, statusEl, notesEl, difficulty, getElapsedSeconds());
     };
 
-    // --- inputs
-    statusEl.onchange = persistDraft;
-    notesEl.oninput = persistDraft;
+    /* -------------------------
+       Commit button logic
+    -------------------------- */
+    function updateCommitButton() {
+        commitBtn.disabled = !(statusEl.value === "completed" && difficulty > 0);
+    }
 
-    // --- timer
-    initTimer({ onTick: persistDraft });
+    statusEl.onchange = () => {
+        updateCommitButton();
+        saveDraft(questionID, statusEl, notesEl, difficulty, getElapsedSeconds());
+    };
 
-    // --- load draft AFTER everything is wired
+    notesEl.oninput = () =>
+        saveDraft(questionID, statusEl, notesEl, difficulty, getElapsedSeconds());
+
+    /* -------------------------
+       Timer
+    -------------------------- */
+    initTimer(questionID, () =>
+        saveDraft(questionID, statusEl, notesEl, difficulty, getElapsedSeconds())
+    );
+
+    /* -------------------------
+       Load local draft
+    -------------------------- */
     const draft = loadDraft(questionID);
     if (draft) {
         statusEl.value = draft.status ?? "not-started";
         notesEl.value = draft.notes ?? "";
         difficulty = draft.difficulty ?? 0;
-        setTime(draft.time ?? 0);
-
-        [...starsEl.children].forEach(s => {
-            s.textContent =
-                Number(s.dataset.star) <= difficulty ? "★" : "☆";
-        });
+        resetTimer(draft.time ?? 0);
+        updateStars();
+    } else {
+        resetTimer(0);
     }
 
-    // --- commit attempt
+    updateCommitButton();
+
+    /* -------------------------
+       Sidebar: previous attempts
+    -------------------------- */
+    await loadPreviousAttempts(questionID, pastList);
+
+    /* -------------------------
+       Save completed attempt
+    -------------------------- */
     commitBtn.onclick = async () => {
         const user = auth.currentUser;
         if (!user) {
@@ -104,33 +106,71 @@ export async function loadQuestion(q, tags, li) {
             return;
         }
 
-        stopTimer();
-
-        await saveAttempt(user.uid, questionID, {
+        const attempt = {
+            createdAt: serverTimestamp(),
             status: "completed",
-            time: getTime(),
+            time: getElapsedSeconds(),
             difficulty,
-            notes: notesEl.value.trim()
-        });
+            notes: notesEl.value.trim(),
+            questionID,
+            userID: user.uid
+        };
+
+        await addDoc(
+            collection(db, "users", user.uid, "questions", questionID, "attempts"),
+            attempt
+        );
+
+        notify({ message: "Attempt saved", type: "success", timeout: 1500 });
 
         clearDraft(questionID);
+        resetTimer(0);
+        difficulty = 0;
+        notesEl.value = "";
+        updateStars();
+        updateCommitButton();
 
-        notify({
-            message: "Attempt saved",
-            type: "success",
-            timeout: 2000
-        });
-
-        // reload attempts
-        pastList.innerHTML = "";
-        const snap = await loadAttempts(user.uid, questionID);
-        snap.docs.forEach(d => pastList.appendChild(createAttemptCard(d)));
+        await loadPreviousAttempts(questionID, pastList);
     };
+}
 
-    // --- solution toggle
-    document.getElementById("solution-toggle").onclick = () => {
-        const s = document.getElementById("solution-container");
-        if (!s) return;
-        s.style.display = s.style.display === "none" ? "block" : "none";
-    };
+/* -------------------------
+   Load sidebar attempts
+-------------------------- */
+async function loadPreviousAttempts(questionID, pastList) {
+    pastList.innerHTML = "";
+
+    const user = auth.currentUser;
+    if (!user) {
+        showEmptyAttempts(pastList);
+        return;
+    }
+
+    const q = query(
+        collection(db, "users", user.uid, "questions", questionID, "attempts"),
+        where("status", "==", "completed"),
+        orderBy("createdAt", "desc")
+    );
+
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+        showEmptyAttempts(pastList);
+        return;
+    }
+
+    snap.docs.forEach(d =>
+        pastList.appendChild(createAttemptCard(d))
+    );
+}
+
+/* -------------------------
+   Empty sidebar state
+-------------------------- */
+function showEmptyAttempts(list) {
+    list.innerHTML = `
+        <li class="empty-attempts" style="opacity:0.6;font-style:italic;">
+            No previous attempts
+        </li>
+    `;
 }
