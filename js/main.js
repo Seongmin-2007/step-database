@@ -119,7 +119,7 @@ function renderList() {
             li.appendChild(tagContainer);
         }
 
-        li.onclick = () => selectQuestion(q, li, questionTags);
+        li.onclick = () => loadQuestion(q, questionTags, li);
         listEl.appendChild(li);
     });
 }
