@@ -21,14 +21,14 @@ for year in os.listdir(BASE_DIR):
             continue
 
         # Extract paper/step number
-        step_match = re.search(r'step(\d+)', step, re.I)
+        step_match = re.search(r'S(\d+)', step, re.I)
         if not step_match:
             continue
         paper = int(step_match.group(1))
 
         # Loop over question images
         for file in os.listdir(step_path):
-            q_match = re.search(r'q(\d+)\.png$', file, re.I)
+            q_match = re.search(r'Q(\d+)\.png$', file, re.I)
             if not q_match:
                 continue
             question_num = int(q_match.group(1))
