@@ -77,7 +77,7 @@ function renderList() {
 
   const filter = FILTER.toLowerCase(); // normalize input
 
-  QUESTIONS
+  questions
     .filter(q => {
         const qId = makeId(q).toLowerCase();
 

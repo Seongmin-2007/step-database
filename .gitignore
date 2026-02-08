@@ -1,3 +1,5 @@
 .DS_Store
 tag_generator.py
 change_file_names.py
+serviceAccountKey.json
+firebase_changer.py
