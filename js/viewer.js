@@ -10,7 +10,7 @@ import {
 
 import { createAttemptCard, notify } from "./ui.js";
 
-import { auth, db } from "./firebase.js";
+import { auth, db } from "./config.js";
 
 export async function loadQuestion(q, tags, li) {
     const viewer = document.getElementById("viewer");
