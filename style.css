@@ -319,6 +319,11 @@ button:hover {
 .delete-attempt:hover {
   color: var(--danger);
 }
+/* Armed state (after first click) */
+.delete-attempt.confirm {
+  color: #ef4444;
+  font-weight: 600;
+}
 
 /* ================================
    9. TAGS

@@ -54,7 +54,7 @@ export function createAttemptCard(attemptDoc) {
                 || doc(db, "users", data.userID || auth.currentUser.uid, "questions", data.questionID, "attempts", attemptDoc.id);
             
             await deleteDoc(attemptRef);
-            localStorage.removeItem("attempts:" + questionID);
+            localStorage.removeItem("attempts:" + data.questionID);
             attemptCard.remove();
         } catch (err) {
             console.log(err);
