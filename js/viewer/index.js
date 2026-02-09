@@ -216,9 +216,13 @@ export async function loadQuestion(q, tags, li) {
 
     // --- solution toggle
     document.getElementById("solution-toggle").onclick = async () => {
-        await loadSolutions(q, questionID);
         const s = document.getElementById("solution-container");
-        if (!s) console.log("No solution container found");
+        if (!s) return;
+
+        if (!s.classList.contains("show")) {
+            await loadSolutions(q, questionID);
+        }
+        
         s.classList.toggle("show");
     };
 }

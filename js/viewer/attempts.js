@@ -23,5 +23,6 @@ export async function loadAttempts(uid, qid) {
         where("status", "==", "completed"),
         orderBy("createdAt", "desc")
     );
+    
     return getDocs(q);
 }

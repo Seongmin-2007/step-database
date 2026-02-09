@@ -93,7 +93,7 @@ export function renderQuestion({ q, tags, li }) {
 
         <div id="solution-container" class="solution hidden">
             <p class="placeholder hidden">
-            Solution not available yet.
+                Solution not available yet.
             </p>
         </div>
         </div>
