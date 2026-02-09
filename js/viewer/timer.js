@@ -1,4 +1,4 @@
-import { formatTime } from "../utils.js";
+import { formatTime, parseTime } from "../utils.js";
 
 let interval = null;
 let elapsed = 0;
@@ -64,11 +64,12 @@ export function getTime() {
 export function makeTimeEditable(timeDisplay) {
     timeDisplay.addEventListener("click", () => {
         // Parse current display
-        const [minutes, seconds] = timeDisplay.textContent
-            .replace("min", "").replace("sec", "")
-            .split(" ")
-            .map(s => parseInt(s)) 
-            .filter(n => !isNaN(n));
+        const seconds = parseTime(timeDisplay.textContent);
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+
+        timeDisplay.style.display = "none";
 
         // Create inputs
         const minInput = document.createElement("input");
@@ -89,18 +90,23 @@ export function makeTimeEditable(timeDisplay) {
         saveBtn.style.marginLeft = "4px";
 
         const container = document.createElement("span");
+        container.appendChild(hrInput);
+        container.appendChild(document.createTextNode("hrs "));
         container.appendChild(minInput);
-        container.appendChild(document.createTextNode(" : "));
+        container.appendChild(document.createTextNode("mins "));
         container.appendChild(secInput);
+        container.appendChild(document.createTextNode("secs "));
         container.appendChild(saveBtn);
 
-        timeDisplay.replaceWith(container);
+        timeDisplay.parentNode.insertBefore(container, timeDisplay.nextSibling);
 
         saveBtn.onclick = () => {
             const totalSec = Number(minInput.value) * 60 + Number(secInput.value);
             setTime(totalSec);
-            container.replaceWith(timeDisplay);
-            timeDisplay.textContent = `${minInput.value}min ${secInput.value}sec`;
+
+            timeDisplay.textContent = formatTime(total);
+            container.remove();
+            timeDisplay.style.display = ""; // show it again
         };
     });
 }
