@@ -111,7 +111,7 @@ export function makeTimeEditable(timeDisplay) {
             const totalSec = Number(minInput.value) * 60 + Number(secInput.value);
             setTime(totalSec);
 
-            timeDisplay.textContent = formatTime(total);
+            timeDisplay.textContent = formatTime(totalSec);
             container.remove();
             timeDisplay.style.display = ""; // show it again
         };
