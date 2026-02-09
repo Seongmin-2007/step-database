@@ -10,107 +10,107 @@ export function renderQuestion({ q, tags, li }) {
 
     viewer.innerHTML = `
     <section class="question-header">
-        <div class="question-title">
+    <div class="question-title">
         <h2>${questionID}</h2>
         <div class="question-tags">
-            ${tags.length
+        ${tags.length
             ? tags.map(t => `<span class="tag-chip">${t}</span>`).join("")
-            : `<span class="tag-muted">No tags</span>`
-            }
+            : `<span class="tag-muted">No tags</span>`}
         </div>
-        </div>
+    </div>
     </section>
 
     <div class="question-layout">
 
-        <!-- LEFT: Question + tools -->
-        <div class="question-main">
+    <!-- LEFT: Question + tools -->
+    <div class="question-main">
 
         <!-- Question content -->
         <div class="question-content">
-            <img src="${questionImage}" alt="Question ${questionID}">
+        <img src="${questionImage}" alt="Question ${questionID}">
         </div>
 
         <!-- Attempt panel -->
         <section class="attempt-panel">
 
-            <div class="attempt-row">
+        <div class="attempt-row">
             <div class="attempt-field">
-                <label>Status</label>
-                <select id="status">
-                    <option value="not-started">Not started</option>
-                    <option value="attempted">Attempted</option>
-                    <option value="completed">Completed</option>
-                    <option value="revision">Needs revision</option>
-                </select>
+            <label>Status</label>
+            <select id="status">
+                <option value="not-started">Not started</option>
+                <option value="attempted">Attempted</option>
+                <option value="completed">Completed</option>
+                <option value="revision">Needs revision</option>
+            </select>
             </div>
 
             <div class="attempt-field time-control">
-                <label>Timer</label>
-                <div class="timer-controls">
-                    <span id="time-display">00min 00sec</span>
-                    <div class="timer-buttons">
-                        <button id="start-timer">Start</button>
-                    </div>
-                </div>
+            <label>Timer</label>
+            <div class="timer-controls">
+                <span id="time-display">00min 00sec</span>
+                <span class="time-edit-inline"></span>
+            </div>
+            <div class="timer-buttons">
+                <button id="start-timer">Start</button>
             </div>
             </div>
+        </div>
 
-            <div class="attempt-row">
+        <div class="attempt-row">
             <div class="attempt-field">
-                <label>Difficulty</label>
-                <div id="stars" class="stars">
+            <label>Difficulty</label>
+            <div id="stars" class="stars">
                 <span data-star="1">☆</span>
                 <span data-star="2">☆</span>
                 <span data-star="3">☆</span>
                 <span data-star="4">☆</span>
                 <span data-star="5">☆</span>
-                </div>
             </div>
             </div>
+        </div>
 
-            <div class="attempt-row">
+        <div class="attempt-row">
             <div class="attempt-field full">
-                <label>Notes</label>
-                <textarea id="notes" rows="3" placeholder="Key ideas, mistakes, insights…"></textarea>
+            <label>Notes</label>
+            <textarea id="notes" rows="3" placeholder="Key ideas, mistakes, insights…"></textarea>
             </div>
-            </div>
+        </div>
 
-            <div class="attempt-actions">
+        <div class="attempt-actions">
             <div id="save-status" class="save-status"></div>
             <button id="commit-attempt" class="primary">
-                Mark as completed
+            Mark as completed
             </button>
-            </div>
+        </div>
 
         </section>
 
         <!-- Solution -->
         <div class="solution-section">
-            <button id="solution-toggle" class="secondary">
+        <button id="solution-toggle" class="secondary">
             Show solution
-            </button>
+        </button>
 
-            <div id="solution-container" class="solution hidden">
+        <div id="solution-container" class="solution hidden">
             <p class="placeholder hidden">
-                Solution not available yet.
+            Solution not available yet.
             </p>
-            </div>
+        </div>
         </div>
 
-        </div>
+    </div>
 
-        <!-- RIGHT: Sidebar -->
-        <aside class="question-sidebar">
+    <!-- RIGHT: Sidebar -->
+    <aside class="question-sidebar">
         <h3>Previous completions</h3>
         <ul id="past-notes-list"></ul>
-        </aside>
+    </aside>
 
     </div>
 
     <div class="question-nav">
-        <button id="prev-question">← Previous</button>
-        <button id="next-question">Next →</button>
+    <button id="prev-question">← Previous</button>
+    <button id="next-question">Next →</button>
     </div>
     `;
 

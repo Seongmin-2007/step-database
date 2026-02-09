@@ -13,6 +13,10 @@ export function initTimer({ onTick }) {
 
     if (!startBtn || !display) return;
 
+    if (display.textContent != "00min 00sec") {
+        startBtn.textContent = "Resume";
+    }
+
     function update() {
         display.textContent = formatTime(elapsed);
     }
@@ -52,6 +56,15 @@ export function setTime(seconds) {
     const display = qs("time-display");
     elapsed = seconds;
     display.textContent = formatTime(elapsed);
+
+
+    // If timer is running, pause it when time is manually set
+    if (interval) {
+        clearInterval(interval);
+        interval = null;
+        const startBtn = qs("start-timer");
+        if (startBtn) startBtn.textContent = "Resume";
+    }
 }
 
 export function getTime() {
@@ -69,6 +82,13 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
     timeDisplay.addEventListener("click", () => {
         // Prevent multiple containers
         if (timeDisplay.nextElementSibling?.classList.contains("time-edit-container")) return;
+
+        // Pause timer while editing
+        if (interval) {
+            clearInterval(interval);
+            interval = null;
+            if (startBtn) startBtn.textContent = "Resume";
+        }
 
         // Disable timer button while editing
         if (startBtn) startBtn.disabled = true;
@@ -113,6 +133,9 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
 
         timeDisplay.parentNode.insertBefore(container, timeDisplay.nextSibling);
 
+        // Hide original span but keep layout
+        timeDisplay.style.opacity = "0.3";
+
         saveBtn.onclick = () => {
             const totalSec = Number(hrInput.value) * 3600 +
                              Number(minInput.value) * 60 +
@@ -122,10 +145,8 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
             persistDraft();
 
             // Reset display & remove input container
-            timeDisplay.textContent = formatTime(totalSec);
             container.remove();
-            timeDisplay.style.display = "";
-            
+            timeDisplay.style.opacity = "1";
             if (startBtn) startBtn.disabled = false;
         };
     });
