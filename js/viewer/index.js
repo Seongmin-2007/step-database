@@ -219,11 +219,11 @@ export async function loadQuestion(q, tags, li) {
         const s = document.getElementById("solution-container");
         if (!s) return;
 
-        if (!s.classList.contains("show")) {
+        if (s.classList.contains("hidden")) {
             await loadSolutions(q, questionID);
         }
-        
-        s.classList.toggle("show");
+
+        s.classList.toggle("hidden");
     };
 }
 
