@@ -1,11 +1,13 @@
 import { auth } from "../config.js";
 import { notify, createAttemptCard } from "../ui.js";
+import { emit } from "../eventBus.js";
 
 import { renderQuestion, loadSolutions } from "./render.js";
 import { initTimer, stop as stopTimer, setTime, getTime, makeTimeEditable } from "./timer.js";
 import { saveDraft, loadDraft, clearDraft } from "./draft.js";
 import { saveAttempt, loadAttempts } from "./attempts.js";
 import { initNavigation } from "./navigation.js";
+
 
 let difficulty = 0;
 let authListenerBound = false;
@@ -40,6 +42,16 @@ export async function loadQuestion(q, tags, li) {
     // --- render DOM FIRST
     const { questionID } = renderQuestion({ q, tags, li });
     currentQuestionID = questionID;
+
+    // Enable tag filtering inside the viewer
+    document.querySelectorAll(".viewer-tag").forEach(el => {
+        el.onclick = e => {
+            e.stopPropagation();
+            const tag = e.target.dataset.tag;
+            emit("filter:apply", tag);
+        };
+    });
+
 
     // Navigation (previous, after quickly)
     initNavigation({

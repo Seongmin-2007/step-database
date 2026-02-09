@@ -17,7 +17,7 @@ fetch("build.json", { cache: "no-store" })
 
 import "./auth.js";
 import { loadQuestion } from "./viewer/index.js";
-
+import { on } from "./eventBus.js";
 
 const themeToggleBtn = document.getElementById("theme-toggle");
 
@@ -84,6 +84,20 @@ search.addEventListener("input", e => {
     const value = e.target.value.toLowerCase();
     FILTER = value;
     renderList();
+});
+
+
+// Listen for tag filter events from render.js
+on("filter:apply", tag => {
+    search.value = tag;
+    FILTER = tag.toLowerCase();
+    renderList();
+
+    // Optional: auto-select first match
+    const first = window.__filteredQuestions?.[0];
+    if (first) {
+        loadQuestion(first.data, first.tags, first.li);
+    }
 });
 
 

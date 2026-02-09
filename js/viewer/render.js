@@ -14,7 +14,7 @@ export function renderQuestion({ q, tags, li }) {
         <h2>${questionID}</h2>
         <div class="question-tags">
         ${tags.length
-            ? tags.map(t => `<span class="tag-chip">${t}</span>`).join("")
+            ? tags.map(t => `<span class="tag-chip viewer-tag" data-tag="${t}">${t}</span>`).join("")
             : `<span class="tag-muted">No tags</span>`}
         </div>
     </div>
