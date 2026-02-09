@@ -134,8 +134,8 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
         timeDisplay.parentNode.insertBefore(container, timeDisplay.nextSibling);
 
         // Hide original span but keep layout
-        timeDisplay.style.display = "";
-        startBtn.style.display = "";
+        timeDisplay.style.display = "none";
+        startBtn.style.display = "none";
 
         saveBtn.onclick = () => {
             const totalSec = Number(hrInput.value) * 3600 +
