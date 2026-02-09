@@ -214,16 +214,11 @@ export async function loadQuestion(q, tags, li) {
         await loadSidebarAttempts(questionID, pastList);
     };
 
-    let numberOfSolutionImages = loadSolutions(q, questionID) ?? 0;
+    
+    const solutionContainer = document.getElementById("solution-container");
+    loadSolutions(q, questionID);
     document.getElementById("solution-toggle").onclick = async () => {        
-        if (numberOfSolutionImages == 0) {
-            const placeholder = container.querySelector(".placeholder");
-            placeholder.classList.toggle("hidden");
-        } else {
-            for (let i = 1; i <= numberOfSolutionImages; j++) {
-                document.getElementById(`${questionID}-${i}`).classList.toggle("hidden");
-            }
-        }
+        solutionContainer.classList.toggle("show");
     };
 }
 

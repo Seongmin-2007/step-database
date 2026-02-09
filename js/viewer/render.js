@@ -117,23 +117,20 @@ export function renderQuestion({ q, tags, li }) {
     return { questionID };
 }
 
-/**
- * 
- * @param {*} q 
- * @param {*} questionID 
- * @returns {Number} Number of solutions
- */
 export async function loadSolutions(q, questionID) {
     const container = document.getElementById("solution-container");
+    const placeholder = container.querySelector(".placeholder");
 
     let i = 1;
+    let foundAny = false;
+
     while (true) {
         const path = `images/solutions/${q.year}/S${q.paper}/Q${q.question}-${i}.jpg`;
 
         const img = document.createElement("img");
         img.src = path;
         img.alt = `Solution ${questionID} (${i})`;
-        img.id = `${questionID}-${i}`;
+        // img.id = `${questionID}-$`;
 
         const loaded = await new Promise(resolve => {
             img.onload = () => resolve(true);
@@ -143,8 +140,11 @@ export async function loadSolutions(q, questionID) {
         if (!loaded) break;
 
         container.appendChild(img);
+        foundAny = true;
         i++;
     }
 
-    return i - 1;
+    if (!foundAny) {
+        placeholder.classList.remove("hidden");
+    }
 }
