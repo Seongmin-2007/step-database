@@ -509,14 +509,50 @@ img {
   flex: 1 1 100%;
 }
 
-.timer-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+
+/* ================================
+   TIMER CONTAINER
+   ================================ */
+.time-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.timer-buttons {
+    margin-top: 6px;
+    display: flex;
+    gap: 6px;
 }
 
 /* ================================
-   TIMER
+   TIMER BUTTONS
+   ================================ */
+.timer-buttons button,
+.time-save-btn {
+    padding: 4px 10px;
+    border: none;
+    background-color: #0077ff;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.timer-buttons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.timer-buttons button:hover:not(:disabled),
+.time-save-btn:hover {
+    background-color: #005ec2;
+}
+
+/* ================================
+   NUMBER INPUTS (editable time)
    ================================ */
 /* Remove default spinners for number inputs */
 input[type=number]::-webkit-outer-spin-button,
@@ -530,38 +566,27 @@ input[type=number] {
     appearance: textfield;
 }
 
-/* Styled numeric inputs for timer */
+/* Styled numeric inputs for editable time */
 .time-edit-input {
-    width: 50px;           /* consistent width */
-    padding: 4px 6px;      /* slight padding */
-    margin-right: 4px;     /* space between inputs */
-    border: 1px solid #ccc; /* subtle border */
-    border-radius: 6px;    /* rounded corners */
-    font-size: 0.9em;      /* matches your UI font */
-    text-align: center;    /* numbers centered */
+    width: 50px;              /* consistent width */
+    padding: 4px 6px;         /* slight padding */
+    margin-right: 4px;        /* space between inputs */
+    border: 1px solid #ccc;   /* subtle border */
+    border-radius: 6px;       /* rounded corners */
+    font-size: 0.9em;         /* matches your UI font */
+    text-align: center;       /* numbers centered */
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .time-edit-input:focus {
     outline: none;
-    border-color: #0077ff;  /* primary highlight */
+    border-color: #0077ff;    /* primary highlight */
     box-shadow: 0 0 4px rgba(0, 119, 255, 0.5);
 }
 
-/* Save button styling */
+/* Save button inside editable time input area */
 .time-save-btn {
-    padding: 4px 8px;
-    border: none;
-    background-color: #0077ff;
-    color: white;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.time-save-btn:hover {
-    background-color: #005ec2;
+    margin-left: 4px;
 }
 
 

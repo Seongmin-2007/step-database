@@ -38,19 +38,21 @@ export function renderQuestion({ q, tags, li }) {
             <div class="attempt-field">
                 <label>Status</label>
                 <select id="status">
-                <option value="not-started">Not started</option>
-                <option value="attempted">Attempted</option>
-                <option value="completed">Completed</option>
-                <option value="revision">Needs revision</option>
+                    <option value="not-started">Not started</option>
+                    <option value="attempted">Attempted</option>
+                    <option value="completed">Completed</option>
+                    <option value="revision">Needs revision</option>
                 </select>
             </div>
 
             <div class="attempt-field time-control">
                 <label>Timer</label>
                 <div class="timer-controls">
-                <button id="start-timer">Start</button>
-                <button id="stop-timer" disabled>Stop</button>
-                <span id="time-display">00min 00sec</span>
+                    <span id="time-display">00min 00sec</span>
+                    <div class="timer-buttons">
+                        <button id="start-timer">Start</button>
+                        <button id="stop-timer" disabled>Stop</button>
+                    </div>
                 </div>
             </div>
             </div>

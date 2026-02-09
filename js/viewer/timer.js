@@ -18,20 +18,36 @@ export function initTimer({ onTick }) {
         display.textContent = formatTime(elapsed);
     }
 
-    startBtn.onclick = () => {
+    function start() {
         if (interval) return;
-
-        startBtn.disabled = true;
-        stopBtn.disabled = false;
-
         interval = setInterval(() => {
             elapsed++;
             update();
             onTick(elapsed);
         }, 1000);
+
+        startBtn.textContent = "Pause";
+        stopBtn.disabled = true; // optional: hide stop entirely if using Pause
+    }
+
+    function pause() {
+        if (interval) clearInterval(interval);
+        interval = null;
+
+        startBtn.textContent = "Resume";
+        stopBtn.disabled = true;
+    }
+
+    startBtn.onclick = () => {
+        if (interval) pause();
+        else start();
     };
 
-    stopBtn.onclick = stop;
+    stopBtn.onclick = () => {
+        pause();
+        setTime(0);
+        startBtn.textContent = "Start";
+    };
 
     update();
 }
@@ -39,12 +55,6 @@ export function initTimer({ onTick }) {
 export function stop() {
     if (interval) clearInterval(interval);
     interval = null;
-
-    const startBtn = qs("start-timer");
-    const stopBtn = qs("stop-timer");
-
-    if (startBtn) startBtn.disabled = false;
-    if (stopBtn) stopBtn.disabled = true;
 }
 
 export function setTime(seconds) {
@@ -64,10 +74,8 @@ export function getTime() {
  */
 export function makeTimeEditable(timeDisplay, persistDraft) {
     timeDisplay.addEventListener("click", () => {
-        // Avoid spawning multiple containers
-        if (timeDisplay.nextElementSibling?.classList.contains("time-edit-container")) {
-            return;
-        }
+        // Prevent multiple containers
+        if (timeDisplay.nextElementSibling?.classList.contains("time-edit-container")) return;
 
         const seconds = parseTime(timeDisplay.textContent);
         const hrs = Math.floor(seconds / 3600);
@@ -76,60 +84,51 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
 
         timeDisplay.style.display = "none";
 
-        // Create inputs
         const hrInput = document.createElement("input");
         hrInput.type = "number";
         hrInput.min = 0;
-        hrInput.value = hrs || 0;
-        hrInput.style.width = "40px";
+        hrInput.value = hrs;
+        hrInput.classList.add("time-edit-input");
 
         const minInput = document.createElement("input");
         minInput.type = "number";
         minInput.min = 0;
         minInput.max = 59;
-        minInput.value = mins || 0;
-        minInput.style.width = "40px";
+        minInput.value = mins;
+        minInput.classList.add("time-edit-input");
 
         const secInput = document.createElement("input");
         secInput.type = "number";
         secInput.min = 0;
         secInput.max = 59;
-        secInput.value = secs || 0;
-        secInput.style.width = "40px";
+        secInput.value = secs;
+        secInput.classList.add("time-edit-input");
 
         const saveBtn = document.createElement("button");
         saveBtn.textContent = "✔";
-        saveBtn.style.marginLeft = "4px";
-
-        hrInput.classList.add("time-edit-input");
-        minInput.classList.add("time-edit-input");
-        secInput.classList.add("time-edit-input");
         saveBtn.classList.add("time-save-btn");
 
         const container = document.createElement("span");
-        container.classList.add("time-edit-container"); // add class for identification
-        container.appendChild(hrInput);
-        container.appendChild(document.createTextNode("hrs "));
-        container.appendChild(minInput);
-        container.appendChild(document.createTextNode("mins "));
-        container.appendChild(secInput);
-        container.appendChild(document.createTextNode("secs "));
-        container.appendChild(saveBtn);
+        container.classList.add("time-edit-container");
+        container.append(hrInput, document.createTextNode("hrs "),
+                         minInput, document.createTextNode("mins "),
+                         secInput, document.createTextNode("secs "),
+                         saveBtn);
 
         timeDisplay.parentNode.insertBefore(container, timeDisplay.nextSibling);
 
         saveBtn.onclick = () => {
-            const totalSec =
-                Number(hrInput.value) * 3600 +
-                Number(minInput.value) * 60 +
-                Number(secInput.value);
+            const totalSec = Number(hrInput.value) * 3600 +
+                             Number(minInput.value) * 60 +
+                             Number(secInput.value);
 
             setTime(totalSec);
-            timeDisplay.textContent = formatTime(totalSec);
             persistDraft();
 
+            // Reset display & remove input container
+            timeDisplay.textContent = formatTime(totalSec);
             container.remove();
-            timeDisplay.style.display = ""; // show original span again
+            timeDisplay.style.display = "";
         };
     });
 }
