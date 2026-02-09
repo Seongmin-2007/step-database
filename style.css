@@ -2,7 +2,7 @@
    1. THEME VARIABLES
 =============================== */
 :root {
-  /* Palette */
+  /* Palette: Cool Grays & Academic Blue */
   --bg: #f3f4f6;
   --panel: #ffffff;
   --border: #e5e7eb;
@@ -12,10 +12,10 @@
   /* Actions */
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
-  --accent-soft: #dbeafe; /* toned down for light mode */
+  --accent-soft: #eff6ff;
   --accent-text: #1e40af;
 
-  /* Status */
+  /* Status Colors */
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
@@ -26,11 +26,11 @@
   --radius-lg: 16px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
   --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
 
-  --transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+  --transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ================================
@@ -44,21 +44,63 @@ body.dark-mode {
   --muted: #9ca3af;
   --accent: #3b82f6;
   --accent-hover: #2563eb;
-  --accent-soft: #1e40af33; /* much softer in dark mode */
+  --accent-soft: #1e40af22;
   --accent-text: #93c5fd;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
   --shadow: 0 4px 6px rgba(0,0,0,0.5);
 }
 
-/* Smooth theme transitions */
-body, .sidebar, .content, .progress-panel, .past-attempt, .question-main, .question-sidebar {
+
+/* dark mode buttons */
+.theme-toggle-container {
+  margin-left: 1rem;
+}
+
+#theme-toggle {
+  font-size: 1.2rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#theme-toggle:hover {
+  background: var(--accent-soft);
+}
+
+
+/* Smooth animations for theme change */
+body {
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.sidebar, .content, .progress-panel, .past-attempt, .question-main, .question-sidebar {
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+
+/* ================================
+   SMOOTH ANIMATIONS i hope this work
+   ================================ */
+.question-layout, .progress-panel, #solution-container, .past-attempt {
+  transition: all 0.25s ease-in-out;
+}
+#solution-container {
+  max-height: 0;
+  overflow: hidden;
+}
+#solution-container.show {
+  max-height: 2000px; /* arbitrary high for smooth expansion */
+}
+
+
+
 /* ================================
    2. RESET & TYPOGRAPHY
-=============================== */
+   ================================ */
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -67,20 +109,19 @@ body {
   line-height: 1.6;
 }
 
-h1,h2,h3 {
+h1, h2, h3 {
   margin: 0 0 0.75em;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
-button,input,select,textarea {
+button, input, select, textarea {
   font-family: inherit;
-  transition: var(--transition);
 }
 
 /* ================================
-   3. LAYOUT
-=============================== */
+   3. APP LAYOUT
+   ================================ */
 .layout {
   display: flex;
   height: 100vh;
@@ -97,7 +138,15 @@ button,input,select,textarea {
   flex-direction: column;
 }
 
-/* Sidebar list & search */
+.sidebar h2 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+/* Search */
 #search {
   width: 100%;
   padding: 10px 12px;
@@ -106,19 +155,19 @@ button,input,select,textarea {
   border: 1px solid var(--border);
   background: #f8fafc;
 }
-
 #search:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
+/* Question List */
 #questionList {
   list-style: none;
   padding: 0;
   margin: 0;
-  flex: 1;
   overflow-y: auto;
+  flex: 1;
 }
 
 #questionList li {
@@ -127,42 +176,47 @@ button,input,select,textarea {
   font-size: 0.95rem;
   color: var(--muted);
   cursor: pointer;
+  transition: var(--transition);
 }
 
 #questionList li:hover {
-  background: var(--accent-soft);
-  color: var(--accent-text);
+  background: #f1f5f9;
+  color: var(--text);
 }
 
 #questionList li.active {
-  background: var(--accent);
-  color: white;
+  background: var(--accent-soft);
+  color: var(--accent-text);
   font-weight: 500;
 }
 
-/* Main content */
+/* ================================
+   4. MAIN CONTENT
+   ================================ */
 .content {
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
 }
 
-/* Question layout */
+/* ================================
+   5. QUESTION VIEW
+   ================================ */
 .question-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;
   gap: 1.75rem;
 }
 
-/* Question content */
+/* Question main */
 .question-content {
   background: var(--panel);
   border-radius: var(--radius-lg);
-  padding: 2rem;
-  box-shadow: var(--shadow-sm);
+  padding: 2.5rem;
+  box-shadow: var(--shadow);
 }
 
-/* Sidebar in question view */
+/* Sidebar tools */
 .question-sidebar {
   display: flex;
   flex-direction: column;
@@ -170,8 +224,269 @@ button,input,select,textarea {
 }
 
 /* ================================
+   6. PROGRESS PANEL
+   ================================ */
+.progress-panel {
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.progress-panel label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.progress-panel input,
+.progress-panel select,
+.progress-panel textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #f8fafc;
+}
+
+.progress-panel textarea {
+  resize: vertical;
+}
+
+/* ================================
+   7. BUTTONS
+   ================================ */
+button {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+button:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+/* ================================
+   8. PAST ATTEMPTS (VERTICAL, CLEAN)
+   ================================ */
+#past-notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.past-attempt {
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.past-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.past-notes {
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+/* Delete */
+.delete-attempt {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 1.2rem;
+  color: #cbd5f5;
+  cursor: pointer;
+}
+.delete-attempt:hover {
+  color: var(--danger);
+}
+
+/* ================================
+   9. TAGS
+   ================================ */
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.tag-chip {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tag-chip:hover {
+  background: #e0e7ff;
+}
+
+/* ================================
+   10. UTILITIES
+   ================================ */
+img {
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+  margin: 1.5rem 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+
+/* ================================
+   PROFILE DROPDOWN MENU
+   ================================ */
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* spacing between toggle and auth buttons */
+  margin-left: auto; /* push to right */
+}
+
+#theme-toggle {
+  flex-shrink: 0;
+}
+
+
+.auth-area {
+  position: relative; /* anchor for dropdown positioning */
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);   /* drop below profile button */
+  right: 0;
+
+  min-width: 180px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+
+  z-index: 200;
+}
+
+/* Menu items */
+.dropdown-item {
+  background: none;
+  border: none;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.dropdown-item:hover {
+  background: var(--bg);
+}
+
+/* Optional divider support */
+.dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 0;
+}
+
+/* Destructive action (logout) */
+.dropdown-item.danger {
+  color: var(--danger);
+}
+
+.dropdown-item.danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* Optional subtle animation */
+.dropdown-menu {
+  transform-origin: top right;
+  animation: dropdownFade 120ms ease-out;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+
+
+
+/* ================================
+   QUESTION HEADER FOR viewer/render.js
+   ================================ */
+.question-header {
+  margin-bottom: 1.5rem;
+}
+
+.question-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.question-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-muted {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ================================
+   QUESTION CONTENT
+   ================================ */
+.question-content {
+  background: var(--panel);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ================================
    ATTEMPT PANEL
-=============================== */
+   ================================ */
 .attempt-panel {
   margin-top: 1.5rem;
   background: var(--panel);
@@ -182,8 +497,8 @@ button,input,select,textarea {
 
 .attempt-row {
   display: flex;
-  flex-wrap: wrap;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .attempt-field {
@@ -196,90 +511,90 @@ button,input,select,textarea {
   flex: 1 1 100%;
 }
 
-/* Timer */
+
+/* ================================
+   TIMER CONTAINER
+   ================================ */
 .time-control {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .timer-buttons {
-  display: flex;
-  gap: 6px;
+    margin-top: 6px;
+    display: flex;
+    gap: 6px;
 }
 
-/* Editable time inputs */
-.time-edit-input {
-  width: 50px;
-  padding: 4px 6px;
-  margin-right: 4px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  text-align: center;
-  font-size: 0.9em;
-}
-
-.time-edit-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 4px rgba(37,99,235,0.3);
-}
-
+/* ================================
+   TIMER BUTTONS
+   ================================ */
+.timer-buttons button,
 .time-save-btn {
-  padding: 4px 8px;
-  background: var(--accent);
-  color: white;
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-}
-
-/* Timer buttons */
-.timer-buttons button {
-  padding: 6px 12px;
-  background: var(--accent);
-  color: white;
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
+    padding: 4px 10px;
+    border: none;
+    background-color: #0077ff;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .timer-buttons button:disabled {
-  background-color: #6b7280;
-  cursor: not-allowed;
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
-.timer-buttons button:hover:not(:disabled) {
-  background-color: var(--accent-hover);
-}
-
-/* ================================
-   STARS
-=============================== */
-.stars span {
-  font-size: 1.2rem;
-  cursor: pointer;
-  margin-right: 4px;
-}
-
-.stars span:hover {
-  color: var(--accent);
+.timer-buttons button:hover:not(:disabled),
+.time-save-btn:hover {
+    background-color: #005ec2;
 }
 
 /* ================================
-   NOTES
-=============================== */
-textarea {
-  padding: 8px 10px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  resize: vertical;
+   NUMBER INPUTS (editable time)
+   ================================ */
+/* Remove default spinners for number inputs */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
+
+input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield;
+}
+
+/* Styled numeric inputs for editable time */
+.time-edit-input {
+    width: 50px;              /* consistent width */
+    padding: 4px 6px;         /* slight padding */
+    margin-right: 4px;        /* space between inputs */
+    border: 1px solid #ccc;   /* subtle border */
+    border-radius: 6px;       /* rounded corners */
+    font-size: 0.9em;         /* matches your UI font */
+    text-align: center;       /* numbers centered */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.time-edit-input:focus {
+    outline: none;
+    border-color: #0077ff;    /* primary highlight */
+    box-shadow: 0 0 4px rgba(0, 119, 255, 0.5);
+}
+
+/* Save button inside editable time input area */
+.time-save-btn {
+    margin-left: 4px;
+}
+
 
 /* ================================
    ACTIONS
-=============================== */
+   ================================ */
 .attempt-actions {
   display: flex;
   justify-content: space-between;
@@ -298,54 +613,17 @@ button.primary:hover {
 }
 
 button.secondary {
-  margin-top: 1rem;
-}
-
-/* Saved state */
-button.success {
-  background: #ecfdf5;
-  border-color: var(--success);
-  color: #047857;
-  animation: pulse 0.6s ease-out;
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
-  100% { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+  margin-top: 1.5rem;
 }
 
 /* ================================
    SOLUTION SECTION
-=============================== */
+   ================================ */
 .solution-section {
   margin-top: 1.5rem;
 }
 
-#solution-container {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.25s ease-in-out;
-}
-
-#solution-container.show {
-  max-height: 2000px;
-}
-
-/* ================================
-   TAGS
-=============================== */
-.tag-chip {
-  background: var(--accent-soft);
-  color: var(--accent-text);
-  font-size: 0.75rem;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-weight: 600;
-}
-
-/* ================================
-   NAVIGATION
-=============================== */
+/* left right navigation buttons */
 .question-nav {
   display: flex;
   justify-content: space-between;
@@ -354,11 +632,30 @@ button.success {
   border-top: 1px solid var(--border);
 }
 
+
+
+
+
+
+
+
 /* ================================
-   IMAGES
-=============================== */
-img {
-  max-width: 100%;
-  border-radius: var(--radius-sm);
-  margin: 1.5rem 0;
+   FOR viewer/index.js UPON SAVING
+   ================================ */
+button.success {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #047857;
+  animation: pulse 600ms ease-out;
 }
+
+@keyframes pulse {
+  from { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+  to { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+}
+
+
+
+
+
+
