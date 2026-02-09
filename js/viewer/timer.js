@@ -60,8 +60,9 @@ export function getTime() {
 /**
  * Makes a given span element editable on click
  * @param {HTMLElement} timeDisplay
+ * @param {function} persistDraft Saves draft to local cloud on switching
  */
-export function makeTimeEditable(timeDisplay) {
+export function makeTimeEditable(timeDisplay, persistDraft) {
     timeDisplay.addEventListener("click", () => {
         // Avoid spawning multiple containers
         if (timeDisplay.nextElementSibling?.classList.contains("time-edit-container")) {
@@ -99,7 +100,7 @@ export function makeTimeEditable(timeDisplay) {
         const saveBtn = document.createElement("button");
         saveBtn.textContent = "✔";
         saveBtn.style.marginLeft = "4px";
-        
+
         hrInput.classList.add("time-edit-input");
         minInput.classList.add("time-edit-input");
         secInput.classList.add("time-edit-input");
@@ -125,6 +126,7 @@ export function makeTimeEditable(timeDisplay) {
 
             setTime(totalSec);
             timeDisplay.textContent = formatTime(totalSec);
+            persistDraft();
 
             container.remove();
             timeDisplay.style.display = ""; // show original span again
