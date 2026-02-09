@@ -132,7 +132,8 @@ export async function loadQuestion(q, tags, li) {
     initTimer({ onTick: persistDraft });
 
     // Make time editable on click
-    makeTimeEditable(persistDraft);
+    const timeDisplay = document.getElementById("time-display");
+    makeTimeEditable(timeDisplay, persistDraft);
 
     // --- load local draft
     const draft = loadDraft(questionID);
