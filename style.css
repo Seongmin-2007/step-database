@@ -84,14 +84,16 @@ body {
    SMOOTH ANIMATIONS i hope this work
    ================================ */
 .question-layout, .progress-panel, #solution-container, .past-attempt {
-  transition: all 0.25s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
+
 #solution-container {
   max-height: 0;
   overflow: hidden;
 }
+
 #solution-container.show {
-  max-height: 2000px; /* arbitrary high for smooth expansion */
+  max-height: 5000px; /* arbitrary high for smooth expansion */
 }
 
 
