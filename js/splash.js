@@ -181,7 +181,7 @@ document.getElementById("easteregg").onclick = () => {
   // We don't check sessionStorage here because the user explicitly clicked it
   const isSuperUser = auth.currentUser && auth.currentUser.uid === "xc1CIaOlAzcF0PvouZpR8WxwaDG3";
   // Random chance of screensaver mode vs normal splash
-  const mode = (isSuperUser && Math.random() > 0.8) ? "saver" : "splash";
+  const mode = (isSuperUser && Math.random() > 0.2) ? "splash" : "saver";
   
   startChaos(mode);
 };
