@@ -63,7 +63,11 @@ export function getTime() {
  */
 export function makeTimeEditable(timeDisplay) {
     timeDisplay.addEventListener("click", () => {
-        // Parse current display
+        // Avoid spawning multiple containers
+        if (timeDisplay.nextElementSibling?.classList.contains("time-edit-container")) {
+            return;
+        }
+
         const seconds = parseTime(timeDisplay.textContent);
         const hrs = Math.floor(seconds / 3600);
         const mins = Math.floor((seconds % 3600) / 60);
@@ -97,6 +101,7 @@ export function makeTimeEditable(timeDisplay) {
         saveBtn.style.marginLeft = "4px";
 
         const container = document.createElement("span");
+        container.classList.add("time-edit-container"); // add class for identification
         container.appendChild(hrInput);
         container.appendChild(document.createTextNode("hrs "));
         container.appendChild(minInput);
@@ -108,12 +113,16 @@ export function makeTimeEditable(timeDisplay) {
         timeDisplay.parentNode.insertBefore(container, timeDisplay.nextSibling);
 
         saveBtn.onclick = () => {
-            const totalSec = Number(minInput.value) * 60 + Number(secInput.value);
-            setTime(totalSec);
+            const totalSec =
+                Number(hrInput.value) * 3600 +
+                Number(minInput.value) * 60 +
+                Number(secInput.value);
 
+            setTime(totalSec);
             timeDisplay.textContent = formatTime(totalSec);
+
             container.remove();
-            timeDisplay.style.display = ""; // show it again
+            timeDisplay.style.display = ""; // show original span again
         };
     });
 }
