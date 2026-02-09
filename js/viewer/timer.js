@@ -9,10 +9,9 @@ function qs(id) {
 
 export function initTimer({ onTick }) {
     const startBtn = qs("start-timer");
-    const stopBtn = qs("stop-timer");
     const display = qs("time-display");
 
-    if (!startBtn || !stopBtn || !display) return;
+    if (!startBtn || !display) return;
 
     function update() {
         display.textContent = formatTime(elapsed);
@@ -25,17 +24,13 @@ export function initTimer({ onTick }) {
             update();
             onTick(elapsed);
         }, 1000);
-
         startBtn.textContent = "Pause";
-        stopBtn.disabled = true; // optional: hide stop entirely if using Pause
     }
 
     function pause() {
         if (interval) clearInterval(interval);
         interval = null;
-
         startBtn.textContent = "Resume";
-        stopBtn.disabled = true;
     }
 
     startBtn.onclick = () => {
@@ -43,18 +38,7 @@ export function initTimer({ onTick }) {
         else start();
     };
 
-    stopBtn.onclick = () => {
-        pause();
-        setTime(0);
-        startBtn.textContent = "Start";
-    };
-
     update();
-}
-
-export function stop() {
-    if (interval) clearInterval(interval);
-    interval = null;
 }
 
 export function setTime(seconds) {
@@ -73,9 +57,14 @@ export function getTime() {
  * @param {function} persistDraft Saves draft to local cloud on switching
  */
 export function makeTimeEditable(timeDisplay, persistDraft) {
+    const startBtn = qs("start-timer");
+
     timeDisplay.addEventListener("click", () => {
         // Prevent multiple containers
         if (timeDisplay.nextElementSibling?.classList.contains("time-edit-container")) return;
+
+        // Disable timer button while editing
+        if (startBtn) startBtn.disabled = true;
 
         const seconds = parseTime(timeDisplay.textContent);
         const hrs = Math.floor(seconds / 3600);
@@ -110,6 +99,7 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
 
         const container = document.createElement("span");
         container.classList.add("time-edit-container");
+        container.style.display = "inline-block"; // keep inline, no layout shift
         container.append(hrInput, document.createTextNode("hrs "),
                          minInput, document.createTextNode("mins "),
                          secInput, document.createTextNode("secs "),
@@ -129,6 +119,7 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
             timeDisplay.textContent = formatTime(totalSec);
             container.remove();
             timeDisplay.style.display = "";
+            if (startBtn) startBtn.disabled = false;
         };
     });
 }

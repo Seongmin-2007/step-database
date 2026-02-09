@@ -51,7 +51,6 @@ export function renderQuestion({ q, tags, li }) {
                     <span id="time-display">00min 00sec</span>
                     <div class="timer-buttons">
                         <button id="start-timer">Start</button>
-                        <button id="stop-timer" disabled>Stop</button>
                     </div>
                 </div>
             </div>
