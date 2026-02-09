@@ -218,7 +218,7 @@ export async function loadQuestion(q, tags, li) {
     document.getElementById("solution-toggle").onclick = async () => {
         await loadSolutions(q, questionID);
         const s = document.getElementById("solution-container");
-        if (!s) return;
+        if (!s) console.log("No solution container found");
         s.classList.toggle("show");
     };
 }
