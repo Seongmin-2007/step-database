@@ -712,9 +712,12 @@ button.success {
   background: #005ec2;
 }
 
+
+
 /* Splash Screen Container */
 #splash-screen {
   position: fixed;       /* cover entire viewport */
+  overflow: hidden;
   top: 0;
   left: 0;
   width: 100%;
@@ -724,7 +727,7 @@ button.success {
   justify-content: center;
   background-color: black; /* or any background */
   opacity: 1;             /* fully visible initially */
-  transition: opacity 1s ease; /* fade transition */
+  transition: opacity 3s ease; /* fade transition */
   z-index: 9999;          /* on top of everything */
 }
 

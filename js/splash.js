@@ -132,13 +132,6 @@ function startChaos(mode = "splash") {
             stopChaos();
             splash.onclick = null; // Clean up listener
         };
-
-        function stopChaosOnScroll() {
-            stopChaos();
-            document.removeEventListener("scroll", stopChaosOnScroll);
-        }
-
-        document.addEventListener("scroll", stopChaosOnScroll);
     }
 }
 
