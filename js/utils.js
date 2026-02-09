@@ -5,7 +5,7 @@ export function formatTime(seconds) {
     return `${hrs == 0 ? "" : String(hrs) + "hrs "}${String(mins).padStart(2, "0")}min ${String(secs).padStart(2, "0")}sec`;
 }
 
-export function parseTime(time) {
+export function parseTime(str) {
     const hrsMatch = str.match(/(\d+)hrs/);
     const minMatch = str.match(/(\d+)min/);
     const secMatch = str.match(/(\d+)sec/);

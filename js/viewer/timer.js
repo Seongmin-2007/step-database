@@ -89,7 +89,7 @@ export function makeTimeEditable(timeDisplay) {
         secInput.type = "number";
         secInput.min = 0;
         secInput.max = 59;
-        secInput.value = hrs || 0;
+        secInput.value = secs || 0;
         secInput.style.width = "40px";
 
         const saveBtn = document.createElement("button");
