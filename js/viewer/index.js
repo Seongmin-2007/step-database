@@ -21,11 +21,11 @@ function loadAttemptsFromCache(questionID) {
 }
 
 function saveAttemptsToCache(questionID, docs) {
-    console.log("22");
     const data = docs.map(d => ({
         id: d.id,
         data: d.data()
     }));
+    
     localStorage.setItem(attemptsCacheKey(questionID), JSON.stringify(data));
 }
 
