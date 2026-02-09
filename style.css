@@ -660,16 +660,6 @@ button.success {
 
 
 
-
-/* body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-  background: #c3eaff;
-} */
-
 .timer-card {
   background: var(--bg);
   color: var(--text);
