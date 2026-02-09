@@ -146,6 +146,7 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
 
             // Reset display & remove input container
             container.remove();
+            timeDisplay.textContent = formatTime(totalSec);
             timeDisplay.style.opacity = "1";
             if (startBtn) startBtn.disabled = false;
         };
