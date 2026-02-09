@@ -140,9 +140,9 @@ function startChaos(mode = "splash") {
 
         document.addEventListener("scroll", stopChaosOnScroll);
     }
-    }
+}
 
-    function stopChaos() {
+function stopChaos() {
     const splash = document.getElementById("splash-screen");
     
     // Stop animation loop

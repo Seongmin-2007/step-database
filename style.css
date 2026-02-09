@@ -711,3 +711,25 @@ button.success {
 .timer-btn:hover {
   background: #005ec2;
 }
+
+/* Splash Screen Container */
+#splash-screen {
+  position: fixed;       /* cover entire viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;         /* center content */
+  align-items: center;
+  justify-content: center;
+  background-color: black; /* or any background */
+  opacity: 1;             /* fully visible initially */
+  transition: opacity 1s ease; /* fade transition */
+  z-index: 9999;          /* on top of everything */
+}
+
+/* Fade-out state */
+#splash-screen.hidden {
+  opacity: 0;             /* triggers fade */
+  pointer-events: none;   /* prevent clicks during fade */
+}
