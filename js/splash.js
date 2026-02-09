@@ -134,6 +134,7 @@ function startChaos(mode = "splash") {
         };
 
         splash.addEventListener("scroll", () => {
+            console.log("H");
             stopChaos();
             splash.addEventListener("scroll", () => {});
         });
