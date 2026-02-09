@@ -45,27 +45,18 @@ export function renderQuestion({ q, tags, li }) {
             </div>
 
             <div class="timer-card">
-            <div class="timer-header">
-                <span class="timer-label">TIMER</span>
-                <h2 class="timer-title">Personal Project</h2>
-            </div>
-
             <div class="timer-display">
                 <div class="time-unit">
-                <span id="days">0</span>
-                <small>DAYS</small>
-                </div>
-                <div class="time-unit">
                 <span id="hours">0</span>
-                <small>HOURS</small>
+                <small>hours</small>
                 </div>
                 <div class="time-unit">
                 <span id="minutes">0</span>
-                <small>MINUTES</small>
+                <small>minutes</small>
                 </div>
                 <div class="time-unit">
                 <span id="seconds">0</span>
-                <small>SECONDS</small>
+                <small>seconds</small>
                 </div>
             </div>
 

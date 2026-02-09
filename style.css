@@ -671,30 +671,14 @@ body {
 }
 
 .timer-card {
-  background: #00bcd4;
-  color: white;
+  background: var(--bg);
+  color: var(--text);
   border-radius: 16px;
   width: 400px;
   padding: 2rem;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   position: relative;
-}
-
-.timer-header {
-  text-align: left;
-  margin-bottom: 2rem;
-}
-
-.timer-label {
-  font-size: 0.75rem;
-  opacity: 0.7;
-  letter-spacing: 1px;
-}
-
-.timer-title {
-  font-size: 1.5rem;
-  margin: 0.25rem 0 0;
 }
 
 .timer-display {
