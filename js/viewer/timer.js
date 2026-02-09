@@ -1,154 +1,171 @@
-import { formatTime, parseTime } from "../utils.js";
-
 let interval = null;
-let elapsed = 0;
+let elapsed = 0; // seconds
 
 function qs(id) {
-    return document.getElementById(id);
-}
-
-export function initTimer({ onTick }) {
-    const startBtn = qs("start-timer");
-    const display = qs("time-display");
-
-    if (!startBtn || !display) return;
-
-    if (display.textContent != "00min 00sec") {
-        startBtn.textContent = "Resume";
-    }
-
-    function update() {
-        display.textContent = formatTime(elapsed);
-    }
-
-    function start() {
-        if (interval) return;
-        interval = setInterval(() => {
-            elapsed++;
-            update();
-            onTick(elapsed);
-        }, 1000);
-
-        startBtn.textContent = "Pause";
-    }
-
-    function pause() {
-        if (interval) clearInterval(interval);
-        interval = null;
-
-        startBtn.textContent = "Resume";
-    }
-
-    startBtn.onclick = () => {
-        if (interval) pause();
-        else start();
-    };
-
-    update();
-}
-
-export function stop() {
-    if (interval) clearInterval(interval);
-    interval = null;
-}
-
-export function setTime(seconds) {
-    const display = qs("time-display");
-    elapsed = seconds;
-    display.textContent = formatTime(elapsed);
-
-
-    // If timer is running, pause it when time is manually set
-    if (interval) {
-        clearInterval(interval);
-        interval = null;
-        const startBtn = qs("start-timer");
-        if (startBtn) startBtn.textContent = "Resume";
-    }
-}
-
-export function getTime() {
-    return elapsed;
+  return document.getElementById(id);
 }
 
 /**
- * Makes a given span element editable on click
- * @param {HTMLElement} timeDisplay
- * @param {function} persistDraft Saves draft to local cloud on switching
+ * Updates the timer display based on elapsed seconds
  */
-export function makeTimeEditable(timeDisplay, persistDraft) {
+function updateDisplay() {
+  const daysEl = qs("days");
+  const hoursEl = qs("hours");
+  const minutesEl = qs("minutes");
+  const secondsEl = qs("seconds");
+
+  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+  let seconds = elapsed;
+  const d = Math.floor(seconds / 86400);
+  seconds %= 86400;
+  const h = Math.floor(seconds / 3600);
+  seconds %= 3600;
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+
+  daysEl.textContent = d.toString().padStart(2, "0");
+  hoursEl.textContent = h.toString().padStart(2, "0");
+  minutesEl.textContent = m.toString().padStart(2, "0");
+  secondsEl.textContent = s.toString().padStart(2, "0");
+}
+
+/**
+ * Initialize the timer
+ * @param {function} onTick callback every second
+ */
+export function initTimer({ onTick }) {
+  const startBtn = qs("start-timer");
+  if (!startBtn) return;
+
+  function start() {
+    if (interval) return;
+    interval = setInterval(() => {
+      elapsed++;
+      updateDisplay();
+      if (onTick) onTick(elapsed);
+    }, 1000);
+    startBtn.textContent = "⏸"; // pause icon
+  }
+
+  function pause() {
+    clearInterval(interval);
+    interval = null;
+    startBtn.textContent = "▶"; // play icon
+  }
+
+  startBtn.onclick = () => {
+    if (interval) pause();
+    else start();
+  };
+
+  updateDisplay();
+}
+
+/**
+ * Stop the timer completely
+ */
+export function stop() {
+  if (interval) clearInterval(interval);
+  interval = null;
+}
+
+/**
+ * Set elapsed time manually
+ */
+export function setTime(seconds) {
+  elapsed = seconds;
+  updateDisplay();
+
+  // pause if running
+  if (interval) {
+    clearInterval(interval);
+    interval = null;
     const startBtn = qs("start-timer");
+    if (startBtn) startBtn.textContent = "▶";
+  }
+}
 
-    timeDisplay.addEventListener("click", () => {
-        // Prevent multiple containers
-        if (timeDisplay.nextElementSibling?.classList.contains("time-edit-container")) return;
+/**
+ * Get elapsed time in seconds
+ */
+export function getTime() {
+  return elapsed;
+}
 
-        // Pause timer while editing
-        if (interval) {
-            clearInterval(interval);
-            interval = null;
-            if (startBtn) startBtn.textContent = "Resume";
-        }
+/**
+ * Make the timer editable inline for days/hours/minutes/seconds
+ */
+export function makeTimeEditable(persistDraft) {
+  const units = ["days", "hours", "minutes", "seconds"];
+  const startBtn = qs("start-timer");
 
-        // Disable timer button while editing
-        if (startBtn) startBtn.disabled = true;
-        
-        const seconds = parseTime(timeDisplay.textContent);
-        const hrs = Math.floor(seconds / 3600);
-        const mins = Math.floor((seconds % 3600) / 60);
-        const secs = seconds % 60;
+  units.forEach((id) => {
+    const el = qs(id);
+    if (!el) return;
 
-        timeDisplay.style.display = "none";
+    el.addEventListener("click", () => {
+      // Prevent multiple editors
+      if (el.nextElementSibling?.classList.contains("time-edit-container")) return;
 
-        const hrInput = document.createElement("input");
-        hrInput.type = "number";
-        hrInput.min = 0;
-        hrInput.value = hrs;
-        hrInput.classList.add("time-edit-input");
+      // Pause timer if running
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+        if (startBtn) startBtn.textContent = "▶";
+      }
 
-        const minInput = document.createElement("input");
-        minInput.type = "number";
-        minInput.min = 0;
-        minInput.max = 59;
-        minInput.value = mins;
-        minInput.classList.add("time-edit-input");
+      if (startBtn) startBtn.disabled = true;
 
-        const secInput = document.createElement("input");
-        secInput.type = "number";
-        secInput.min = 0;
-        secInput.max = 59;
-        secInput.value = secs;
-        secInput.classList.add("time-edit-input");
+      // Get current time values
+      const d = Number(qs("days")?.textContent || 0);
+      const h = Number(qs("hours")?.textContent || 0);
+      const m = Number(qs("minutes")?.textContent || 0);
+      const s = Number(qs("seconds")?.textContent || 0);
 
-        const saveBtn = document.createElement("button");
-        saveBtn.textContent = "✔";
-        saveBtn.classList.add("time-save-btn");
+      // Create input fields inline
+      const input = document.createElement("input");
+      input.type = "number";
+      input.min = 0;
+      input.value = id === "days" ? d : id === "hours" ? h : id === "minutes" ? m : s;
+      input.classList.add("time-edit-input");
+      input.style.width = "50px";
 
-        const container = document.createElement("span");
-        container.classList.add("time-edit-container");
-        container.append(hrInput, document.createTextNode("hrs "),
-                         minInput, document.createTextNode("mins "),
-                         secInput, document.createTextNode("secs "),
-                         saveBtn);
+      // Save button
+      const saveBtn = document.createElement("button");
+      saveBtn.textContent = "✔";
+      saveBtn.classList.add("time-save-btn");
 
-        timeDisplay.parentNode.insertBefore(container, timeDisplay.nextSibling);
+      const container = document.createElement("span");
+      container.classList.add("time-edit-container");
+      container.append(input, saveBtn);
 
-        // Hide original span but keep layout
-        timeDisplay.style.opacity = "0.3";
+      el.parentNode.insertBefore(container, el.nextSibling);
+      el.style.opacity = "0.3"; // indicate editing
 
-        saveBtn.onclick = () => {
-            const totalSec = Number(hrInput.value) * 3600 +
-                             Number(minInput.value) * 60 +
-                             Number(secInput.value);
+      saveBtn.onclick = () => {
+        const val = Number(input.value);
+        if (isNaN(val) || val < 0) return;
 
-            setTime(totalSec);
-            persistDraft();
+        // Update elapsed time
+        let newElapsed = 0;
+        newElapsed += qs("days")?.textContent ? Number(qs("days").textContent) * 86400 : 0;
+        newElapsed += qs("hours")?.textContent ? Number(qs("hours").textContent) * 3600 : 0;
+        newElapsed += qs("minutes")?.textContent ? Number(qs("minutes").textContent) * 60 : 0;
+        newElapsed += qs("seconds")?.textContent ? Number(qs("seconds").textContent) : 0;
 
-            // Reset display & remove input container
-            container.remove();
-            timeDisplay.textContent = formatTime(totalSec);
-            timeDisplay.style.opacity = "1";
-            if (startBtn) startBtn.disabled = false;
-        };
+        if (id === "days") newElapsed = val * 86400 + (newElapsed % 86400);
+        else if (id === "hours") newElapsed = Math.floor(newElapsed / 86400) * 86400 + val * 3600 + (newElapsed % 3600);
+        else if (id === "minutes") newElapsed = Math.floor(newElapsed / 3600) * 3600 + val * 60 + (newElapsed % 60);
+        else if (id === "seconds") newElapsed = Math.floor(newElapsed / 60) * 60 + val;
+
+        setTime(newElapsed);
+        if (persistDraft) persistDraft();
+
+        container.remove();
+        el.style.opacity = "1";
+        if (startBtn) startBtn.disabled = false;
+      };
     });
+  });
 }

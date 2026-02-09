@@ -659,3 +659,81 @@ button.success {
 
 
 
+
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: #c3eaff;
+}
+
+.timer-card {
+  background: #00bcd4;
+  color: white;
+  border-radius: 16px;
+  width: 400px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+.timer-header {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.timer-label {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  letter-spacing: 1px;
+}
+
+.timer-title {
+  font-size: 1.5rem;
+  margin: 0.25rem 0 0;
+}
+
+.timer-display {
+  display: flex;
+  justify-content: space-between;
+  background: #ffffff;
+  color: #111827;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.time-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+}
+
+.time-unit small {
+  font-size: 0.7rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.timer-btn {
+  background: #0077ff;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+}
+
+.timer-btn:hover {
+  background: #005ec2;
+}

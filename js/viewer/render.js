@@ -44,15 +44,34 @@ export function renderQuestion({ q, tags, li }) {
             </select>
             </div>
 
-            <div class="attempt-field time-control">
-            <label>Timer</label>
-            <div class="timer-controls">
-                <span id="time-display">00min 00sec</span>
-                <span class="time-edit-inline"></span>
+            <div class="timer-card">
+            <div class="timer-header">
+                <span class="timer-label">TIMER</span>
+                <h2 class="timer-title">Personal Project</h2>
             </div>
-            <div class="timer-buttons">
-                <button id="start-timer">Start</button>
+
+            <div class="timer-display">
+                <div class="time-unit">
+                <span id="days">0</span>
+                <small>DAYS</small>
+                </div>
+                <div class="time-unit">
+                <span id="hours">0</span>
+                <small>HOURS</small>
+                </div>
+                <div class="time-unit">
+                <span id="minutes">0</span>
+                <small>MINUTES</small>
+                </div>
+                <div class="time-unit">
+                <span id="seconds">0</span>
+                <small>SECONDS</small>
+                </div>
             </div>
+
+            <button id="start-timer" class="timer-btn">
+                ▶
+            </button>
             </div>
         </div>
 
