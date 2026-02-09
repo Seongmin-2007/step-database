@@ -133,8 +133,7 @@ function startChaos(mode = "splash") {
             splash.onclick = null; // Clean up listener
         };
 
-        splash.addEventListener("scroll", () => {
-            console.log("H");
+        document.addEventListener("scroll", () => {
             stopChaos();
             splash.addEventListener("scroll", () => {});
         });
