@@ -214,16 +214,18 @@ export async function loadQuestion(q, tags, li) {
         await loadSidebarAttempts(questionID, pastList);
     };
 
-    // --- solution toggle
-    document.getElementById("solution-toggle").onclick = async () => {
-        const s = document.getElementById("solution-container");
-        if (!s) return;
+    let solutionsLoaded = false;
 
-        if (s.classList.contains("hidden")) {
+    document.getElementById("solution-toggle").onclick = async () => {
+        const container = document.getElementById("solution-container");
+        if (!container) return;
+
+        if (!solutionsLoaded) {
             await loadSolutions(q, questionID);
+            solutionsLoaded = true;
         }
 
-        s.classList.toggle("hidden");
+        container.classList.toggle("hidden");
     };
 }
 

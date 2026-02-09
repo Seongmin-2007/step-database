@@ -121,26 +121,33 @@ export async function loadSolutions(q, questionID) {
     const container = document.getElementById("solution-container");
     const placeholder = container.querySelector(".placeholder");
 
+    // Clear old images (important!)
+    container.querySelectorAll("img").forEach(img => img.remove());
+    placeholder.style.display = "none";
+
     let i = 1;
-    let found = false;
+    let foundAny = false;
 
     while (true) {
         const path = `images/solutions/${q.year}/S${q.paper}/Q${q.question}-${i}.jpg`;
-        try {
-            const res = await fetch(path, { method: "HEAD" });
-            if (!res.ok) break;
 
-            const img = document.createElement("img");
-            img.src = path;
-            img.alt = `Solution ${questionID} (${i})`;
-            container.appendChild(img);
+        const img = document.createElement("img");
+        img.src = path;
+        img.alt = `Solution ${questionID} (${i})`;
 
-            found = true;
-            i++;
-        } catch {
-            break;
-        }
+        const loaded = await new Promise(resolve => {
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
+        });
+
+        if (!loaded) break;
+
+        container.appendChild(img);
+        foundAny = true;
+        i++;
     }
 
-    if (!found) placeholder.style.display = "block";
+    if (!foundAny) {
+        placeholder.style.display = "block";
+    }
 }
