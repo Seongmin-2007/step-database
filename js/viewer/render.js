@@ -91,7 +91,7 @@ export function renderQuestion({ q, tags, li }) {
             Show solution
         </button>
 
-        <div id="solution-container" class="solution hidden">
+        <div id="solution-container" class="solution">
             <p class="placeholder hidden">
                 Solution not available yet.
             </p>
@@ -117,23 +117,23 @@ export function renderQuestion({ q, tags, li }) {
     return { questionID };
 }
 
+/**
+ * 
+ * @param {*} q 
+ * @param {*} questionID 
+ * @returns {Number} Number of solutions
+ */
 export async function loadSolutions(q, questionID) {
     const container = document.getElementById("solution-container");
-    const placeholder = container.querySelector(".placeholder");
-
-    // Clear old images (important!)
-    container.querySelectorAll("img").forEach(img => img.remove());
-    placeholder.style.display = "none";
 
     let i = 1;
-    let foundAny = false;
-
     while (true) {
         const path = `images/solutions/${q.year}/S${q.paper}/Q${q.question}-${i}.jpg`;
 
         const img = document.createElement("img");
         img.src = path;
         img.alt = `Solution ${questionID} (${i})`;
+        img.id = `${questionID}-${i}`;
 
         const loaded = await new Promise(resolve => {
             img.onload = () => resolve(true);
@@ -143,11 +143,8 @@ export async function loadSolutions(q, questionID) {
         if (!loaded) break;
 
         container.appendChild(img);
-        foundAny = true;
         i++;
     }
 
-    if (!foundAny) {
-        placeholder.style.display = "block";
-    }
+    return i - 1;
 }
