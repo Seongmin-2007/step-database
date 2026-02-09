@@ -516,6 +516,56 @@ img {
 }
 
 /* ================================
+   TIMER
+   ================================ */
+/* Remove default spinners for number inputs */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield;
+}
+
+/* Styled numeric inputs for timer */
+.time-edit-input {
+    width: 50px;           /* consistent width */
+    padding: 4px 6px;      /* slight padding */
+    margin-right: 4px;     /* space between inputs */
+    border: 1px solid #ccc; /* subtle border */
+    border-radius: 6px;    /* rounded corners */
+    font-size: 0.9em;      /* matches your UI font */
+    text-align: center;    /* numbers centered */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.time-edit-input:focus {
+    outline: none;
+    border-color: #0077ff;  /* primary highlight */
+    box-shadow: 0 0 4px rgba(0, 119, 255, 0.5);
+}
+
+/* Save button styling */
+.time-save-btn {
+    padding: 4px 8px;
+    border: none;
+    background-color: #0077ff;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.time-save-btn:hover {
+    background-color: #005ec2;
+}
+
+
+/* ================================
    ACTIONS
    ================================ */
 .attempt-actions {
@@ -576,6 +626,8 @@ button.success {
   from { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
   to { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
 }
+
+
 
 
 

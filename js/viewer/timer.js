@@ -99,6 +99,11 @@ export function makeTimeEditable(timeDisplay) {
         const saveBtn = document.createElement("button");
         saveBtn.textContent = "✔";
         saveBtn.style.marginLeft = "4px";
+        
+        hrInput.classList.add("time-edit-input");
+        minInput.classList.add("time-edit-input");
+        secInput.classList.add("time-edit-input");
+        saveBtn.classList.add("time-save-btn");
 
         const container = document.createElement("span");
         container.classList.add("time-edit-container"); // add class for identification
