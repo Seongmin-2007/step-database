@@ -24,12 +24,14 @@ export function initTimer({ onTick }) {
             update();
             onTick(elapsed);
         }, 1000);
+
         startBtn.textContent = "Pause";
     }
 
     function pause() {
         if (interval) clearInterval(interval);
         interval = null;
+
         startBtn.textContent = "Resume";
     }
 
@@ -39,6 +41,11 @@ export function initTimer({ onTick }) {
     };
 
     update();
+}
+
+export function stop() {
+    if (interval) clearInterval(interval);
+    interval = null;
 }
 
 export function setTime(seconds) {
@@ -65,7 +72,7 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
 
         // Disable timer button while editing
         if (startBtn) startBtn.disabled = true;
-
+        
         const seconds = parseTime(timeDisplay.textContent);
         const hrs = Math.floor(seconds / 3600);
         const mins = Math.floor((seconds % 3600) / 60);
@@ -99,7 +106,6 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
 
         const container = document.createElement("span");
         container.classList.add("time-edit-container");
-        container.style.display = "inline-block"; // keep inline, no layout shift
         container.append(hrInput, document.createTextNode("hrs "),
                          minInput, document.createTextNode("mins "),
                          secInput, document.createTextNode("secs "),
@@ -119,6 +125,7 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
             timeDisplay.textContent = formatTime(totalSec);
             container.remove();
             timeDisplay.style.display = "";
+            
             if (startBtn) startBtn.disabled = false;
         };
     });
