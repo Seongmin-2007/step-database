@@ -2,7 +2,7 @@ import { auth } from "../config.js";
 import { notify, createAttemptCard } from "../ui.js";
 
 import { renderQuestion, loadSolutions } from "./render.js";
-import { initTimer, stop as stopTimer, setTime, getTime } from "./timer.js";
+import { initTimer, stop as stopTimer, setTime, getTime, makeTimeEditable } from "./timer.js";
 import { saveDraft, loadDraft, clearDraft } from "./draft.js";
 import { saveAttempt, loadAttempts } from "./attempts.js";
 import { initNavigation } from "./navigation.js";
