@@ -124,6 +124,7 @@ function computePriorityList(attempts) {
 
     score += latest.difficulty * 5;
     score += latest.time / 60 / 5;
+    score = score.toFixed(2);
 
     list.push({ questionID: qid, score });
   }
@@ -195,7 +196,15 @@ function renderHeatmap(attempts) {
   const activity = {};
 
   attempts.forEach(a => {
-    const d = a.createdAt.toDate();
+    if (!a.createdAt) return;
+
+    const d =
+      typeof a.createdAt.toDate === "function"
+        ? a.createdAt.toDate()
+        : a.createdAt;
+
+    if (!(d instanceof Date)) return;
+
     const key = d.toISOString().slice(0, 10);
     activity[key] = (activity[key] || 0) + 1;
   });
