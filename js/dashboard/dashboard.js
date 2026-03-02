@@ -178,8 +178,7 @@ function renderRecentList(list) {
   }
 
   list.forEach(item => {
-    const fakeDoc = { id: item.id, ref: null, data: () => item.data };
-    ul.appendChild(createAttemptCard(fakeDoc));
+    ul.appendChild(createAttemptCard(item));
   });
 }
 
