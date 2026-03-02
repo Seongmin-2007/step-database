@@ -122,13 +122,10 @@ function computePriorityList(attempts) {
     const latest = attemptsForQ[0];
     let score = 0;
 
-    if (latest.difficulty >= 4) score += 2;
-    if (latest.time > 20 * 60) score += 1;
-    if (latest.status !== "completed") score += 1;
+    score += latest.difficulty * 5;
+    score += latest.time / 60 / 5;
 
-    if (score > 0) {
-      list.push({ questionID: qid, score });
-    }
+    list.push({ questionID: qid, score });
   }
 
   return list.sort((a, b) => b.score - a.score);
