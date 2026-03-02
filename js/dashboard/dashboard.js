@@ -177,8 +177,14 @@ function renderRecentList(list) {
     return;
   }
 
-  list.forEach(attempt => {
-      ul.appendChild(createAttemptCardFromData(attempt));
+  list.forEach(item => {
+    const fakeDoc = {
+      id: item.id,
+      ref: null,
+      data: () => item.data
+    };
+
+    ul.appendChild(createAttemptCard(fakeDoc));
   });
 }
 
