@@ -7,7 +7,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 import { auth, db } from "../config.js";
-import { createAttemptCardFromData } from "../ui.js";
+import { createAttemptCard } from "../ui.js";
 
 /* ================================
    ENTRY POINT
@@ -157,10 +157,7 @@ function computeRecentQuestions(attempts) {
   for (const a of attempts) {
     if (!seen.has(a.questionID)) {
       seen.add(a.questionID);
-      recent.push({
-        questionID: a.questionID,
-        date: a.createdAt.toDate()
-      });
+      recent.push(a); // keep FULL attempt
     }
     if (recent.length >= 8) break;
   }
@@ -181,7 +178,7 @@ function renderRecentList(list) {
     const fakeDoc = {
       id: item.id,
       ref: null,
-      data: () => item.data
+      data: () => item
     };
 
     ul.appendChild(createAttemptCard(fakeDoc));

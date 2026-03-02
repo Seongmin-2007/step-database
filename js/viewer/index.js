@@ -1,5 +1,5 @@
 import { auth } from "../config.js";
-import { notify, createAttemptCardFromData } from "../ui.js";
+import { notify, createAttemptCard } from "../ui.js";
 import { emit } from "../eventBus.js";
 
 import { renderQuestion, loadSolutions } from "./render.js";
@@ -236,12 +236,8 @@ async function loadSidebarAttempts(questionID, list) {
     if (cached && cached.length) {
         console.log("Got cached data instead");
         cached.forEach(item => {
-            list.appendChild(
-                createAttemptCardFromData({
-                    id: item.id,
-                    ...item.data
-                })
-            );
+            const fakeDoc = { id: item.id, ref: null, data: () => item.data };
+            list.appendChild(createAttemptCard(fakeDoc));
         });
         return;
     }
