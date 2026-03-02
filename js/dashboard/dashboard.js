@@ -180,21 +180,8 @@ function renderRecentList(list) {
   }
 
   list.forEach(item => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <div class="past-attempt">        
-        <div class="past-meta">
-          Date: ${item.date}<br>
-          Time taken: ${item.time == 0 ? "N/A" : formatTime(item.time)}<br>
-          Difficulty: ${"★".repeat(item.difficulty ?? 0)}<br>
-          Notes:
-        </div>
-        <div class="past-notes">
-          ${item.notes}
-        </div>
-      </div>
-    `;
-    ul.appendChild(li);
+    const fakeDoc = { id: item.id, ref: null, data: () => item.data };
+    ul.appendChild(createAttemptCard(fakeDoc));
   });
 }
 
