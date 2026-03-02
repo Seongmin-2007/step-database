@@ -120,13 +120,34 @@ function computePriorityList(attempts) {
     );
 
     const latest = attemptsForQ[0];
-    let score = 0;
 
-    score += latest.difficulty * 5;
-    score += latest.time / 60 / 5;
-    score = score.toFixed(2);
+    // ----- Difficulty (stars): dominant signal
+    const difficultyScore = (latest.difficulty ?? 0) ** 2 * 2;
+    // 1★→2 | 3★→18 | 5★→50
 
-    list.push({ questionID: qid, score });
+    // ----- Time spent (soft-capped, minutes)
+    const minutes =
+      typeof latest.time === "number" ? latest.time / 60 : 0;
+    const timeScore = Math.min(minutes, 120) / 10;
+    // max +12
+
+    // ----- Recency (days since last attempt)
+    const daysSince =
+      (Date.now() - latest.createdAt.toDate()) /
+      (1000 * 60 * 60 * 24);
+
+    const recencyScore = 20 * (1 - Math.exp(-daysSince / 30));
+    // asymptotic, max ~20
+
+    const score =
+      difficultyScore +
+      timeScore +
+      recencyScore;
+
+    list.push({
+      questionID: qid,
+      score: score.toFixed(2)
+    });
   }
 
   return list.sort((a, b) => b.score - a.score);
