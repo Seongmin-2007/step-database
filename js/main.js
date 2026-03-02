@@ -57,9 +57,9 @@ document.addEventListener("click", e => {
 });
 
 // Opens dashboard
-// dashboardBtn.onclick = () => {
-//     window.location.href = "dashboard.html";
-// };
+dashboardBtn.onclick = () => {
+    window.location.href = "dashboard.html";
+};
 
 
 const listEl = document.getElementById("questionList");
