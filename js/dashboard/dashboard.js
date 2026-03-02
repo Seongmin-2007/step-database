@@ -7,7 +7,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 import { auth, db } from "../config.js";
-import { createAttemptCard } from "../ui.js";
+import { createAttemptCardFromData } from "../ui.js";
 
 /* ================================
    ENTRY POINT
@@ -177,8 +177,8 @@ function renderRecentList(list) {
     return;
   }
 
-  list.forEach(item => {
-    ul.appendChild(createAttemptCard(item));
+  list.forEach(attempt => {
+      ul.appendChild(createAttemptCardFromData(attempt));
   });
 }
 
