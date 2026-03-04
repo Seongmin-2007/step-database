@@ -113,31 +113,52 @@ function computePriorityList(attempts) {
   });
 
   const list = [];
+  const DECAY = 45;         // memory window
+  const LATEST_BOOST = 3;   // how dominant latest difficulty/time is
 
   for (const qid in byQuestion) {
     const attemptsForQ = byQuestion[qid].sort(
       (a, b) => b.createdAt.seconds - a.createdAt.seconds
     );
 
-    const latest = attemptsForQ[0];
+    let difficultyScore = 0;
+    let timeScore = 0;
+    let recencyScore = 0;
 
-    // ----- Difficulty (stars): dominant signal
-    const difficultyScore = (latest.difficulty ?? 0) ** 2 * 2;
-    // 1★→2 | 3★→18 | 5★→50
+    attemptsForQ.forEach((attempt, index) => {
+      const daysAgo =
+        (Date.now() - attempt.createdAt.toDate()) /
+        (1000 * 60 * 60 * 24);
 
-    // ----- Time spent (soft-capped, minutes)
-    const minutes =
-      typeof latest.time === "number" ? latest.time / 60 : 0;
-    const timeScore = Math.min(minutes, 120) / 10;
-    // max +12
+      const weight = Math.exp(-daysAgo / DECAY);
 
-    // ----- Recency (days since last attempt)
-    const daysSince =
-      (Date.now() - latest.createdAt.toDate()) /
-      (1000 * 60 * 60 * 24);
+      // ----- Difficulty
+      const difficulty = (attempt.difficulty ?? 0) ** 2 * 2;
 
-    const recencyScore = 20 * (1 - Math.exp(-daysSince / 30));
-    // asymptotic, max ~20
+      difficultyScore +=
+        difficulty *
+        weight *
+        (index === 0 ? LATEST_BOOST : 1);
+
+      // ----- Time
+      const minutes =
+        typeof attempt.time === "number"
+          ? attempt.time / 60
+          : 0;
+
+      const cappedTime = Math.min(minutes, 120) / 10;
+
+      timeScore +=
+        cappedTime *
+        weight *
+        (index === 0 ? LATEST_BOOST : 1);
+
+      // ----- Recency (natural decay already handles dominance)
+      const recency =
+        20 * (1 - Math.exp(-daysAgo / 30));
+
+      recencyScore += recency * weight;
+    });
 
     const score =
       difficultyScore +
