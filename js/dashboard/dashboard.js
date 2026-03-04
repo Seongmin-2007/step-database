@@ -113,32 +113,29 @@ function computePriorityList(attempts) {
   });
 
   const list = [];
-  const DECAY = 45;         // memory window
-  const LATEST_BOOST = 3;   // how dominant latest difficulty/time is
+  const DECAY = 45;
+  const LATEST_BOOST = 3;
 
   for (const qid in byQuestion) {
     const attemptsForQ = byQuestion[qid].sort(
       (a, b) => b.createdAt.seconds - a.createdAt.seconds
     );
 
-    let difficultyScore = 0;
-    let timeScore = 0;
-    let recencyScore = 0;
+    let totalScore = 0;
+    let totalWeight = 0;
 
     attemptsForQ.forEach((attempt, index) => {
       const daysAgo =
         (Date.now() - attempt.createdAt.toDate()) /
         (1000 * 60 * 60 * 24);
 
-      const weight = Math.exp(-daysAgo / DECAY);
+      const weight =
+        Math.exp(-daysAgo / DECAY) *
+        (index === 0 ? LATEST_BOOST : 1);
 
       // ----- Difficulty
-      const difficulty = (attempt.difficulty ?? 0) ** 2 * 2;
-
-      difficultyScore +=
-        difficulty *
-        weight *
-        (index === 0 ? LATEST_BOOST : 1);
+      const difficulty =
+        (attempt.difficulty ?? 0) ** 2 * 2;
 
       // ----- Time
       const minutes =
@@ -146,28 +143,36 @@ function computePriorityList(attempts) {
           ? attempt.time / 60
           : 0;
 
-      const cappedTime = Math.min(minutes, 120) / 10;
+      const cappedTime =
+        Math.min(minutes, 120) / 10;
 
-      timeScore +=
-        cappedTime *
-        weight *
-        (index === 0 ? LATEST_BOOST : 1);
-
-      // ----- Recency (natural decay already handles dominance)
+      // ----- Recency
       const recency =
         20 * (1 - Math.exp(-daysAgo / 30));
 
-      recencyScore += recency * weight;
+      const combined =
+        difficulty + cappedTime + recency;
+
+      totalScore += combined * weight;
+      totalWeight += weight;
     });
 
-    const score =
-      difficultyScore +
-      timeScore +
-      recencyScore;
+    // 🔥 NORMALISED SCORE
+    const averageScore =
+      totalWeight > 0
+        ? totalScore / totalWeight
+        : 0;
+
+    // Slight attempt bonus (saturates)
+    const attemptFactor =
+      1 + 0.15 * Math.log(1 + attemptsForQ.length);
+
+    const finalScore =
+      averageScore * attemptFactor;
 
     list.push({
       questionID: qid,
-      score: score.toFixed(2)
+      score: finalScore.toFixed(2)
     });
   }
 
