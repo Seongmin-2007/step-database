@@ -224,7 +224,7 @@ function renderRecentList(list) {
       data: () => item
     };
 
-    ul.appendChild(createAttemptCard(fakeDoc));
+    ul.appendChild(createAttemptCard(fakeDoc, {includeID: true}));
   });
 }
 

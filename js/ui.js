@@ -7,7 +7,7 @@ import { auth, db } from "./config.js";
  * @param {Object} attemptDoc - Firestore doc or cached object.
  *   Should have: { id, ref?, data: ()=>object, userID?, questionID? }
  */
-export function createAttemptCard(attemptDoc) {
+export function createAttemptCard(attemptDoc, parameters={includeID:false}) {
     const data = attemptDoc.data();
     const attemptCard = document.createElement("li");
     attemptCard.innerHTML = `
@@ -15,6 +15,7 @@ export function createAttemptCard(attemptDoc) {
             <div class="delete-attempt" title="Delete">×</div>
             
             <div class="past-meta">
+                ${includeID ? (`ID: ${data.questionID}<br>`) : ""}
                 Date: ${firebaseTimeToDate(data.createdAt)}<br>
                 Time taken: ${data.time == 0 ? "N/A" : formatTime(data.time)}<br>
                 Difficulty: ${"★".repeat(data.difficulty ?? 0)}<br>
