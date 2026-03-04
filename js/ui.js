@@ -15,7 +15,7 @@ export function createAttemptCard(attemptDoc, parameters={includeID:false}) {
             <div class="delete-attempt" title="Delete">×</div>
             
             <div class="past-meta">
-                ${includeID ? (`ID: ${data.questionID}<br>`) : ""}
+                ${parameters.includeID ? (`ID: ${data.questionID}<br>`) : ""}
                 Date: ${firebaseTimeToDate(data.createdAt)}<br>
                 Time taken: ${data.time == 0 ? "N/A" : formatTime(data.time)}<br>
                 Difficulty: ${"★".repeat(data.difficulty ?? 0)}<br>
