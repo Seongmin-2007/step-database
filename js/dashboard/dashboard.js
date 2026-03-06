@@ -36,6 +36,11 @@ async function loadDashboard() {
     ...d.data()
   }));
 
+  const theme = localStorage.getItem("theme");
+  if (theme === "dark") {
+      document.body.classList.add("dark-mode");
+  }
+
   // ---- render everything ----
   renderStats(computeStats(attempts));
   renderPriorityList(computePriorityList(attempts));

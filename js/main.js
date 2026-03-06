@@ -39,8 +39,6 @@ themeToggleBtn.addEventListener("click", () => {
     themeToggleBtn.textContent = isDark ? "🌙" : "🌞";
 });
 
-
-
 const profileBtn = document.getElementById("profile-btn");
 const dashboardBtn = document.getElementById("open-dashboard");
 const dropdown = document.getElementById("profile-dropdown");
