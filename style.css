@@ -790,22 +790,34 @@ button.success {
 .heat-6  { background: #6366f1; }
 .heat-7  { background: #8b5cf6; }
 .heat-8  { background: #d946ef; }
-.heat-9  { background: #f43f5e; }
-.heat-10 { background: #dc2626; }
+.heat-9  { background: #e83ff4; }
+.heat-10 { background: #dc26d9; }
+
+/* Dark mode tuning */
+.heat-0  { background: #e5e7eb; }
+.heat-1  { background: #e0f2fe; }
+.heat-2  { background: #bae6fd; }
+.heat-3  { background: #7dd3fc; }
+.heat-4  { background: #38bdf8; }
+.heat-5  { background: #0ea5e9; }
+.heat-6  { background: #0284c7; }
+.heat-7  { background: #2563eb; }
+.heat-8  { background: #1d4ed8; }
+.heat-9  { background: #1e40af; }
+.heat-10 { background: #172554; }
 
 /* Dark mode tuning */
 body.dark-mode .heat-0  { background: #2a2a2a; }
-body.dark-mode .heat-1  { background: #1e3a8a; }
-body.dark-mode .heat-2  { background: #1d4ed8; }
-body.dark-mode .heat-3  { background: #2563eb; }
-body.dark-mode .heat-4  { background: #3b82f6; }
-body.dark-mode .heat-5  { background: #4f46e5; }
-body.dark-mode .heat-6  { background: #6366f1; }
-body.dark-mode .heat-7  { background: #8b5cf6; }
-body.dark-mode .heat-8  { background: #c026d3; }
-body.dark-mode .heat-9  { background: #e11d48; }
-body.dark-mode .heat-10 { background: #b91c1c; }
-
+body.dark-mode .heat-1  { background: #082f49; }
+body.dark-mode .heat-2  { background: #0c4a6e; }
+body.dark-mode .heat-3  { background: #075985; }
+body.dark-mode .heat-4  { background: #0369a1; }
+body.dark-mode .heat-5  { background: #0284c7; }
+body.dark-mode .heat-6  { background: #0ea5e9; }
+body.dark-mode .heat-7  { background: #38bdf8; }
+body.dark-mode .heat-8  { background: #60a5fa; }
+body.dark-mode .heat-9  { background: #818cf8; }
+body.dark-mode .heat-10 { background: #a78bfa; }
 
 /* ================================
    DASHBOARD LAYOUT
