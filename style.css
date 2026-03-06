@@ -781,18 +781,30 @@ button.success {
 }
 
 /* Activity intensity */
-.heat-0 { background: #e5e7eb; }
-.heat-1 { background: #bfdbfe; }
-.heat-2 { background: #93c5fd; }
-.heat-3 { background: #60a5fa; }
-.heat-4 { background: #2563eb; }
+.heat-0  { background: #e5e7eb; }
+.heat-1  { background: #dbeafe; }
+.heat-2  { background: #bfdbfe; }
+.heat-3  { background: #93c5fd; }
+.heat-4  { background: #60a5fa; }
+.heat-5  { background: #3b82f6; }
+.heat-6  { background: #6366f1; }
+.heat-7  { background: #8b5cf6; }
+.heat-8  { background: #d946ef; }
+.heat-9  { background: #f43f5e; }
+.heat-10 { background: #dc2626; }
 
 /* Dark mode tuning */
-body.dark-mode .heat-0 { background: #2a2a2a; }
-body.dark-mode .heat-1 { background: #1e3a8a; }
-body.dark-mode .heat-2 { background: #1d4ed8; }
-body.dark-mode .heat-3 { background: #2563eb; }
-body.dark-mode .heat-4 { background: #3b82f6; }
+body.dark-mode .heat-0  { background: #2a2a2a; }
+body.dark-mode .heat-1  { background: #1e3a8a; }
+body.dark-mode .heat-2  { background: #1d4ed8; }
+body.dark-mode .heat-3  { background: #2563eb; }
+body.dark-mode .heat-4  { background: #3b82f6; }
+body.dark-mode .heat-5  { background: #4f46e5; }
+body.dark-mode .heat-6  { background: #6366f1; }
+body.dark-mode .heat-7  { background: #8b5cf6; }
+body.dark-mode .heat-8  { background: #c026d3; }
+body.dark-mode .heat-9  { background: #e11d48; }
+body.dark-mode .heat-10 { background: #b91c1c; }
 
 
 /* ================================

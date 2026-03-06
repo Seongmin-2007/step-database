@@ -229,7 +229,8 @@ function renderRecentList(list) {
       data: () => item
     };
 
-    ul.appendChild(createAttemptCard(fakeDoc, {includeID: true}));
+    const attemptCard = createAttemptCard(fakeDoc, {includeID: true});
+    ul.appendChild(attemptCard);
   });
 }
 
@@ -265,7 +266,7 @@ function renderHeatmap(attempts) {
     const count = activity[key] || 0;
 
     const cell = document.createElement("div");
-    cell.className = `heat-day heat-${Math.min(count, 4)}`;
+    cell.className = `heat-day heat-${Math.min(count, 10)}`;
     cell.title = `${key}: ${count} attempts`;
 
     container.appendChild(cell);
