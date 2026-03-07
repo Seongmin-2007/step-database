@@ -28,6 +28,7 @@ function renderDashboard(model, questions) {
   renderPriorityList(model.priority);
   renderRecentList(model.recent);
   renderHeatmap(model.attempts);
+  renderStepMatrix(questions, model.priority);
 
   drawLineChart(
     document.getElementById("timeChart"),
@@ -41,8 +42,8 @@ function renderDashboard(model, questions) {
     "#dc2626"
   );
 
-  const grouped = groupQuestions(questions);
-  renderOverview(grouped);
+  // const grouped = groupQuestions(questions);
+  // renderOverview(grouped);
 }
 
 function buildDashboardModel(attempts) {
@@ -230,6 +231,16 @@ function computePriorityList(attempts) {
   return list.sort((a, b) => b.score - a.score);
 }
 
+function buildPriorityMap(priorityList){
+  const map = {};
+
+  priorityList.forEach(p=>{
+    map[p.questionID] = Number(p.score);
+  });
+
+  return map;
+}
+
 function renderPriorityList(list) {
   const ul = document.getElementById("priorityList");
   ul.innerHTML = "";
@@ -243,6 +254,67 @@ function renderPriorityList(list) {
     const li = document.createElement("li");
     li.textContent = `${item.questionID} · Priority ${item.score}`;
     ul.appendChild(li);
+  });
+}
+
+function renderStepMatrix(questions, priorityList){
+
+  const container = document.getElementById("stepMatrix");
+  container.innerHTML = "";
+
+  const priorityMap = buildPriorityMap(priorityList);
+
+  const years = [...new Set(questions.map(q=>q.year))].sort((a,b)=>b-a);
+
+  years.forEach(year=>{
+
+    const row = document.createElement("div");
+    row.className = "matrix-row";
+
+    const label = document.createElement("div");
+    label.className = "matrix-year";
+    label.textContent = year;
+
+    row.appendChild(label);
+
+    questions
+      .filter(q=>q.year===year)
+      .sort((a,b)=> a.paper-b.paper || a.question-b.question)
+      .forEach(q=>{
+
+        const id = `${q.year}-S${q.paper}-Q${q.question}`;
+        const score = priorityMap[id];
+
+        const cell = document.createElement("div");
+        cell.className = "matrix-cell";
+
+        if(score === undefined){
+          cell.classList.add("matrix-empty");
+        }else if(score < 10){
+          cell.classList.add("matrix-low");
+        }else if(score < 20){
+          cell.classList.add("matrix-mid");
+        }else{
+          cell.classList.add("matrix-high");
+        }
+
+        const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
+        const tags = window.questionTags?.[qPath] ?? [];
+
+        cell.title = `${id}\n${tags.join(", ")}`;
+
+        cell.onclick = () => {
+          loadQuestion(q, tags);
+          document.getElementById("dashboard-screen").style.display = "none";
+          document.getElementById("main-screen").style.display = "block";
+        };
+
+        row.appendChild(cell);
+
+      });
+
+    container.appendChild(row);
+
   });
 }
 
@@ -470,80 +542,80 @@ function renderDifficultyChart(attempts) {
 
 
 // SHOWS ALL QUESTIONS AND BY YEAR ETC
-function groupQuestions(questions) {
-  const map = {};
+// function groupQuestions(questions) {
+//   const map = {};
 
-  questions.forEach(q => {
+//   questions.forEach(q => {
 
-    if (!map[q.year]) map[q.year] = {};
-    if (!map[q.year][q.step]) map[q.year][q.step] = [];
+//     if (!map[q.year]) map[q.year] = {};
+//     if (!map[q.year][q.step]) map[q.year][q.step] = [];
 
-    map[q.year][q.step].push(q);
+//     map[q.year][q.step].push(q);
 
-  });
+//   });
 
-  return map;
-}
+//   return map;
+// }
 
-function renderOverview(grouped) {
+// // function renderOverview(grouped) {
 
-  const container = document.getElementById("questionOverview");
-  container.innerHTML = "";
+// //   const container = document.getElementById("questionOverview");
+// //   container.innerHTML = "";
 
-  const years = Object.keys(grouped).sort((a,b)=>b-a);
+// //   const years = Object.keys(grouped).sort((a,b)=>b-a);
 
-  years.forEach(year => {
+// //   years.forEach(year => {
 
-    const yearBlock = document.createElement("div");
-    yearBlock.className = "year-block";
+// //     const yearBlock = document.createElement("div");
+// //     yearBlock.className = "year-block";
 
-    yearBlock.innerHTML = `<h3>${year}</h3>`;
+// //     yearBlock.innerHTML = `<h3>${year}</h3>`;
 
-    [1,2,3].forEach(step => {
+// //     [1,2,3].forEach(step => {
 
-      if (!grouped[year][step]) return;
+// //       if (!grouped[year][step]) return;
 
-      const table = document.createElement("table");
-      table.className = "overview-table";
+// //       const table = document.createElement("table");
+// //       table.className = "overview-table";
 
-      table.innerHTML = `
-      <thead>
-        <tr>
-          <th>STEP ${step}</th>
-          <th>Status</th>
-          <th>Attempts</th>
-          <th>Latest Time</th>
-          <th>Last Solve</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-      `;
+// //       table.innerHTML = `
+// //       <thead>
+// //         <tr>
+// //           <th>STEP ${step}</th>
+// //           <th>Status</th>
+// //           <th>Attempts</th>
+// //           <th>Latest Time</th>
+// //           <th>Last Solve</th>
+// //         </tr>
+// //       </thead>
+// //       <tbody></tbody>
+// //       `;
 
-      const tbody = table.querySelector("tbody");
+// //       const tbody = table.querySelector("tbody");
 
-      grouped[year][step]
-        .sort((a,b)=>a.question-b.question)
-        .forEach(q => {
+// //       grouped[year][step]
+// //         .sort((a,b)=>a.question-b.question)
+// //         .forEach(q => {
 
-          const row = document.createElement("tr");
+// //           const row = document.createElement("tr");
 
-          row.innerHTML = `
-            <td>Q${q.question}</td>
-            <td>${q.status ?? "No data"}</td>
-            <td>${q.records ?? "0-0-0-0"}</td>
-            <td>${q.latestTime ?? "N/A"}</td>
-            <td>${q.lastSolve ?? "N/A"}</td>
-          `;
+// //           row.innerHTML = `
+// //             <td>Q${q.question}</td>
+// //             <td>${q.status ?? "No data"}</td>
+// //             <td>${q.records ?? "0-0-0-0"}</td>
+// //             <td>${q.latestTime ?? "N/A"}</td>
+// //             <td>${q.lastSolve ?? "N/A"}</td>
+// //           `;
 
-          tbody.appendChild(row);
+// //           tbody.appendChild(row);
 
-        });
+// //         });
 
-      yearBlock.appendChild(table);
+// //       yearBlock.appendChild(table);
 
-    });
+// //     });
 
-    container.appendChild(yearBlock);
+// //     container.appendChild(yearBlock);
 
-  });
-}
+// //   });
+// // }

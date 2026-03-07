@@ -1065,3 +1065,49 @@ body.dark-mode .heat-10 { background: #a78bfa; }
 .dark-mode #backButton{
   background:#3b82f6;
 }
+
+
+#stepMatrix{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.matrix-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.matrix-year{
+  width:50px;
+  font-weight:600;
+}
+
+.matrix-cell{
+  width:18px;
+  height:18px;
+  border-radius:3px;
+  cursor:pointer;
+  border:1px solid rgba(0,0,0,0.1);
+}
+
+.matrix-empty{
+  background:#eee;
+}
+
+.matrix-low{
+  background:#c7d2fe;
+}
+
+.matrix-mid{
+  background:#6366f1;
+}
+
+.matrix-high{
+  background:#312e81;
+}
+
+.matrix-cell:hover{
+  transform:scale(1.2);
+}
