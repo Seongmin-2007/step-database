@@ -68,7 +68,7 @@ dashboardBtn.onclick = () => {
     document.getElementById("main-screen").style.display = "none";
     document.getElementById("dashboard-screen").style.display = "block";
 
-    loadDashboard(); // run dashboard code
+    loadDashboard(questions); // run dashboard code
 };
 
 document.getElementById("close-dashboard").onclick = () => {

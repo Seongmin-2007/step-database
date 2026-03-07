@@ -22,29 +22,78 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+function renderDashboard(model, questions) {
+
+  renderStats(model.stats);
+  renderPriorityList(model.priority);
+  renderRecentList(model.recent);
+  renderHeatmap(model.attempts);
+
+  drawLineChart(
+    document.getElementById("timeChart"),
+    model.timeSeries,
+    "#2563eb"
+  );
+
+  drawLineChart(
+    document.getElementById("difficultyChart"),
+    model.difficultySeries,
+    "#dc2626"
+  );
+
+  const grouped = groupQuestions(questions);
+  renderOverview(grouped);
+}
+
+function buildDashboardModel(attempts) {
+  return {
+    attempts,
+
+    stats: computeStats(attempts),
+
+    priority: computePriorityList(attempts),
+
+    recent: computeRecentQuestions(attempts),
+
+    timeSeries: attempts
+      .filter(a => typeof a.time === "number")
+      .sort((a,b)=>a.createdAt.seconds-b.createdAt.seconds)
+      .map(a => a.time/60),
+
+    difficultySeries: attempts
+      .filter(a => a.difficulty)
+      .sort((a,b)=>a.createdAt.seconds-b.createdAt.seconds)
+      .map(a => a.difficulty)
+  };
+}
+
 /* ================================
    LOAD DASHBOARD
 ================================ */
-export function loadDashboard() {
+let dashboardInitialized = false;
+
+export function loadDashboard(questions) {
+
   const attempts = getAttempts();
+  ALL_ATTEMPTS = attempts;
 
-  renderStats(computeStats(attempts));
-  renderPriorityList(computePriorityList(attempts));
-  renderRecentList(computeRecentQuestions(attempts));
-  renderHeatmap(attempts);
-  renderTimeChart(attempts);
-  renderDifficultyChart(attempts);
+  const model = buildDashboardModel(attempts);
+  renderDashboard(model, questions);
 
-  onAttemptsChanged(attempts => {
+  if (!dashboardInitialized) {
 
-    renderStats(computeStats(attempts));
-    renderPriorityList(computePriorityList(attempts));
-    renderRecentList(computeRecentQuestions(attempts));
-    renderHeatmap(attempts);
-    renderTimeChart(attempts);
-    renderDifficultyChart(attempts);
+    onAttemptsChanged(newAttempts => {
 
-  });
+      ALL_ATTEMPTS = newAttempts;
+
+      const model = buildDashboardModel(newAttempts);
+      renderDashboard(model, questions);
+
+    });
+
+    dashboardInitialized = true;
+  }
+
 }
 
 /* ================================
@@ -363,11 +412,6 @@ function openDayView(dateKey) {
   }
 }
 
-document.getElementById("backButton").addEventListener("click", () => {
-  document.getElementById("day-screen").style.display = "none";
-  document.querySelector(".dashboard-layout").style.display = "block";
-});
-
 /* ================================
    CHARTS
 ================================ */
@@ -421,4 +465,85 @@ function renderDifficultyChart(attempts) {
     diffs,
     "#dc2626"
   );
+}
+
+
+
+// SHOWS ALL QUESTIONS AND BY YEAR ETC
+function groupQuestions(questions) {
+  const map = {};
+
+  questions.forEach(q => {
+
+    if (!map[q.year]) map[q.year] = {};
+    if (!map[q.year][q.step]) map[q.year][q.step] = [];
+
+    map[q.year][q.step].push(q);
+
+  });
+
+  return map;
+}
+
+function renderOverview(grouped) {
+
+  const container = document.getElementById("questionOverview");
+  container.innerHTML = "";
+
+  const years = Object.keys(grouped).sort((a,b)=>b-a);
+
+  years.forEach(year => {
+
+    const yearBlock = document.createElement("div");
+    yearBlock.className = "year-block";
+
+    yearBlock.innerHTML = `<h3>${year}</h3>`;
+
+    [1,2,3].forEach(step => {
+
+      if (!grouped[year][step]) return;
+
+      const table = document.createElement("table");
+      table.className = "overview-table";
+
+      table.innerHTML = `
+      <thead>
+        <tr>
+          <th>STEP ${step}</th>
+          <th>Status</th>
+          <th>Attempts</th>
+          <th>Latest Time</th>
+          <th>Last Solve</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      `;
+
+      const tbody = table.querySelector("tbody");
+
+      grouped[year][step]
+        .sort((a,b)=>a.question-b.question)
+        .forEach(q => {
+
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+            <td>Q${q.question}</td>
+            <td>${q.status ?? "No data"}</td>
+            <td>${q.records ?? "0-0-0-0"}</td>
+            <td>${q.latestTime ?? "N/A"}</td>
+            <td>${q.lastSolve ?? "N/A"}</td>
+          `;
+
+          tbody.appendChild(row);
+
+        });
+
+      yearBlock.appendChild(table);
+
+    });
+
+    container.appendChild(yearBlock);
+
+  });
 }
