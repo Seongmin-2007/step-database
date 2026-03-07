@@ -256,9 +256,13 @@ function renderStepMatrix(questions, priorityList){
 
   const priorityMap = buildPriorityMap(priorityList);
 
-  const years = [...new Set(questions.map(q => q.year))].sort((a,b)=>b-a);
+  const years = [...new Set(questions.map(q=>q.year))].sort((a,b)=>b-a);
 
-  const papers = [1,2,3];
+  const paperSizes = {
+    1: 14,
+    2: 14,
+    3: 14
+  };
 
   years.forEach(year=>{
 
@@ -268,21 +272,30 @@ function renderStepMatrix(questions, priorityList){
     const label = document.createElement("div");
     label.className = "matrix-year";
     label.textContent = year;
+
     row.appendChild(label);
 
-    papers.forEach(paper=>{
+    [1,2,3].forEach(paper=>{
 
-      const paperQuestions = questions
-        .filter(q => q.year===year && q.paper===paper)
-        .sort((a,b)=>a.question-b.question);
+      const maxQ = paperSizes[paper];
 
-      paperQuestions.forEach(q=>{
+      for(let qn=1; qn<=maxQ; qn++){
 
-        const id = `${q.year}-S${q.paper}-Q${q.question}`;
-        const score = priorityMap[id];
+        const q = questions.find(
+          x => x.year===year && x.paper===paper && x.question===qn
+        );
 
         const cell = document.createElement("div");
         cell.className = "matrix-cell";
+
+        if(!q){
+          cell.classList.add("matrix-missing");
+          row.appendChild(cell);
+          continue;
+        }
+
+        const id = `${q.year}-S${q.paper}-Q${q.question}`;
+        const score = priorityMap[id];
 
         if(score === undefined){
           cell.classList.add("matrix-empty");
@@ -306,18 +319,15 @@ function renderStepMatrix(questions, priorityList){
         };
 
         row.appendChild(cell);
+      }
 
-      });
-
-      /* spacer between papers */
-      const spacer = document.createElement("div");
-      spacer.className = "matrix-paper-gap";
-      row.appendChild(spacer);
+      const gap = document.createElement("div");
+      gap.className = "matrix-paper-gap";
+      row.appendChild(gap);
 
     });
 
     container.appendChild(row);
-
   });
 }
 
