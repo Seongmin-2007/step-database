@@ -18,6 +18,7 @@ fetch("build.json", { cache: "no-store" })
 import "./auth.js";
 import { loadQuestion } from "./viewer/index.js";
 import { on } from "./eventBus.js";
+import { loadDashboard } from "./dashboard/dashboard.js";
 
 const themeToggleBtn = document.getElementById("theme-toggle");
 
@@ -56,7 +57,15 @@ document.addEventListener("click", e => {
 
 // Opens dashboard
 dashboardBtn.onclick = () => {
-    window.location.href = "dashboard.html";
+    document.getElementById("main-screen").style.display = "none";
+    document.getElementById("dashboard-screen").style.display = "block";
+
+    loadDashboard(); // run dashboard code
+};
+
+document.getElementById("close-dashboard").onclick = () => {
+    document.getElementById("dashboard-screen").style.display = "none";
+    document.getElementById("main-screen").style.display = "block";
 };
 
 

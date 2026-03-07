@@ -16,13 +16,20 @@ let ALL_ATTEMPTS = [];
    ENTRY POINT
 ================================ */
 auth.onAuthStateChanged(user => {
-  if (user) loadDashboard();
+  if (user) {
+     window.__USER = user;
+  }
 });
 
 /* ================================
    LOAD DASHBOARD
 ================================ */
-async function loadDashboard() {
+let DASHBOARD_LOADED = false;
+
+export async function loadDashboard() {
+
+  if (DASHBOARD_LOADED) return;
+
   const user = auth.currentUser;
   if (!user) return;
 
@@ -38,20 +45,17 @@ async function loadDashboard() {
     id: d.id,
     ...d.data()
   }));
+
   ALL_ATTEMPTS = attempts;
 
-  const theme = localStorage.getItem("theme");
-  if (theme === "dark") {
-      document.body.classList.add("dark-mode");
-  }
-
-  // ---- render everything ----
   renderStats(computeStats(attempts));
   renderPriorityList(computePriorityList(attempts));
   renderRecentList(computeRecentQuestions(attempts));
   renderHeatmap(attempts);
   renderTimeChart(attempts);
   renderDifficultyChart(attempts);
+
+  DASHBOARD_LOADED = true;
 }
 
 /* ================================

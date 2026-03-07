@@ -11,8 +11,7 @@
   <canvas id="chaos-canvas"></canvas>
 </div>
 
-<div class="layout">
-
+<div id="main-screen" class="layout">
   <!-- LEFT SIDEBAR -->
   <aside class="sidebar">
     <h2 id="easteregg">STEP Questions</h2>
@@ -81,9 +80,59 @@
   </header>
 </div>
 
+<!-- DASHBOARD -->
+<div id="dashboard-screen" class="hidden">
+
+  <div class="dashboard-layout">
+
+    <div class="dashboard-header">
+      <h1>Your Progress</h1>
+      <button id="close-dashboard">Back to Questions</button>
+    </div>
+
+    <div class="dashboard-grid">
+      <div id="stat-attempted" class="dashboard-card"></div>
+      <div id="stat-completed" class="dashboard-card"></div>
+      <div id="stat-avg-time" class="dashboard-card"></div>
+      <div id="stat-avg-difficulty" class="dashboard-card"></div>
+    </div>
+
+    <div class="dashboard-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="dashboard-section">
+        <h3>Time (min) per attempt</h3>
+        <canvas id="timeChart"></canvas>
+      </div>
+      <div class="dashboard-section">
+        <h3>Difficulty per attempt</h3>
+        <canvas id="difficultyChart"></canvas>
+      </div>
+    </div>
+
+    <div class="dashboard-section">
+      <h3>Activity Map</h3>
+      <div id="heatmap"></div>
+    </div>
+
+    <div class="dashboard-split">
+      <div>
+        <h2>Priority Review</h2>
+        <ul id="priorityList"></ul>
+      </div>
+
+      <div>
+        <h2>Recent Activity</h2>
+        <div id="recentList"></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
 <!-- Notifications -->
 <div id="notifications"></div>
 
 <script type="module" src="./js/splash.js"></script>
 <script type="module" src="./js/main.js"></script>
+<script type="module" src="./js/dashboard/dashboard.js"></script>
 </html>
