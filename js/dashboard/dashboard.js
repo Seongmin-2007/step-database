@@ -3,6 +3,7 @@ import { createAttemptCard } from "../ui.js";
 import { parseQuestionID } from "../utils.js";
 import { loadQuestion } from "../viewer/index.js";
 import { getAttempts, onAttemptsChanged } from "../attemptStore.js";
+import { emit } from "../eventBus.js";
 
 let ALL_ATTEMPTS = [];
 
@@ -315,6 +316,7 @@ function renderStepMatrix(questions, priorityList){
 
         cell.onclick = () => {
           loadQuestion(q, tags, null);
+          emit("filter:apply", q);
 
           const mainScreen = document.getElementById("main-screen");
           const dashboardScreen = document.getElementById("dashboard-screen");
