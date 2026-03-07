@@ -286,8 +286,8 @@ function renderHeatmap(attempts) {
 }
 
 function openDayView(dateKey) {
-  const dashboard = document.getElementById("dashboardScreen");
-  const dayScreen = document.getElementById("dayScreen");
+  const dashboard = document.getElementById("dashboard-layout");
+  const dayScreen = document.getElementById("day-screen");
 
   dashboard.style.display = "none";
   dayScreen.style.display = "block";
@@ -350,8 +350,8 @@ function openDayView(dateKey) {
 }
 
 document.getElementById("backButton").addEventListener("click", () => {
-  document.getElementById("dayScreen").style.display = "none";
-  document.getElementById("dashboardScreen").style.display = "block";
+  document.getElementById("day-screen").style.display = "none";
+  document.getElementById("dashboard-screen").style.display = "block";
 });
 
 /* ================================
