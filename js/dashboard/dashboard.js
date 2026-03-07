@@ -1,11 +1,3 @@
-import {
-  collectionGroup,
-  query,
-  where,
-  orderBy,
-  onSnapshot
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
 import { auth, db } from "../config.js";
 import { createAttemptCard } from "../ui.js";
 import { parseQuestionID } from "../utils.js";
