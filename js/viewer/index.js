@@ -52,7 +52,6 @@ export async function loadQuestion(q, tags, li) {
         };
     });
 
-
     // Navigation (previous, after quickly)
     initNavigation({
         getQuestions: () => window.__filteredQuestions,

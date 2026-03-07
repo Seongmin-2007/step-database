@@ -6,7 +6,10 @@ export function renderQuestion({ q, tags, li }) {
     // Highlight active question
     document.querySelectorAll("#questionList li")
         .forEach(x => x.classList.remove("active"));
-    li.classList.add("active");
+    
+    if (li) {
+        li.classList.add("active");
+    }
 
     viewer.innerHTML = `
     <section class="question-header">

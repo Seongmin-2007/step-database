@@ -314,7 +314,7 @@ function renderStepMatrix(questions, priorityList){
         cell.title = `${id}\n${tags.join(", ")}`;
 
         cell.onclick = () => {
-          loadQuestion(q, tags);
+          loadQuestion(q, tags, null);
 
           const mainScreen = document.getElementById("main-screen");
           const dashboardScreen = document.getElementById("dashboard-screen");
