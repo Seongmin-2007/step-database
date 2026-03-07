@@ -264,7 +264,9 @@ function renderStepMatrix(questions, priorityList){
 
   const priorityMap = buildPriorityMap(priorityList);
 
-  const years = [...new Set(questions.map(q=>q.year))].sort((a,b)=>b-a);
+  const years = [...new Set(questions.map(q => q.year))].sort((a,b)=>b-a);
+
+  const papers = [1,2,3];
 
   years.forEach(year=>{
 
@@ -274,13 +276,15 @@ function renderStepMatrix(questions, priorityList){
     const label = document.createElement("div");
     label.className = "matrix-year";
     label.textContent = year;
-
     row.appendChild(label);
 
-    questions
-      .filter(q=>q.year===year)
-      .sort((a,b)=> a.paper-b.paper || a.question-b.question)
-      .forEach(q=>{
+    papers.forEach(paper=>{
+
+      const paperQuestions = questions
+        .filter(q => q.year===year && q.paper===paper)
+        .sort((a,b)=>a.question-b.question);
+
+      paperQuestions.forEach(q=>{
 
         const id = `${q.year}-S${q.paper}-Q${q.question}`;
         const score = priorityMap[id];
@@ -312,6 +316,13 @@ function renderStepMatrix(questions, priorityList){
         row.appendChild(cell);
 
       });
+
+      /* spacer between papers */
+      const spacer = document.createElement("div");
+      spacer.className = "matrix-paper-gap";
+      row.appendChild(spacer);
+
+    });
 
     container.appendChild(row);
 

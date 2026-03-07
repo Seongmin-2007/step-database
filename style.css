@@ -1111,3 +1111,7 @@ body.dark-mode .heat-10 { background: #a78bfa; }
 .matrix-cell:hover{
   transform:scale(1.2);
 }
+
+.matrix-paper-gap{
+  width:16px;
+}
