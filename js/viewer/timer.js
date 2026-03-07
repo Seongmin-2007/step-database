@@ -32,7 +32,7 @@ export function initTimer({ onTick }) {
         if (interval) clearInterval(interval);
         interval = null;
 
-        startBtn.textContent = "Resume";
+        startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
     }
 
     startBtn.onclick = () => {
@@ -42,9 +42,7 @@ export function initTimer({ onTick }) {
 
     update();
 
-    if (display.textContent != "00min 00sec") {
-        startBtn.textContent = "Resume";
-    }
+    startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
 }
 
 export function stop() {
@@ -63,7 +61,9 @@ export function setTime(seconds) {
         clearInterval(interval);
         interval = null;
         const startBtn = qs("start-timer");
-        if (startBtn) startBtn.textContent = "Resume";
+        if (startBtn) {
+            startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
+        }
     }
 }
 
@@ -87,7 +87,9 @@ export function makeTimeEditable(timeDisplay, persistDraft) {
         if (interval) {
             clearInterval(interval);
             interval = null;
-            if (startBtn) startBtn.textContent = "Resume";
+            if (startBtn) {
+                startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
+            }
         }
 
         // Disable timer button while editing
