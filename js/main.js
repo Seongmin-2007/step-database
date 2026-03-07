@@ -64,16 +64,19 @@ document.addEventListener("click", e => {
 });
 
 // Opens dashboard
-dashboardBtn.onclick = () => {
-    document.getElementById("main-screen").style.display = "none";
-    document.getElementById("dashboard-screen").style.display = "block";
+const mainScreen = document.getElementById("main-screen");
+const dashboardScreen = document.getElementById("dashboard-screen");
 
-    loadDashboard(questions); // run dashboard code
+dashboardBtn.onclick = () => {
+    mainScreen.classList.add("hidden");
+    dashboardScreen.classList.remove("hidden");
+
+    loadDashboard(questions);
 };
 
 document.getElementById("close-dashboard").onclick = () => {
-    document.getElementById("dashboard-screen").style.display = "none";
-    document.getElementById("main-screen").style.display = "block";
+    dashboardScreen.classList.add("hidden");
+    mainScreen.classList.remove("hidden");
 };
 
 
