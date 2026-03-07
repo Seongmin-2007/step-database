@@ -8,6 +8,7 @@ import {
 
 import { auth, db } from "../config.js";
 import { createAttemptCard } from "../ui.js";
+import { parseQuestionID } from "../utils.js";
 
 let ALL_ATTEMPTS = [];
 
@@ -286,7 +287,7 @@ function renderHeatmap(attempts) {
 }
 
 function openDayView(dateKey) {
-  const dashboard = document.getElementById("dashboard-layout");
+  const dashboard = document.querySelector(".dashboard-layout");
   const dayScreen = document.getElementById("day-screen");
 
   dashboard.style.display = "none";
@@ -298,6 +299,7 @@ function openDayView(dateKey) {
   const container = document.getElementById("dayAttempts");
   container.innerHTML = "";
 
+  // filter attempts from that day
   const attempts = ALL_ATTEMPTS.filter(a => {
     if (!a.createdAt) return false;
 
@@ -316,42 +318,61 @@ function openDayView(dateKey) {
     return;
   }
 
+  // GROUP ATTEMPTS BY QUESTION
+  const byQuestion = {};
+
   attempts.forEach(a => {
+    byQuestion[a.questionID] ??= [];
+    byQuestion[a.questionID].push(a);
+  });
 
-    const row = document.createElement("div");
-    row.className = "day-row";
+  // render each question group
+  for (const qid in byQuestion) {
 
-    const q = parseQuestionID(a.questionID);
+    const q = parseQuestionID(qid);
 
     const questionImage =
       `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
 
+    const questionBlock = document.createElement("div");
+    questionBlock.className = "question-block";
+
+    // image
     const questionBox = document.createElement("div");
     questionBox.className = "question-content";
 
     questionBox.innerHTML = `
-      <img src="${questionImage}" alt="Question ${a.questionID}">
+      <img src="${questionImage}" alt="Question ${qid}">
     `;
 
-    const fakeDoc = {
-      id: a.id,
-      ref: null,
-      data: () => a
-    };
+    questionBlock.appendChild(questionBox);
 
-    const card = createAttemptCard(fakeDoc, {includeID:true});
+    // attempts container
+    const attemptsContainer = document.createElement("div");
+    attemptsContainer.className = "attempts-container";
 
-    row.appendChild(questionBox);
-    row.appendChild(card);
+    byQuestion[qid].forEach(a => {
 
-    container.appendChild(row);
+      const fakeDoc = {
+        id: a.id,
+        ref: null,
+        data: () => a
+      };
 
-  });
+      const card = createAttemptCard(fakeDoc, {includeID:true});
+      attemptsContainer.appendChild(card);
+
+    });
+
+    questionBlock.appendChild(attemptsContainer);
+
+    container.appendChild(questionBlock);
+  }
 }
 
 document.getElementById("backButton").addEventListener("click", () => {
   document.getElementById("day-screen").style.display = "none";
-  document.getElementById("dashboard-screen").style.display = "block";
+  document.querySelector(".dashboard-layout").style.display = "block";
 });
 
 /* ================================

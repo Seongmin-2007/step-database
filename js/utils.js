@@ -26,3 +26,14 @@ export function firebaseTimeToDate(date) {
         return (new Date(date.seconds * 1000)).toISOString().slice(0, 10);
     }
 }
+
+export function parseQuestionID(questionID) {
+  // Example format: 2022-S1-Q5
+  const parts = questionID.split("-");
+
+  return {
+    year: parts[0],
+    paper: parts[1].replace("S",""),
+    question: parts[2].replace("Q","")
+  };
+}

@@ -997,28 +997,85 @@ body.dark-mode .heat-10 { background: #a78bfa; }
   }
 }
 
-
+/* ================================
+   DAY VIEW
+================================ */
 
 #dayAttempts{
   display:flex;
   flex-direction:column;
-  gap:14px;
+  gap:40px;
+  margin-top:20px;
 }
 
-.day-row{
+/* Each question group */
+.question-block{
   display:flex;
-  gap:20px;
+  gap:32px;
   align-items:flex-start;
+  padding:18px;
+  border-radius:10px;
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
 }
 
-.question-box{
-  min-width:120px;
-  padding:10px;
-  background:#f3f4f6;
+/* Dark mode container */
+.dark-mode .question-block{
+  background:#1f2937;
+  border:1px solid #374151;
+}
+
+/* Question image container */
+.question-content{
+  flex-shrink:0;
+}
+
+/* Question image */
+.question-content img{
+  max-width:360px;
+  width:100%;
   border-radius:8px;
-  font-weight:600;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
-.dark-mode .question-box{
-  background:#374151;
+/* Attempts list */
+.attempts-container{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  flex:1;
+}
+
+/* Back button styling */
+#backButton{
+  margin-bottom:18px;
+  padding:8px 16px;
+  border-radius:6px;
+  border:none;
+  background:#2563eb;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+}
+
+#backButton:hover{
+  background:#1d4ed8;
+}
+
+/* Dark mode button */
+.dark-mode #backButton{
+  background:#3b82f6;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 900px){
+
+  .question-block{
+    flex-direction:column;
+  }
+
+  .question-content img{
+    max-width:100%;
+  }
+
 }
