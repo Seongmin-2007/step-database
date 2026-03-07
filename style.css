@@ -996,3 +996,29 @@ body.dark-mode .heat-10 { background: #a78bfa; }
     gap: 1rem;
   }
 }
+
+
+
+#dayAttempts{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.day-row{
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+}
+
+.question-box{
+  min-width:120px;
+  padding:10px;
+  background:#f3f4f6;
+  border-radius:8px;
+  font-weight:600;
+}
+
+.dark-mode .question-box{
+  background:#374151;
+}

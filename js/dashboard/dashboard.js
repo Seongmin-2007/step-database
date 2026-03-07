@@ -9,6 +9,8 @@ import {
 import { auth, db } from "../config.js";
 import { createAttemptCard } from "../ui.js";
 
+let ALL_ATTEMPTS = [];
+
 /* ================================
    ENTRY POINT
 ================================ */
@@ -35,6 +37,7 @@ async function loadDashboard() {
     id: d.id,
     ...d.data()
   }));
+  ALL_ATTEMPTS = attempts;
 
   const theme = localStorage.getItem("theme");
   if (theme === "dark") {
@@ -274,9 +277,82 @@ function renderHeatmap(attempts) {
     cell.className = `heat-day heat-${Math.min(count, 10)}`;
     cell.title = `${key}: ${count} attempts`;
 
+    cell.addEventListener("click", () => {
+      openDayView(key);
+    });
+
     container.appendChild(cell);
   }
 }
+
+function openDayView(dateKey) {
+  const dashboard = document.getElementById("dashboardScreen");
+  const dayScreen = document.getElementById("dayScreen");
+
+  dashboard.style.display = "none";
+  dayScreen.style.display = "block";
+
+  document.getElementById("dayTitle").textContent =
+    `Attempts on ${dateKey}`;
+
+  const container = document.getElementById("dayAttempts");
+  container.innerHTML = "";
+
+  const attempts = ALL_ATTEMPTS.filter(a => {
+    if (!a.createdAt) return false;
+
+    const d =
+      typeof a.createdAt.toDate === "function"
+        ? a.createdAt.toDate()
+        : a.createdAt;
+
+    const key = d.toISOString().slice(0,10);
+
+    return key === dateKey;
+  });
+
+  if (!attempts.length) {
+    container.innerHTML = "<p>No attempts that day.</p>";
+    return;
+  }
+
+  attempts.forEach(a => {
+
+    const row = document.createElement("div");
+    row.className = "day-row";
+
+    const q = parseQuestionID(a.questionID);
+
+    const questionImage =
+      `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
+
+    const questionBox = document.createElement("div");
+    questionBox.className = "question-content";
+
+    questionBox.innerHTML = `
+      <img src="${questionImage}" alt="Question ${a.questionID}">
+    `;
+
+    const fakeDoc = {
+      id: a.id,
+      ref: null,
+      data: () => a
+    };
+
+    const card = createAttemptCard(fakeDoc, {includeID:true});
+
+    row.appendChild(questionBox);
+    row.appendChild(card);
+
+    container.appendChild(row);
+
+  });
+}
+
+document.getElementById("backButton").addEventListener("click", () => {
+  document.getElementById("dayScreen").style.display = "none";
+  document.getElementById("dashboardScreen").style.display = "block";
+});
 
 /* ================================
    CHARTS
