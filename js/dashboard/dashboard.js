@@ -3,7 +3,7 @@ import {
   query,
   where,
   orderBy,
-  getDocs
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 import { auth, db } from "../config.js";
@@ -24,11 +24,12 @@ auth.onAuthStateChanged(user => {
 /* ================================
    LOAD DASHBOARD
 ================================ */
-let DASHBOARD_LOADED = false;
+let DASHBOARD_INITIALIZED = false;
+let unsubscribe = null;
 
-export async function loadDashboard() {
+export function loadDashboard() {
 
-  if (DASHBOARD_LOADED) return;
+  if (DASHBOARD_INITIALIZED) return;
 
   const user = auth.currentUser;
   if (!user) return;
@@ -39,23 +40,25 @@ export async function loadDashboard() {
     orderBy("createdAt", "desc")
   );
 
-  const snap = await getDocs(q);
+  unsubscribe = onSnapshot(q, snap => {
 
-  const attempts = snap.docs.map(d => ({
-    id: d.id,
-    ...d.data()
-  }));
+    const attempts = snap.docs.map(d => ({
+      id: d.id,
+      ...d.data()
+    }));
 
-  ALL_ATTEMPTS = attempts;
+    ALL_ATTEMPTS = attempts;
 
-  renderStats(computeStats(attempts));
-  renderPriorityList(computePriorityList(attempts));
-  renderRecentList(computeRecentQuestions(attempts));
-  renderHeatmap(attempts);
-  renderTimeChart(attempts);
-  renderDifficultyChart(attempts);
+    renderStats(computeStats(attempts));
+    renderPriorityList(computePriorityList(attempts));
+    renderRecentList(computeRecentQuestions(attempts));
+    renderHeatmap(attempts);
+    renderTimeChart(attempts);
+    renderDifficultyChart(attempts);
 
-  DASHBOARD_LOADED = true;
+  });
+
+  DASHBOARD_INITIALIZED = true;
 }
 
 /* ================================
