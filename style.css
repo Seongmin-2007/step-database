@@ -1066,16 +1066,3 @@ body.dark-mode .heat-10 { background: #a78bfa; }
 .dark-mode #backButton{
   background:#3b82f6;
 }
-
-/* Responsive layout for smaller screens */
-@media (max-width: 900px){
-
-  .question-block{
-    flex-direction:column;
-  }
-
-  .question-content img{
-    max-width:100%;
-  }
-
-}
