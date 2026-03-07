@@ -316,7 +316,7 @@ function renderStepMatrix(questions, priorityList){
 
         cell.onclick = () => {
           loadQuestion(q, tags, null);
-          emit("filter:apply", q);
+          emit("filter:apply", id);
 
           const mainScreen = document.getElementById("main-screen");
           const dashboardScreen = document.getElementById("dashboard-screen");
