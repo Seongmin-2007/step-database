@@ -1,7 +1,7 @@
 import { auth, db } from "../config.js";
 import { createAttemptCard } from "../ui.js";
 import { parseQuestionID } from "../utils.js";
-import { loadQuestion } from "./viewer/index.js";
+import { loadQuestion } from "../viewer/index.js";
 import { getAttempts, onAttemptsChanged } from "../attemptStore.js";
 
 let ALL_ATTEMPTS = [];
