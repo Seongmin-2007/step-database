@@ -9,6 +9,7 @@ import {
 import { auth, db } from "../config.js";
 import { createAttemptCard } from "../ui.js";
 import { parseQuestionID } from "../utils.js";
+import { getAttempts, onAttemptsChanged } from "../attemptStore.js";
 
 let ALL_ATTEMPTS = [];
 
@@ -24,30 +25,17 @@ auth.onAuthStateChanged(user => {
 /* ================================
    LOAD DASHBOARD
 ================================ */
-let DASHBOARD_INITIALIZED = false;
-let unsubscribe = null;
-
 export function loadDashboard() {
+  const attempts = getAttempts();
 
-  if (DASHBOARD_INITIALIZED) return;
+  renderStats(computeStats(attempts));
+  renderPriorityList(computePriorityList(attempts));
+  renderRecentList(computeRecentQuestions(attempts));
+  renderHeatmap(attempts);
+  renderTimeChart(attempts);
+  renderDifficultyChart(attempts);
 
-  const user = auth.currentUser;
-  if (!user) return;
-
-  const q = query(
-    collectionGroup(db, "attempts"),
-    where("userID", "==", user.uid),
-    orderBy("createdAt", "desc")
-  );
-
-  unsubscribe = onSnapshot(q, snap => {
-
-    const attempts = snap.docs.map(d => ({
-      id: d.id,
-      ...d.data()
-    }));
-
-    ALL_ATTEMPTS = attempts;
+  onAttemptsChanged(attempts => {
 
     renderStats(computeStats(attempts));
     renderPriorityList(computePriorityList(attempts));
@@ -57,8 +45,6 @@ export function loadDashboard() {
     renderDifficultyChart(attempts);
 
   });
-
-  DASHBOARD_INITIALIZED = true;
 }
 
 /* ================================

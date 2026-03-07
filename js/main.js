@@ -16,9 +16,17 @@ fetch("build.json", { cache: "no-store" })
     });
 
 import "./auth.js";
+import { auth } from "./config.js";
 import { loadQuestion } from "./viewer/index.js";
 import { on } from "./eventBus.js";
+import { startAttemptListener } from "./attemptStore.js";
 import { loadDashboard } from "./dashboard/dashboard.js";
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        startAttemptListener();
+    }
+});
 
 const themeToggleBtn = document.getElementById("theme-toggle");
 
