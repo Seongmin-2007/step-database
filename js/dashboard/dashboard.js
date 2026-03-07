@@ -315,8 +315,11 @@ function renderStepMatrix(questions, priorityList){
 
         cell.onclick = () => {
           loadQuestion(q, tags);
-          document.getElementById("dashboard-screen").style.display = "none";
-          document.getElementById("main-screen").style.display = "block";
+
+          const mainScreen = document.getElementById("main-screen");
+          const dashboardScreen = document.getElementById("dashboard-screen");
+          mainScreen.classList.remove("hidden");
+          dashboardScreen.classList.add("hidden");
         };
 
         row.appendChild(cell);
