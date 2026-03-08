@@ -2884,90 +2884,16 @@
     "Curve Sketching",
     "Trigonometry"
   ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-22 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Algebra",
-    "Differentiation",
-    "Inequalities",
-    "Optimisation",
-    "Curve sketching"
-  ],
   "assets/images/questions/2013/S1/Q1.png": [
     "Algebra",
     "Polynomials",
     "Inequalities"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-50 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Dynamics",
-    "Kinematics"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-26 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Sequences & Recurrences",
-    "Trigonometry",
-    "Algebra",
-    "Proof / Induction"
   ],
   "assets/images/questions/2013/S1/Q3.png": [
     "Vectors",
     "Algebra",
     "Geometry",
     "Sequences & Recurrences"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-58-00 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Random Variables / Expectation",
-    "Distributions",
-    "Integration",
-    "Algebra"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-06 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Number Theory",
-    "Proof / Induction",
-    "Algebra"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-09 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Integration",
-    "Curve Sketching",
-    "Limits & Asymptotics",
-    "Coordinate Geometry"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-55 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Probability",
-    "Random variables / expectation",
-    "Distributions",
-    "Algebra",
-    "Optimisation"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-30 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Vectors",
-    "Geometry"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-18 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Trigonometry",
-    "Differentiation",
-    "Optimisation",
-    "Geometry"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-14 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Integration",
-    "Polynomials",
-    "Curve Sketching",
-    "Inequalities"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-42 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Kinematics",
-    "Energy & Work",
-    "Momentum & Impulse"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-34 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Coordinate Geometry",
-    "Algebra",
-    "Limits & Asymptotics",
-    "Differentiation"
-  ],
-  "assets/images/questions/2014/S1/Screenshot 2026-03-08 at 23-57-37 Ifinal.pdf - 2014 STEP 1.pdf.png": [
-    "Dynamics",
-    "Kinematics",
-    "Trigonometry",
-    "Curve Sketching"
   ],
   "assets/images/questions/2013/S1/Q2.png": [
     "Algebra",
@@ -3550,5 +3476,80 @@
     "Curve Sketching",
     "Trigonometry",
     "Algebra"
+  ],
+  "assets/images/questions/2014/S1/Q5.png": [
+    "Algebra",
+    "Inequalities",
+    "Differentiation",
+    "Curve Sketching",
+    "Optimisation"
+  ],
+  "assets/images/questions/2014/S1/Q12.png": [
+    "Probability",
+    "Random Variables / Expectation",
+    "Number Theory",
+    "Inequalities",
+    "Optimisation"
+  ],
+  "assets/images/questions/2014/S1/Q8.png": [
+    "Algebra",
+    "Coordinate Geometry",
+    "Limits & Asymptotics",
+    "Differentiation"
+  ],
+  "assets/images/questions/2014/S1/Q6.png": [
+    "Sequences & Recurrences",
+    "Trigonometry",
+    "Algebra",
+    "Proof / Induction"
+  ],
+  "assets/images/questions/2014/S1/Q7.png": [
+    "Vectors",
+    "Geometry"
+  ],
+  "assets/images/questions/2014/S1/Q4.png": [
+    "Differentiation",
+    "Optimisation",
+    "Trigonometry",
+    "Kinematics"
+  ],
+  "assets/images/questions/2014/S1/Q11.png": [
+    "Dynamics",
+    "Kinematics",
+    "Algebra"
+  ],
+  "assets/images/questions/2014/S1/Q9.png": [
+    "Dynamics",
+    "Kinematics",
+    "Trigonometry",
+    "Inequalities",
+    "Curve Sketching"
+  ],
+  "assets/images/questions/2014/S1/Q2.png": [
+    "Integration",
+    "Curve Sketching",
+    "Limits & Asymptotics"
+  ],
+  "assets/images/questions/2014/S1/Q3.png": [
+    "Integration",
+    "Polynomials",
+    "Curve sketching",
+    "Inequalities"
+  ],
+  "assets/images/questions/2014/S1/Q13.png": [
+    "Probability",
+    "Random Variables / Expectation",
+    "Distributions",
+    "Integration"
+  ],
+  "assets/images/questions/2014/S1/Q1.png": [
+    "Number Theory",
+    "Proof / Induction",
+    "Algebra"
+  ],
+  "assets/images/questions/2014/S1/Q10.png": [
+    "Kinematics",
+    "Momentum & Impulse",
+    "Energy & Work"
   ]
 }
