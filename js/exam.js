@@ -15,10 +15,10 @@
 import { addDoc, collection, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-import { auth, db }                              from "../core/config.js";
-import { questionImagePath }                     from "../core/constants.js";
-import { makeQuestionID }                        from "../core/utils.js";
-import { notify }                                from "../ui/ui.js";
+import { auth, db }                              from "./core/config.js";
+import { questionImagePath }                     from "./core/constants.js";
+import { makeQuestionID }                        from "./core/utils.js";
+import { notify }                                from "./ui/ui.js";
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
