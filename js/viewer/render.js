@@ -5,10 +5,6 @@
  */
 
 import { questionImagePath, solutionImagePath } from "../core/constants.js";
-import { renderViewerStatus, bindFlagButton } from "./viewerStatus.js";
-
-renderViewerStatus(questionID, attempts);
-bindFlagButton(questionID);
 
 // ─── Question template ────────────────────────────────────────────────────────
 
