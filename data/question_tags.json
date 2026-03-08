@@ -46,7 +46,7 @@
     "Inequalities"
   ],
   "assets/images/questions/2013/S2/Q4.png": [
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Algebra",
     "Loci"
   ],
@@ -149,9 +149,9 @@
   ],
   "assets/images/questions/2013/S3/Q3.png": [
     "Algebra",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Vectors",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2014/S2/Q11.png": [
     "Forces / Newton\u2019s Laws",
@@ -161,7 +161,7 @@
   ],
   "assets/images/questions/2014/S2/Q10.png": [
     "Kinematics",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Trigonometry",
     "Optimisation",
     "Differentiation"
@@ -175,10 +175,10 @@
   ],
   "assets/images/questions/2014/S2/Q13.png": [
     "Probability",
-    "Expectation / random variables",
+    "Expectation / Random Variables",
     "Combinatorics",
-    "Sequences & recurrences",
-    "Series & expansions"
+    "Sequences & Recurrences",
+    "Series & Expansions"
   ],
   "assets/images/questions/2014/S2/Q8.png": [
     "Polynomials",
@@ -187,15 +187,15 @@
     "Optimisation"
   ],
   "assets/images/questions/2014/S2/Q9.png": [
-    "Forces / newton's laws",
+    "Forces / Newton\u2019s Laws",
     "Trigonometry",
     "Inequalities"
   ],
   "assets/images/questions/2014/S2/Q7.png": [
     "Algebra",
     "Inequalities",
-    "Coordinate geometry",
-    "Proof / induction",
+    "Coordinate Geometry",
+    "Proof / Induction",
     "Optimisation"
   ],
   "assets/images/questions/2014/S2/Q6.png": [
@@ -230,9 +230,9 @@
   ],
   "assets/images/questions/2014/S2/Q3.png": [
     "Differentiation",
-    "Coordinate geometry",
-    "Differential equations",
-    "Proof / induction"
+    "Coordinate Geometry",
+    "Differential Equations",
+    "Proof / Induction"
   ],
   "assets/images/questions/2014/S3/Q11.png": [
     "Forces / Newton\u2019s Laws",
@@ -262,9 +262,9 @@
   ],
   "assets/images/questions/2014/S3/Q8.png": [
     "Inequalities",
-    "Series & expansions",
+    "Series & Expansions",
     "Number theory",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2014/S3/Q9.png": [
     "Kinematics",
@@ -296,7 +296,7 @@
   "assets/images/questions/2014/S3/Q5.png": [
     "Algebra",
     "Proof / Induction",
-    "Coordinate geometry"
+    "Coordinate Geometry"
   ],
   "assets/images/questions/2014/S3/Q1.png": [
     "Algebra",
@@ -308,14 +308,14 @@
     "Integration",
     "Trigonometry",
     "Differentiation",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2014/S3/Q3.png": [
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Differentiation",
     "Optimisation",
     "Inequalities",
-    "Polar / parametric curves"
+    "Polar / Parametric curves"
   ],
   "assets/images/questions/2022/S2/Q11.png": [
     "Probability",
@@ -326,7 +326,7 @@
   "assets/images/questions/2022/S2/Q10.png": [
     "Kinematics",
     "Optimisation",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Trigonometry",
     "Inequalities"
   ],
@@ -339,8 +339,8 @@
   ],
   "assets/images/questions/2022/S2/Q8.png": [
     "Algebra",
-    "Coordinate geometry",
-    "Proof / induction"
+    "Coordinate Geometry",
+    "Proof / Induction"
   ],
   "assets/images/questions/2022/S2/Q9.png": [
     "Forces / Newton\u2019s Laws",
@@ -351,18 +351,18 @@
   "assets/images/questions/2022/S2/Q7.png": [
     "Algebra",
     "Polynomials",
-    "Proof / induction",
+    "Proof / Induction",
     "Complex numbers"
   ],
   "assets/images/questions/2022/S2/Q6.png": [
     "Differentiation",
-    "Differential equations",
-    "Coordinate geometry"
+    "Differential Equations",
+    "Coordinate Geometry"
   ],
   "assets/images/questions/2022/S2/Q4.png": [
     "Algebra",
     "Inequalities",
-    "Coordinate geometry"
+    "Coordinate Geometry"
   ],
   "assets/images/questions/2022/S2/Q5.png": [
     "Algebra",
@@ -376,15 +376,15 @@
     "Optimisation"
   ],
   "assets/images/questions/2022/S2/Q2.png": [
-    "Sequences & recurrences",
+    "Sequences & Recurrences",
     "Polynomials",
-    "Proof / induction",
+    "Proof / Induction",
     "Algebra"
   ],
   "assets/images/questions/2022/S2/Q3.png": [
-    "Sequences & recurrences",
-    "Series & expansions",
-    "Proof / induction",
+    "Sequences & Recurrences",
+    "Series & Expansions",
+    "Proof / Induction",
     "Number theory"
   ],
   "assets/images/questions/2022/S3/Q11.png": [
@@ -408,12 +408,12 @@
   "assets/images/questions/2022/S3/Q8.png": [
     "Trigonometry",
     "Number theory",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2022/S3/Q9.png": [
     "Kinematics",
-    "Momentum & impulse",
-    "Forces / newton\u2019s laws",
+    "Momentum & Impulse",
+    "Forces / Newton\u2019s Laws",
     "Algebra"
   ],
   "assets/images/questions/2022/S3/Q7.png": [
@@ -437,15 +437,15 @@
   ],
   "assets/images/questions/2022/S3/Q5.png": [
     "Integration",
-    "Proof / induction",
+    "Proof / Induction",
     "Trigonometry",
-    "Functional equations"
+    "Functional Equations"
   ],
   "assets/images/questions/2022/S3/Q1.png": [
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Polynomials",
     "Algebra",
-    "Polar / parametric curves"
+    "Polar / Parametric curves"
   ],
   "assets/images/questions/2022/S3/Q2.png": [
     "Number Theory",
@@ -455,7 +455,7 @@
   ],
   "assets/images/questions/2022/S3/Q3.png": [
     "Differentiation",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Optimisation",
     "Inequalities"
   ],
@@ -482,7 +482,7 @@
     "Algebra",
     "Combinatorics",
     "Number theory",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2025/S2/Q9.png": [
     "Kinematics",
@@ -492,7 +492,7 @@
     "Polynomials"
   ],
   "assets/images/questions/2025/S2/Q7.png": [
-    "Differential equations",
+    "Differential Equations",
     "Integration",
     "Kinematics",
     "Differentiation"
@@ -505,9 +505,9 @@
   ],
   "assets/images/questions/2025/S2/Q4.png": [
     "Number theory",
-    "Proof / induction",
+    "Proof / Induction",
     "Algebra",
-    "Functional equations"
+    "Functional Equations"
   ],
   "assets/images/questions/2025/S2/Q5.png": [
     "Integration",
@@ -517,7 +517,7 @@
   "assets/images/questions/2025/S2/Q1.png": [
     "Algebra",
     "Differentiation",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Optimisation"
   ],
   "assets/images/questions/2025/S2/Q2.png": [
@@ -560,7 +560,7 @@
   "assets/images/questions/2025/S3/Q9.png": [
     "Integration",
     "Differentiation",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Optimisation"
   ],
   "assets/images/questions/2025/S3/Q7.png": [
@@ -572,7 +572,7 @@
   "assets/images/questions/2025/S3/Q6.png": [
     "Algebra",
     "Number theory",
-    "Proof / induction",
+    "Proof / Induction",
     "Polynomials"
   ],
   "assets/images/questions/2025/S3/Q4.png": [
@@ -583,8 +583,8 @@
   ],
   "assets/images/questions/2025/S3/Q5.png": [
     "Vectors",
-    "Coordinate geometry",
-    "Proof / induction",
+    "Coordinate Geometry",
+    "Proof / Induction",
     "Inequalities"
   ],
   "assets/images/questions/2025/S3/Q1.png": [
@@ -643,7 +643,7 @@
   ],
   "assets/images/questions/2024/S2/Q4.png": [
     "Vectors",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Trigonometry"
   ],
   "assets/images/questions/2024/S2/Q5.png": [
@@ -656,8 +656,8 @@
   "assets/images/questions/2024/S2/Q1.png": [
     "Number theory",
     "Algebra",
-    "Proof / induction",
-    "Sequences & recurrences"
+    "Proof / Induction",
+    "Sequences & Recurrences"
   ],
   "assets/images/questions/2024/S2/Q22.png": [
     "Probability",
@@ -672,9 +672,9 @@
     "Algebra"
   ],
   "assets/images/questions/2024/S2/Q3.png": [
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Trigonometry",
-    "Functional equations",
+    "Functional Equations",
     "Algebra"
   ],
   "assets/images/questions/2024/S3/Q11.png": [
@@ -709,15 +709,15 @@
     "Inequalities"
   ],
   "assets/images/questions/2024/S3/Q7.png": [
-    "Series & expansions",
+    "Series & Expansions",
     "Inequalities",
     "Number theory",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2024/S3/Q6.png": [
-    "Differential equations",
+    "Differential Equations",
     "Kinematics",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Vectors"
   ],
   "assets/images/questions/2024/S3/Q4.png": [
@@ -733,9 +733,9 @@
     "Proof / Induction"
   ],
   "assets/images/questions/2024/S3/Q1.png": [
-    "Series & expansions",
-    "Limits & asymptotics",
-    "Proof / induction",
+    "Series & Expansions",
+    "Limits & Asymptotics",
+    "Proof / Induction",
     "Algebra"
   ],
   "assets/images/questions/2024/S3/Q2.png": [
@@ -757,7 +757,7 @@
   ],
   "assets/images/questions/2023/S2/Q10.png": [
     "Kinematics",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Trigonometry",
     "Differentiation",
     "Optimisation"
@@ -798,9 +798,9 @@
     "Number Theory"
   ],
   "assets/images/questions/2023/S2/Q5.png": [
-    "Sequences & recurrences",
+    "Sequences & Recurrences",
     "Inequalities",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2023/S2/Q1.png": [
     "Integration",
@@ -810,7 +810,7 @@
   "assets/images/questions/2023/S2/Q2.png": [
     "Trigonometry",
     "Algebra",
-    "Functional equations",
+    "Functional Equations",
     "Inequalities"
   ],
   "assets/images/questions/2023/S2/Q3.png": [
@@ -822,8 +822,8 @@
   ],
   "assets/images/questions/2023/S3/Q11.png": [
     "Probability",
-    "Expectation / random variables",
-    "Series & expansions"
+    "Expectation / Random Variables",
+    "Series & Expansions"
   ],
   "assets/images/questions/2023/S3/Q10.png": [
     "Forces / Newton\u2019s Laws",
@@ -874,7 +874,7 @@
   "assets/images/questions/2023/S3/Q5.png": [
     "Number theory",
     "Algebra",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2023/S3/Q1.png": [
     "Coordinate Geometry",
@@ -924,8 +924,8 @@
   ],
   "assets/images/questions/2015/S2/Q8.png": [
     "Vectors",
-    "Coordinate geometry",
-    "Proof / induction"
+    "Coordinate Geometry",
+    "Proof / Induction"
   ],
   "assets/images/questions/2015/S2/Q9.png": [
     "Forces / Newton\u2019s Laws",
@@ -935,7 +935,7 @@
     "Momentum & Impulse"
   ],
   "assets/images/questions/2015/S2/Q7.png": [
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Algebra",
     "Inequalities"
   ],
@@ -976,8 +976,8 @@
     "Proof / Induction"
   ],
   "assets/images/questions/2015/S3/Q11.png": [
-    "Circular motion",
-    "Forces / newton\u2019s laws",
+    "Circular Motion",
+    "Forces / Newton\u2019s Laws",
     "Kinematics",
     "Trigonometry"
   ],
@@ -995,7 +995,7 @@
   ],
   "assets/images/questions/2015/S3/Q13.png": [
     "Probability",
-    "Expectation / random variables",
+    "Expectation / Random Variables",
     "Integration",
     "Differentiation"
   ],
@@ -1031,7 +1031,7 @@
   ],
   "assets/images/questions/2015/S3/Q5.png": [
     "Number theory",
-    "Proof / induction",
+    "Proof / Induction",
     "Algebra"
   ],
   "assets/images/questions/2015/S3/Q1.png": [
@@ -1047,8 +1047,8 @@
   ],
   "assets/images/questions/2015/S3/Q3.png": [
     "Trigonometry",
-    "Coordinate geometry",
-    "Polar / parametric curves",
+    "Coordinate Geometry",
+    "Polar / Parametric curves",
     "Integration",
     "Inequalities"
   ],
@@ -1119,8 +1119,8 @@
   "assets/images/questions/2012/S2/Q2.png": [
     "Algebra",
     "Polynomials",
-    "Functional equations",
-    "Proof / induction"
+    "Functional Equations",
+    "Proof / Induction"
   ],
   "assets/images/questions/2012/S2/Q3.png": [
     "Integration",
@@ -1129,7 +1129,7 @@
     "Algebra"
   ],
   "assets/images/questions/2012/S3/Q11.png": [
-    "Energy & work",
+    "Energy & Work",
     "Kinematics",
     "Differentiation",
     "Inequalities"
@@ -1144,7 +1144,7 @@
   "assets/images/questions/2012/S3/Q12.png": [
     "Integration",
     "Probability",
-    "Expectation / random variables"
+    "Expectation / Random Variables"
   ],
   "assets/images/questions/2012/S3/Q13.png": [
     "Probability",
@@ -1164,9 +1164,9 @@
     "Inequalities"
   ],
   "assets/images/questions/2012/S3/Q7.png": [
-    "Differential equations",
+    "Differential Equations",
     "Differentiation",
-    "Series & expansions",
+    "Series & Expansions",
     "Optimisation"
   ],
   "assets/images/questions/2012/S3/Q6.png": [
@@ -1199,7 +1199,7 @@
   ],
   "assets/images/questions/2012/S3/Q3.png": [
     "Algebra",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Polynomials",
     "Differentiation",
     "Inequalities"
@@ -1211,9 +1211,9 @@
   ],
   "assets/images/questions/2008/S2/Q10.png": [
     "Trigonometry",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Kinematics",
-    "Energy & work"
+    "Energy & Work"
   ],
   "assets/images/questions/2008/S2/Q12.png": [
     "Probability",
@@ -1238,7 +1238,7 @@
     "Inequalities"
   ],
   "assets/images/questions/2008/S2/Q7.png": [
-    "Differential equations",
+    "Differential Equations",
     "Differentiation",
     "Integration"
   ],
@@ -1249,7 +1249,7 @@
   ],
   "assets/images/questions/2008/S2/Q4.png": [
     "Differentiation",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Trigonometry",
     "Optimisation",
     "Algebra"
@@ -1301,8 +1301,8 @@
     "Expectation / Random Variables"
   ],
   "assets/images/questions/2008/S3/Q8.png": [
-    "Series & expansions",
-    "Sequences & recurrences",
+    "Series & Expansions",
+    "Sequences & Recurrences",
     "Algebra"
   ],
   "assets/images/questions/2008/S3/Q9.png": [
@@ -1313,8 +1313,8 @@
   ],
   "assets/images/questions/2008/S3/Q7.png": [
     "Algebra",
-    "Coordinate geometry",
-    "Proof / induction"
+    "Coordinate Geometry",
+    "Proof / Induction"
   ],
   "assets/images/questions/2008/S3/Q6.png": [
     "Differentiation",
@@ -1383,9 +1383,9 @@
   ],
   "assets/images/questions/2009/S2/Q9.png": [
     "Integration",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Optimisation",
-    "Forces / Newton\u2019s laws"
+    "Forces / Newton\u2019s Laws"
   ],
   "assets/images/questions/2009/S2/Q7.png": [
     "Differentiation",
@@ -1422,7 +1422,7 @@
   ],
   "assets/images/questions/2009/S2/Q3.png": [
     "Trigonometry",
-    "Proof / induction",
+    "Proof / Induction",
     "Algebra"
   ],
   "assets/images/questions/2009/S3/Q11.png": [
@@ -1432,10 +1432,10 @@
     "Limits & Asymptotics"
   ],
   "assets/images/questions/2009/S3/Q10.png": [
-    "Differential equations",
+    "Differential Equations",
     "Kinematics",
-    "Forces / newton\u2019s laws",
-    "Energy & work",
+    "Forces / Newton\u2019s Laws",
+    "Energy & Work",
     "Trigonometry"
   ],
   "assets/images/questions/2009/S3/Q12.png": [
@@ -1501,9 +1501,9 @@
   ],
   "assets/images/questions/2009/S3/Q3.png": [
     "Differentiation",
-    "Limits & asymptotics",
-    "Series & expansions",
-    "Proof / induction",
+    "Limits & Asymptotics",
+    "Series & Expansions",
+    "Proof / Induction",
     "Inequalities"
   ],
   "assets/images/questions/2017/S2/Q11.png": [
@@ -1571,14 +1571,14 @@
     "Series & Expansions"
   ],
   "assets/images/questions/2017/S2/Q2.png": [
-    "Sequences & recurrences",
-    "Proof / induction",
+    "Sequences & Recurrences",
+    "Proof / Induction",
     "Algebra"
   ],
   "assets/images/questions/2017/S2/Q3.png": [
     "Trigonometry",
     "Differentiation",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Inequalities"
   ],
   "assets/images/questions/2017/S3/Q11.png": [
@@ -1613,8 +1613,8 @@
   ],
   "assets/images/questions/2017/S3/Q9.png": [
     "Kinematics",
-    "Forces / newton\u2019s laws",
-    "Energy & work"
+    "Forces / Newton\u2019s Laws",
+    "Energy & Work"
   ],
   "assets/images/questions/2017/S3/Q7.png": [
     "Coordinate Geometry",
@@ -1671,7 +1671,7 @@
   ],
   "assets/images/questions/2010/S2/Q12.png": [
     "Probability",
-    "Expectation / random variables",
+    "Expectation / Random Variables",
     "Integration",
     "Inequalities"
   ],
@@ -1707,7 +1707,7 @@
   "assets/images/questions/2010/S2/Q4.png": [
     "Integration",
     "Trigonometry",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2010/S2/Q5.png": [
     "Vectors",
@@ -1766,8 +1766,8 @@
     "Kinematics",
     "Forces / Newton\u2019s Laws",
     "Energy & Work",
-    "Circular motion",
-    "Differential equations"
+    "Circular Motion",
+    "Differential Equations"
   ],
   "assets/images/questions/2010/S3/Q7.png": [
     "Differential Equations",
@@ -1784,11 +1784,11 @@
   "assets/images/questions/2010/S3/Q4.png": [
     "Algebra",
     "Polynomials",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2010/S3/Q5.png": [
-    "Coordinate geometry",
-    "Proof / induction",
+    "Coordinate Geometry",
+    "Proof / Induction",
     "Vectors"
   ],
   "assets/images/questions/2010/S3/Q1.png": [
@@ -1867,8 +1867,8 @@
   "assets/images/questions/2019/S2/Q1.png": [
     "Polynomials",
     "Differentiation",
-    "Coordinate geometry",
-    "Proof / induction"
+    "Coordinate Geometry",
+    "Proof / Induction"
   ],
   "assets/images/questions/2019/S2/Q2.png": [
     "Integration",
@@ -1899,13 +1899,13 @@
     "Probability",
     "Combinatorics",
     "Set theory",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2019/S3/Q8.png": [
     "Trigonometry",
     "Vectors",
-    "Coordinate geometry",
-    "Proof / induction",
+    "Coordinate Geometry",
+    "Proof / Induction",
     "Inequalities"
   ],
   "assets/images/questions/2019/S3/Q9.png": [
@@ -1922,8 +1922,8 @@
   ],
   "assets/images/questions/2019/S3/Q6.png": [
     "Algebra",
-    "Coordinate geometry",
-    "Proof / induction"
+    "Coordinate Geometry",
+    "Proof / Induction"
   ],
   "assets/images/questions/2019/S3/Q4.png": [
     "Polynomials",
@@ -1996,12 +1996,12 @@
   ],
   "assets/images/questions/2019/S1/Q5.png": [
     "Vectors",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Trigonometry",
     "Algebra"
   ],
   "assets/images/questions/2019/S1/Q1.png": [
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Trigonometry",
     "Optimisation",
     "Differentiation"
@@ -2049,7 +2049,7 @@
   ],
   "assets/images/questions/2021/S2/Q7.png": [
     "Algebra",
-    "Proof / induction",
+    "Proof / Induction",
     "Trigonometry"
   ],
   "assets/images/questions/2021/S2/Q6.png": [
@@ -2065,11 +2065,11 @@
     "Limits & Asymptotics"
   ],
   "assets/images/questions/2021/S2/Q5.png": [
-    "Differential equations",
+    "Differential Equations",
     "Differentiation",
     "Integration",
-    "Coordinate geometry",
-    "Limits & asymptotics"
+    "Coordinate Geometry",
+    "Limits & Asymptotics"
   ],
   "assets/images/questions/2021/S2/Q1.png": [
     "Trigonometry",
@@ -2079,7 +2079,7 @@
   "assets/images/questions/2021/S2/Q2.png": [
     "Algebra",
     "Polynomials",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2021/S2/Q3.png": [
     "Algebra",
@@ -2105,10 +2105,10 @@
     "Combinatorics"
   ],
   "assets/images/questions/2021/S3/Q8.png": [
-    "Sequences & recurrences",
+    "Sequences & Recurrences",
     "Inequalities",
-    "Limits & asymptotics",
-    "Proof / induction"
+    "Limits & Asymptotics",
+    "Proof / Induction"
   ],
   "assets/images/questions/2021/S3/Q9.png": [
     "Trigonometry",
@@ -2119,14 +2119,14 @@
   "assets/images/questions/2021/S3/Q7.png": [
     "Algebra",
     "Trigonometry",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Vectors"
   ],
   "assets/images/questions/2021/S3/Q6.png": [
     "Differentiation",
     "Trigonometry",
-    "Functional equations",
-    "Limits & asymptotics"
+    "Functional Equations",
+    "Limits & Asymptotics"
   ],
   "assets/images/questions/2021/S3/Q4.png": [
     "Vectors",
@@ -2190,7 +2190,7 @@
   ],
   "assets/images/questions/2020/S2/Q7.png": [
     "Algebra",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Inequalities",
     "Proof / Induction"
   ],
@@ -2201,8 +2201,8 @@
   ],
   "assets/images/questions/2020/S2/Q4.png": [
     "Inequalities",
-    "Proof / induction",
-    "Functional equations"
+    "Proof / Induction",
+    "Functional Equations"
   ],
   "assets/images/questions/2020/S2/Q5.png": [
     "Number Theory",
@@ -2221,9 +2221,9 @@
     "Proof / Induction"
   ],
   "assets/images/questions/2020/S2/Q3.png": [
-    "Sequences & recurrences",
+    "Sequences & Recurrences",
     "Inequalities",
-    "Proof / induction",
+    "Proof / Induction",
     "Optimisation",
     "Algebra"
   ],
@@ -2234,10 +2234,10 @@
     "Inequalities"
   ],
   "assets/images/questions/2020/S3/Q10.png": [
-    "Forces / newton\u2019s laws",
+    "Forces / Newton\u2019s Laws",
     "Kinematics",
     "Inequalities",
-    "Differential equations"
+    "Differential Equations"
   ],
   "assets/images/questions/2020/S3/Q12.png": [
     "Probability",
@@ -2245,9 +2245,9 @@
     "Proof / Induction"
   ],
   "assets/images/questions/2020/S3/Q8.png": [
-    "Sequences & recurrences",
+    "Sequences & Recurrences",
     "Number theory",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2020/S3/Q9.png": [
     "Forces / Newton\u2019s Laws",
@@ -2268,7 +2268,7 @@
   ],
   "assets/images/questions/2020/S3/Q4.png": [
     "Vectors",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Algebra"
   ],
   "assets/images/questions/2020/S3/Q5.png": [
@@ -2286,7 +2286,7 @@
   ],
   "assets/images/questions/2020/S3/Q2.png": [
     "Differentiation",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Trigonometry",
     "Inequalities"
   ],
@@ -2303,13 +2303,13 @@
     "Optimisation"
   ],
   "assets/images/questions/2018/S2/Q10.png": [
-    "Differential equations",
+    "Differential Equations",
     "Kinematics",
     "Integration"
   ],
   "assets/images/questions/2018/S2/Q12.png": [
     "Probability",
-    "Expectation / random variables",
+    "Expectation / Random Variables",
     "Optimisation",
     "Combinatorics"
   ],
@@ -2438,10 +2438,10 @@
     "Polynomials"
   ],
   "assets/images/questions/2018/S3/Q2.png": [
-    "Sequences & recurrences",
+    "Sequences & Recurrences",
     "Differentiation",
-    "Proof / induction",
-    "Differential equations",
+    "Proof / Induction",
+    "Differential Equations",
     "Inequalities"
   ],
   "assets/images/questions/2018/S3/Q3.png": [
@@ -2464,12 +2464,12 @@
   ],
   "assets/images/questions/2018/S1/Q12.png": [
     "Probability",
-    "Expectation / random variables",
+    "Expectation / Random Variables",
     "Inequalities"
   ],
   "assets/images/questions/2018/S1/Q13.png": [
     "Probability",
-    "Expectation / random variables",
+    "Expectation / Random Variables",
     "Combinatorics",
     "Optimisation"
   ],
@@ -2508,7 +2508,7 @@
     "Polynomials",
     "Number theory",
     "Algebra",
-    "Proof / induction",
+    "Proof / Induction",
     "Combinatorics"
   ],
   "assets/images/questions/2018/S1/Q1.png": [
@@ -2524,9 +2524,9 @@
     "Proof / Induction"
   ],
   "assets/images/questions/2018/S1/Q3.png": [
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Trigonometry",
-    "Proof / induction",
+    "Proof / Induction",
     "Algebra"
   ],
   "assets/images/questions/2011/S2/Q11.png": [
@@ -2565,10 +2565,10 @@
     "Momentum & Impulse"
   ],
   "assets/images/questions/2011/S2/Q7.png": [
-    "Sequences & recurrences",
-    "Series & expansions",
+    "Sequences & Recurrences",
+    "Series & Expansions",
     "Number theory",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2011/S2/Q6.png": [
     "Integration",
@@ -2586,7 +2586,7 @@
   ],
   "assets/images/questions/2011/S2/Q1.png": [
     "Algebra",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Differentiation",
     "Optimisation"
   ],
@@ -2599,7 +2599,7 @@
     "Differentiation",
     "Inequalities",
     "Trigonometry",
-    "Proof / induction",
+    "Proof / Induction",
     "Optimisation"
   ],
   "assets/images/questions/2011/S3/Q11.png": [
@@ -2624,7 +2624,7 @@
   ],
   "assets/images/questions/2011/S3/Q13.png": [
     "Probability",
-    "Expectation / random variables",
+    "Expectation / Random Variables",
     "Combinatorics",
     "Inequalities"
   ],
@@ -2635,10 +2635,10 @@
     "Inequalities"
   ],
   "assets/images/questions/2011/S3/Q9.png": [
-    "Differential equations",
-    "Forces / Newton\u2019s laws",
-    "Energy & work",
-    "Circular motion",
+    "Differential Equations",
+    "Forces / Newton\u2019s Laws",
+    "Energy & Work",
+    "Circular Motion",
     "Trigonometry"
   ],
   "assets/images/questions/2011/S3/Q7.png": [
@@ -2656,7 +2656,7 @@
     "Inequalities",
     "Integration",
     "Trigonometry",
-    "Coordinate geometry"
+    "Coordinate Geometry"
   ],
   "assets/images/questions/2011/S3/Q5.png": [
     "Differentiation",
@@ -2723,10 +2723,10 @@
     "Proof / Induction"
   ],
   "assets/images/questions/2016/S2/Q6.png": [
-    "Differential equations",
+    "Differential Equations",
     "Differentiation",
-    "Functional equations",
-    "Proof / induction"
+    "Functional Equations",
+    "Proof / Induction"
   ],
   "assets/images/questions/2016/S2/Q4.png": [
     "Algebra",
@@ -2741,9 +2741,9 @@
   ],
   "assets/images/questions/2016/S2/Q1.png": [
     "Differentiation",
-    "Coordinate geometry",
-    "Polar / parametric curves",
-    "Proof / induction"
+    "Coordinate Geometry",
+    "Polar / Parametric curves",
+    "Proof / Induction"
   ],
   "assets/images/questions/2016/S2/Q2.png": [
     "Algebra",
@@ -2767,9 +2767,9 @@
   "assets/images/questions/2016/S3/Q10.png": [
     "Kinematics",
     "Forces / Newton\u2019s Laws",
-    "Circular motion",
-    "Energy & work",
-    "Momentum & impulse"
+    "Circular Motion",
+    "Energy & Work",
+    "Momentum & Impulse"
   ],
   "assets/images/questions/2016/S3/Q12.png": [
     "Probability",
@@ -2780,7 +2780,7 @@
   ],
   "assets/images/questions/2016/S3/Q13.png": [
     "Probability",
-    "Expectation / Random variables",
+    "Expectation / Random Variables",
     "Integration",
     "Proof / Induction"
   ],
@@ -2808,8 +2808,8 @@
     "Inequalities"
   ],
   "assets/images/questions/2016/S3/Q4.png": [
-    "Series & expansions",
-    "Proof / induction",
+    "Series & Expansions",
+    "Proof / Induction",
     "Algebra",
     "Trigonometry"
   ],
@@ -2817,7 +2817,7 @@
     "Number theory",
     "Combinatorics",
     "Inequalities",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2016/S3/Q1.png": [
     "Integration",
@@ -2827,11 +2827,11 @@
     "Algebra"
   ],
   "assets/images/questions/2016/S3/Q2.png": [
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Differentiation",
     "Algebra",
     "Inequalities",
-    "Proof / induction"
+    "Proof / Induction"
   ],
   "assets/images/questions/2016/S3/Q3.png": [
     "Integration",
