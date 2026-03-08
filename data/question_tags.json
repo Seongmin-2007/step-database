@@ -12,7 +12,7 @@
     "Differentiation"
   ],
   "assets/images/questions/2013/S2/Q12.png": [
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Series & Expansions",
     "Probability"
@@ -31,7 +31,6 @@
   "assets/images/questions/2013/S2/Q9.png": [
     "Dynamics",
     "Trigonometry",
-    "Equilibrium",
     "Geometry",
     "Inequalities"
   ],
@@ -42,7 +41,7 @@
   ],
   "assets/images/questions/2013/S2/Q6.png": [
     "Sequences & Recurrences",
-    "Limits & asymptotics",
+    "Limits & Asymptotics",
     "Proof / Induction",
     "Inequalities"
   ],
@@ -50,12 +49,12 @@
     "Coordinate Geometry",
     "Locus",
     "Geometry",
-    "Curve sketching"
+    "Curve Sketching"
   ],
   "assets/images/questions/2013/S2/Q5.png": [
     "Differentiation",
-    "Functional equations",
-    "Curve sketching",
+    "Functional Equations",
+    "Curve Sketching",
     "Inequalities"
   ],
   "assets/images/questions/2013/S2/Q1.png": [
@@ -74,24 +73,24 @@
     "Polynomials",
     "Inequalities",
     "Differentiation",
-    "Curve sketching"
+    "Curve Sketching"
   ],
   "assets/images/questions/2013/S3/Q11.png": [
     "Trigonometry",
     "Dynamics",
-    "Energy & work",
+    "Energy & Work",
     "Optimisation"
   ],
   "assets/images/questions/2013/S3/Q10.png": [
     "Dynamics",
-    "Momentum & impulse",
+    "Momentum & Impulse",
     "Optimisation",
     "Differentiation"
   ],
   "assets/images/questions/2013/S3/Q12.png": [
     "Combinatorics",
     "Probability",
-    "Random variables / Expectation"
+    "Random Variables / Expectation"
   ],
   "assets/images/questions/2013/S3/Q13.png": [
     "Probability",
@@ -176,7 +175,7 @@
   ],
   "assets/images/questions/2014/S2/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Combinatorics",
     "Sequences & Recurrences"
   ],
@@ -190,8 +189,7 @@
   "assets/images/questions/2014/S2/Q9.png": [
     "Dynamics",
     "Trigonometry",
-    "Statics",
-    "Equilibrium"
+    "Statics"
   ],
   "assets/images/questions/2014/S2/Q7.png": [
     "Curve Sketching",
@@ -233,8 +231,8 @@
     "Differentiation",
     "Coordinate Geometry",
     "Geometry",
-    "Differential equations",
-    "Curve sketching"
+    "Differential Equations",
+    "Curve Sketching"
   ],
   "assets/images/questions/2014/S3/Q11.png": [
     "Dynamics",
@@ -244,7 +242,7 @@
     "Inequalities"
   ],
   "assets/images/questions/2014/S3/Q10.png": [
-    "Differential equations",
+    "Differential Equations",
     "Dynamics",
     "Kinematics",
     "Trigonometry"
@@ -267,7 +265,7 @@
     "Series & Expansions",
     "Number Theory",
     "Proof / Induction",
-    "Limits & asymptotics"
+    "Limits & Asymptotics"
   ],
   "assets/images/questions/2014/S3/Q9.png": [
     "Differentiation",
@@ -331,7 +329,7 @@
   ],
   "assets/images/questions/2022/S2/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Integration",
     "Inequalities"
@@ -348,7 +346,7 @@
     "Geometry"
   ],
   "assets/images/questions/2022/S2/Q7.png": [
-    "Complex numbers",
+    "Complex Numbers",
     "Polynomials",
     "Proof / Induction",
     "Algebra",
@@ -362,7 +360,7 @@
   "assets/images/questions/2022/S2/Q4.png": [
     "Algebra",
     "Inequalities",
-    "Curve sketching"
+    "Curve Sketching"
   ],
   "assets/images/questions/2022/S2/Q5.png": [
     "Geometry",
@@ -373,8 +371,8 @@
   "assets/images/questions/2022/S2/Q1.png": [
     "Integration",
     "Differentiation",
-    "Curve sketching",
-    "Limits & asymptotics",
+    "Curve Sketching",
+    "Limits & Asymptotics",
     "Proof / Induction"
   ],
   "assets/images/questions/2022/S2/Q2.png": [
@@ -382,7 +380,7 @@
     "Polynomials",
     "Proof / Induction",
     "Algebra",
-    "Functional equations"
+    "Functional Equations"
   ],
   "assets/images/questions/2022/S2/Q3.png": [
     "Sequences & Recurrences",
@@ -393,7 +391,7 @@
   ],
   "assets/images/questions/2022/S3/Q11.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Combinatorics",
     "Series & Expansions",
     "Proof / Induction"
@@ -468,7 +466,7 @@
   ],
   "assets/images/questions/2025/S2/Q11.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Series & Expansions",
     "Combinatorics"
   ],
@@ -512,16 +510,16 @@
   ],
   "assets/images/questions/2025/S2/Q4.png": [
     "Number Theory",
-    "Functional equations",
+    "Functional Equations",
     "Proof / Induction"
   ],
   "assets/images/questions/2025/S2/Q5.png": [
     "Integration",
-    "Limits & asymptotics",
+    "Limits & Asymptotics",
     "Proof / Induction"
   ],
   "assets/images/questions/2025/S2/Q1.png": [
-    "Curve sketching",
+    "Curve Sketching",
     "Inequalities",
     "Differentiation",
     "Optimisation",
@@ -542,13 +540,13 @@
   ],
   "assets/images/questions/2025/S3/Q11.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
-    "Limits & asymptotics",
+    "Limits & Asymptotics",
     "Series & Expansions"
   ],
   "assets/images/questions/2025/S3/Q10.png": [
-    "Differential equations",
+    "Differential Equations",
     "Kinematics",
     "Dynamics",
     "Trigonometry",
@@ -556,7 +554,7 @@
   ],
   "assets/images/questions/2025/S3/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Sequences & Recurrences",
     "Series & Expansions",
     "Proof / Induction"
@@ -605,9 +603,9 @@
     "Trigonometry"
   ],
   "assets/images/questions/2025/S3/Q2.png": [
-    "Functional equations",
+    "Functional Equations",
     "Sequences & Recurrences",
-    "Curve sketching"
+    "Curve Sketching"
   ],
   "assets/images/questions/2025/S3/Q3.png": [
     "Algebra",
@@ -647,7 +645,7 @@
   ],
   "assets/images/questions/2024/S2/Q7.png": [
     "Coordinate Geometry",
-    "Curve sketching",
+    "Curve Sketching",
     "Locus",
     "Algebra"
   ],
@@ -684,13 +682,13 @@
     "Trigonometry",
     "Coordinate Geometry",
     "Geometry",
-    "Functional equations"
+    "Functional Equations"
   ],
   "assets/images/questions/2024/S3/Q11.png": [
     "Combinatorics",
     "Proof / Induction",
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Optimisation"
   ],
   "assets/images/questions/2024/S3/Q10.png": [
@@ -700,7 +698,7 @@
   ],
   "assets/images/questions/2024/S3/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Integration",
     "Coordinate Geometry"
   ],
@@ -724,7 +722,7 @@
     "Proof / Induction"
   ],
   "assets/images/questions/2024/S3/Q6.png": [
-    "Differential equations",
+    "Differential Equations",
     "Kinematics",
     "Coordinate Geometry"
   ],
@@ -748,8 +746,8 @@
   "assets/images/questions/2024/S3/Q2.png": [
     "Inequalities",
     "Algebra",
-    "Limits & asymptotics",
-    "Curve sketching",
+    "Limits & Asymptotics",
+    "Curve Sketching",
     "Coordinate Geometry"
   ],
   "assets/images/questions/2024/S3/Q3.png": [
@@ -774,7 +772,7 @@
   ],
   "assets/images/questions/2023/S2/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Integration",
     "Differentiation",
     "Inequalities"
@@ -791,7 +789,7 @@
     "Trigonometry"
   ],
   "assets/images/questions/2023/S2/Q7.png": [
-    "Complex numbers",
+    "Complex Numbers",
     "Number Theory",
     "Proof / Induction",
     "Algebra"
@@ -807,14 +805,14 @@
     "Algebra",
     "Polynomials",
     "Number Theory",
-    "Complex numbers",
+    "Complex Numbers",
     "Proof / Induction"
   ],
   "assets/images/questions/2023/S2/Q5.png": [
     "Sequences & Recurrences",
     "Inequalities",
     "Proof / Induction",
-    "Limits & asymptotics"
+    "Limits & Asymptotics"
   ],
   "assets/images/questions/2023/S2/Q1.png": [
     "Integration",
@@ -823,7 +821,7 @@
   ],
   "assets/images/questions/2023/S2/Q2.png": [
     "Trigonometry",
-    "Functional equations",
+    "Functional Equations",
     "Polynomials",
     "Inequalities"
   ],
@@ -837,7 +835,7 @@
   "assets/images/questions/2023/S3/Q11.png": [
     "Series & Expansions",
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions"
   ],
   "assets/images/questions/2023/S3/Q10.png": [
@@ -850,7 +848,7 @@
   "assets/images/questions/2023/S3/Q12.png": [
     "Combinatorics",
     "Probability",
-    "Random variables / Expectation"
+    "Random Variables / Expectation"
   ],
   "assets/images/questions/2023/S3/Q8.png": [
     "Differentiation",
@@ -870,7 +868,7 @@
     "Integration",
     "Differentiation",
     "Proof / Induction",
-    "Functional equations"
+    "Functional Equations"
   ],
   "assets/images/questions/2023/S3/Q6.png": [
     "Differentiation",
@@ -932,7 +930,7 @@
     "Differentiation",
     "Optimisation",
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions"
   ],
   "assets/images/questions/2015/S2/Q8.png": [
@@ -958,9 +956,9 @@
   ],
   "assets/images/questions/2015/S2/Q4.png": [
     "Trigonometry",
-    "Curve sketching",
-    "Functional equations",
-    "Limits & asymptotics"
+    "Curve Sketching",
+    "Functional Equations",
+    "Limits & Asymptotics"
   ],
   "assets/images/questions/2015/S2/Q5.png": [
     "Sequences & Recurrences",
@@ -1001,13 +999,13 @@
   ],
   "assets/images/questions/2015/S3/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Number Theory",
     "Series & Expansions"
   ],
   "assets/images/questions/2015/S3/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Integration"
   ],
@@ -1031,7 +1029,7 @@
     "Series & Expansions"
   ],
   "assets/images/questions/2015/S3/Q6.png": [
-    "Complex numbers",
+    "Complex Numbers",
     "Algebra",
     "Proof / Induction",
     "Inequalities"
@@ -1056,13 +1054,13 @@
     "Sequences & Recurrences",
     "Inequalities",
     "Proof / Induction",
-    "Limits & asymptotics"
+    "Limits & Asymptotics"
   ],
   "assets/images/questions/2015/S3/Q3.png": [
     "Coordinate Geometry",
     "Polar / Parametric Curves",
     "Locus",
-    "Curve sketching",
+    "Curve Sketching",
     "Integration"
   ],
   "assets/images/questions/2012/S2/Q11.png": [
@@ -1080,12 +1078,12 @@
   ],
   "assets/images/questions/2012/S2/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Inequalities"
   ],
   "assets/images/questions/2012/S2/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Integration"
   ],
@@ -1132,7 +1130,7 @@
   "assets/images/questions/2012/S2/Q2.png": [
     "Algebra",
     "Polynomials",
-    "Functional equations"
+    "Functional Equations"
   ],
   "assets/images/questions/2012/S2/Q3.png": [
     "Integration",
@@ -1160,7 +1158,7 @@
   ],
   "assets/images/questions/2012/S3/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions"
   ],
   "assets/images/questions/2012/S3/Q8.png": [
@@ -1209,7 +1207,7 @@
   ],
   "assets/images/questions/2012/S3/Q3.png": [
     "Coordinate Geometry",
-    "Curve sketching",
+    "Curve Sketching",
     "Differentiation",
     "Polynomials",
     "Inequalities"
@@ -1224,7 +1222,7 @@
     "Dynamics",
     "Trigonometry",
     "Coordinate Geometry",
-    "Energy & work"
+    "Energy & Work"
   ],
   "assets/images/questions/2008/S2/Q12.png": [
     "Probability",
@@ -1256,7 +1254,7 @@
   "assets/images/questions/2008/S2/Q6.png": [
     "Trigonometry",
     "Differentiation",
-    "Curve sketching"
+    "Curve Sketching"
   ],
   "assets/images/questions/2008/S2/Q4.png": [
     "Differentiation",
@@ -1279,7 +1277,6 @@
   "assets/images/questions/2008/S2/Q2.png": [
     "Algebra",
     "Series & Expansions",
-    "Partial fractions",
     "Number Theory"
   ],
   "assets/images/questions/2008/S2/Q3.png": [
@@ -1301,14 +1298,14 @@
   ],
   "assets/images/questions/2008/S3/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
-    "Limits & asymptotics",
+    "Limits & Asymptotics",
     "Series & Expansions"
   ],
   "assets/images/questions/2008/S3/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Combinatorics"
   ],
   "assets/images/questions/2008/S3/Q8.png": [
@@ -1321,7 +1318,7 @@
     "Kinematics",
     "Integration",
     "Trigonometry",
-    "Curve sketching"
+    "Curve Sketching"
   ],
   "assets/images/questions/2008/S3/Q7.png": [
     "Complex Numbers",
@@ -1330,7 +1327,7 @@
   ],
   "assets/images/questions/2008/S3/Q6.png": [
     "Differentiation",
-    "Differential equations",
+    "Differential Equations",
     "Integration"
   ],
   "assets/images/questions/2008/S3/Q4.png": [
@@ -1377,9 +1374,9 @@
   ],
   "assets/images/questions/2009/S2/Q12.png": [
     "Integration",
-    "Curve sketching",
+    "Curve Sketching",
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions"
   ],
   "assets/images/questions/2009/S2/Q13.png": [
@@ -1429,7 +1426,6 @@
   "assets/images/questions/2009/S2/Q2.png": [
     "Differentiation",
     "Curve Sketching",
-    "Approximation",
     "Trigonometry",
     "Integration"
   ],
@@ -1439,8 +1435,8 @@
     "Algebra"
   ],
   "assets/images/questions/2009/S3/Q11.png": [
-    "Differential equations",
-    "Momentum & impulse",
+    "Differential Equations",
+    "Momentum & Impulse",
     "Kinematics",
     "Dynamics",
     "Integration"
@@ -1454,12 +1450,12 @@
   ],
   "assets/images/questions/2009/S3/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Series & Expansions"
   ],
   "assets/images/questions/2009/S3/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Trigonometry",
     "Coordinate Geometry"
@@ -1477,7 +1473,7 @@
   ],
   "assets/images/questions/2009/S3/Q7.png": [
     "Differentiation",
-    "Functional equations",
+    "Functional Equations",
     "Proof / Induction",
     "Polynomials",
     "Sequences & Recurrences"
@@ -1512,10 +1508,10 @@
     "Trigonometry"
   ],
   "assets/images/questions/2009/S3/Q3.png": [
-    "Limits & asymptotics",
+    "Limits & Asymptotics",
     "Series & Expansions",
     "Differentiation",
-    "Curve sketching",
+    "Curve Sketching",
     "Proof / Induction"
   ],
   "assets/images/questions/2017/S2/Q11.png": [
@@ -1533,12 +1529,12 @@
   ],
   "assets/images/questions/2017/S2/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions"
   ],
   "assets/images/questions/2017/S2/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Series & Expansions"
   ],
   "assets/images/questions/2017/S2/Q8.png": [
@@ -1638,7 +1634,7 @@
   "assets/images/questions/2017/S3/Q6.png": [
     "Integration",
     "Differentiation",
-    "Functional equations",
+    "Functional Equations",
     "Proof / Induction"
   ],
   "assets/images/questions/2017/S3/Q4.png": [
@@ -1661,7 +1657,7 @@
     "Proof / Induction"
   ],
   "assets/images/questions/2017/S3/Q2.png": [
-    "Complex numbers",
+    "Complex Numbers",
     "Trigonometry",
     "Algebra"
   ],
@@ -1682,7 +1678,7 @@
     "Inequalities"
   ],
   "assets/images/questions/2010/S2/Q12.png": [
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Integration",
     "Inequalities",
     "Probability",
@@ -1693,7 +1689,7 @@
     "Inequalities"
   ],
   "assets/images/questions/2010/S2/Q8.png": [
-    "Curve sketching",
+    "Curve Sketching",
     "Integration",
     "Series & Expansions",
     "Trigonometry",
@@ -1709,7 +1705,7 @@
     "Algebra",
     "Polynomials",
     "Differentiation",
-    "Curve sketching",
+    "Curve Sketching",
     "Inequalities"
   ],
   "assets/images/questions/2010/S2/Q6.png": [
@@ -1764,19 +1760,19 @@
   ],
   "assets/images/questions/2010/S3/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Algebra"
   ],
   "assets/images/questions/2010/S3/Q8.png": [
     "Differentiation",
     "Integration",
-    "Differential equations",
+    "Differential Equations",
     "Polynomials"
   ],
   "assets/images/questions/2010/S3/Q9.png": [
     "Dynamics",
     "Circular Motion",
-    "Energy & work",
+    "Energy & Work",
     "Differentiation",
     "Inequalities"
   ],
@@ -1814,7 +1810,7 @@
     "Proof / Induction"
   ],
   "assets/images/questions/2010/S3/Q3.png": [
-    "Complex numbers",
+    "Complex Numbers",
     "Polynomials",
     "Number Theory",
     "Algebra",
@@ -1841,7 +1837,7 @@
   ],
   "assets/images/questions/2019/S2/Q8.png": [
     "Matrices",
-    "Functional equations",
+    "Functional Equations",
     "Algebra"
   ],
   "assets/images/questions/2019/S2/Q9.png": [
@@ -1925,16 +1921,16 @@
   ],
   "assets/images/questions/2019/S3/Q7.png": [
     "Coordinate Geometry",
-    "Curve sketching",
+    "Curve Sketching",
     "Differentiation",
     "Locus"
   ],
   "assets/images/questions/2019/S3/Q6.png": [
-    "Complex numbers",
+    "Complex Numbers",
     "Locus",
     "Geometry",
     "Coordinate Geometry",
-    "Curve sketching"
+    "Curve Sketching"
   ],
   "assets/images/questions/2019/S3/Q4.png": [
     "Algebra",
@@ -1945,7 +1941,7 @@
   "assets/images/questions/2019/S3/Q5.png": [
     "Integration",
     "Differentiation",
-    "Curve sketching",
+    "Curve Sketching",
     "Trigonometry"
   ],
   "assets/images/questions/2019/S3/Q1.png": [
@@ -1955,10 +1951,10 @@
     "Optimisation"
   ],
   "assets/images/questions/2019/S3/Q2.png": [
-    "Functional equations",
+    "Functional Equations",
     "Differentiation",
-    "Differential equations",
-    "Limits & asymptotics"
+    "Differential Equations",
+    "Limits & Asymptotics"
   ],
   "assets/images/questions/2019/S3/Q3.png": [
     "Matrices",
@@ -1978,7 +1974,7 @@
   ],
   "assets/images/questions/2019/S1/Q8.png": [
     "Integration",
-    "Functional equations",
+    "Functional Equations",
     "Algebra"
   ],
   "assets/images/questions/2019/S1/Q9.png": [
@@ -2033,10 +2029,10 @@
   ],
   "assets/images/questions/2021/S2/Q10.png": [
     "Dynamics",
-    "Differential equations",
+    "Differential Equations",
     "Kinematics",
     "Optimisation",
-    "Energy & work"
+    "Energy & Work"
   ],
   "assets/images/questions/2021/S2/Q12.png": [
     "Probability",
@@ -2074,10 +2070,10 @@
     "Algebra"
   ],
   "assets/images/questions/2021/S2/Q5.png": [
-    "Differential equations",
+    "Differential Equations",
     "Differentiation",
-    "Curve sketching",
-    "Limits & asymptotics"
+    "Curve Sketching",
+    "Limits & Asymptotics"
   ],
   "assets/images/questions/2021/S2/Q1.png": [
     "Trigonometry",
@@ -2096,7 +2092,7 @@
   ],
   "assets/images/questions/2021/S3/Q11.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Integration",
     "Distributions"
   ],
@@ -2114,7 +2110,7 @@
   "assets/images/questions/2021/S3/Q8.png": [
     "Sequences & Recurrences",
     "Inequalities",
-    "Limits & asymptotics",
+    "Limits & Asymptotics",
     "Proof / Induction"
   ],
   "assets/images/questions/2021/S3/Q9.png": [
@@ -2141,7 +2137,7 @@
   "assets/images/questions/2021/S3/Q5.png": [
     "Polar / Parametric Curves",
     "Trigonometry",
-    "Curve sketching",
+    "Curve Sketching",
     "Algebra"
   ],
   "assets/images/questions/2021/S3/Q1.png": [
@@ -2175,7 +2171,7 @@
   ],
   "assets/images/questions/2020/S2/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Inequalities",
     "Proof / Induction"
   ],
@@ -2183,7 +2179,7 @@
     "Polynomials",
     "Differentiation",
     "Integration",
-    "Curve sketching",
+    "Curve Sketching",
     "Inequalities"
   ],
   "assets/images/questions/2020/S2/Q9.png": [
@@ -2192,7 +2188,7 @@
     "Inequalities"
   ],
   "assets/images/questions/2020/S2/Q7.png": [
-    "Complex numbers",
+    "Complex Numbers",
     "Locus",
     "Coordinate Geometry"
   ],
@@ -2219,12 +2215,12 @@
   "assets/images/questions/2020/S2/Q1.png": [
     "Integration",
     "Differentiation",
-    "Limits & asymptotics"
+    "Limits & Asymptotics"
   ],
   "assets/images/questions/2020/S2/Q2.png": [
-    "Differential equations",
+    "Differential Equations",
     "Coordinate Geometry",
-    "Curve sketching",
+    "Curve Sketching",
     "Differentiation"
   ],
   "assets/images/questions/2020/S2/Q3.png": [
@@ -2243,13 +2239,13 @@
   "assets/images/questions/2020/S3/Q10.png": [
     "Dynamics",
     "Kinematics",
-    "Differential equations",
+    "Differential Equations",
     "Inequalities",
-    "Energy & work"
+    "Energy & Work"
   ],
   "assets/images/questions/2020/S3/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions"
   ],
   "assets/images/questions/2020/S3/Q8.png": [
@@ -2305,7 +2301,7 @@
     "Optimisation"
   ],
   "assets/images/questions/2020/S3/Q3.png": [
-    "Complex numbers",
+    "Complex Numbers",
     "Geometry",
     "Proof / Induction"
   ],
@@ -2315,19 +2311,19 @@
     "Kinematics"
   ],
   "assets/images/questions/2018/S2/Q10.png": [
-    "Differential equations",
+    "Differential Equations",
     "Kinematics",
     "Integration"
   ],
   "assets/images/questions/2018/S2/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Optimisation"
   ],
   "assets/images/questions/2018/S2/Q13.png": [
     "Probability",
     "Sequences & Recurrences",
-    "Random variables / Expectation"
+    "Random Variables / Expectation"
   ],
   "assets/images/questions/2018/S2/Q8.png": [
     "Differential Equations",
@@ -2362,7 +2358,7 @@
   "assets/images/questions/2018/S2/Q1.png": [
     "Polynomials",
     "Algebra",
-    "Complex numbers"
+    "Complex Numbers"
   ],
   "assets/images/questions/2018/S2/Q2.png": [
     "Inequalities",
@@ -2393,21 +2389,21 @@
   ],
   "assets/images/questions/2018/S3/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Combinatorics",
     "Differentiation"
   ],
   "assets/images/questions/2018/S3/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Series & Expansions"
   ],
   "assets/images/questions/2018/S3/Q8.png": [
     "Integration",
     "Series & Expansions",
-    "Functional equations",
+    "Functional Equations",
     "Number Theory"
   ],
   "assets/images/questions/2018/S3/Q9.png": [
@@ -2417,7 +2413,7 @@
     "Inequalities"
   ],
   "assets/images/questions/2018/S3/Q7.png": [
-    "Complex numbers",
+    "Complex Numbers",
     "Trigonometry",
     "Series & Expansions",
     "Proof / Induction"
@@ -2442,7 +2438,7 @@
   ],
   "assets/images/questions/2018/S3/Q1.png": [
     "Differentiation",
-    "Curve sketching",
+    "Curve Sketching",
     "Polynomials",
     "Inequalities",
     "Optimisation"
@@ -2472,12 +2468,12 @@
   ],
   "assets/images/questions/2018/S1/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Inequalities"
   ],
   "assets/images/questions/2018/S1/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Optimisation"
   ],
@@ -2496,7 +2492,7 @@
   "assets/images/questions/2018/S1/Q7.png": [
     "Algebra",
     "Polynomials",
-    "Complex numbers",
+    "Complex Numbers",
     "Proof / Induction",
     "Inequalities"
   ],
@@ -2548,13 +2544,13 @@
   ],
   "assets/images/questions/2011/S2/Q12.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Inequalities",
     "Differentiation"
   ],
   "assets/images/questions/2011/S2/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Integration"
   ],
@@ -2596,7 +2592,7 @@
   ],
   "assets/images/questions/2011/S2/Q1.png": [
     "Algebra",
-    "Curve sketching",
+    "Curve Sketching",
     "Coordinate Geometry"
   ],
   "assets/images/questions/2011/S2/Q2.png": [
@@ -2630,7 +2626,7 @@
   ],
   "assets/images/questions/2011/S3/Q13.png": [
     "Probability",
-    "Random variables / Expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Combinatorics",
     "Inequalities"
@@ -2644,8 +2640,8 @@
   "assets/images/questions/2011/S3/Q9.png": [
     "Dynamics",
     "Circular Motion",
-    "Energy & work",
-    "Differential equations",
+    "Energy & Work",
+    "Differential Equations",
     "Trigonometry"
   ],
   "assets/images/questions/2011/S3/Q7.png": [
@@ -2686,7 +2682,7 @@
   "assets/images/questions/2011/S3/Q3.png": [
     "Polynomials",
     "Algebra",
-    "Complex numbers"
+    "Complex Numbers"
   ],
   "assets/images/questions/2016/S2/Q11.png": [
     "Kinematics",
@@ -2697,13 +2693,12 @@
   "assets/images/questions/2016/S2/Q10.png": [
     "Trigonometry",
     "Geometry",
-    "Dynamics",
-    "Equilibrium"
+    "Dynamics"
   ],
   "assets/images/questions/2016/S2/Q7.png": [
     "Integration",
     "Trigonometry",
-    "Proof"
+    "Proof / Induction"
   ],
   "assets/images/questions/2016/S2/Q13.png": [
     "Probability",
