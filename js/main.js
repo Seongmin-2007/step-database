@@ -96,6 +96,9 @@ let filter       = "";
 loadQuestionData().then(({ questions }) => {
   allQuestions = questions;
   renderList();
+
+  // Initialises Mock Exam launcher
+  initExamLauncher(allQuestions);
 });
 
 // Search input
@@ -170,6 +173,3 @@ function _buildQuestionListItem(q, id, tags) {
 
 // Initialises Image Zoom
 initImageZoom();
-
-// Initialises Mock Exam launcher
-initExamLauncher(allQuestions);
