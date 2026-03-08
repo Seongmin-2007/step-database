@@ -1129,6 +1129,342 @@ button.secondary:hover { background: var(--clr-surface-alt); }
   inset: 0;
 }
 
+/* =============================================================================
+   [19b] EXAM — HEADER
+   ============================================================================= */
+.exam-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.875rem 1.5rem;
+  background: var(--clr-surface);
+  border-bottom: 1px solid var(--clr-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.exam-header--finished { opacity: 0.5; pointer-events: none; }
+
+.exam-header__left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.exam-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Countdown timer */
+.exam-header__center { text-align: center; }
+
+.exam-timer {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--clr-text);
+  transition: color var(--transition);
+}
+
+.exam-timer.timer-warn { color: var(--clr-warning); }
+.exam-timer.timer-crit { color: var(--clr-danger);  }
+
+.exam-timer-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  margin-top: 2px;
+}
+
+/* Progress bar (right side) */
+.exam-header__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.exam-progress { width: 100%; max-width: 200px; }
+
+.exam-progress__text {
+  font-size: 0.75rem;
+  color: var(--clr-text-muted);
+  display: block;
+  margin-bottom: 4px;
+  text-align: right;
+}
+
+.exam-progress__track {
+  height: 4px;
+  background: var(--clr-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.exam-progress__bar {
+  height: 100%;
+  background: var(--clr-accent);
+  border-radius: 999px;
+  transition: width 300ms var(--ease);
+}
+
+
+/* =============================================================================
+   [19c] EXAM — BODY + QUESTION BLOCKS
+   ============================================================================= */
+.exam-body {
+  height: calc(100vh - 70px); /* header height */
+  overflow-y: auto;
+  background: var(--clr-bg);
+}
+
+.exam-questions {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* Individual question block */
+.exam-question-block {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.exam-question-block__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1.25rem;
+  background: var(--clr-surface-alt);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.exam-q-number {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.exam-q-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.badge-unattempted { background: var(--clr-surface); border: 1px solid var(--clr-border); color: var(--clr-text-xmuted); }
+.badge-attempted   { background: var(--clr-success-bg); color: var(--clr-success); }
+
+.exam-question-block__body {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+}
+
+/* Question image */
+.exam-question-block__img {
+  padding: 1.5rem;
+  border-right: 1px solid var(--clr-border);
+}
+
+.exam-question-block__img img { width: 100%; }
+
+/* Notes + controls panel */
+.exam-question-block__panel {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.exam-field { display: flex; flex-direction: column; gap: 6px; }
+
+.exam-field__label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+}
+
+.exam-stars { font-size: 1.3rem; }
+
+.exam-notes {
+  width: 100%;
+  resize: vertical;
+  min-height: 120px;
+  background: var(--clr-surface-alt);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font: inherit;
+  color: var(--clr-text);
+  transition: border-color var(--transition);
+}
+
+.exam-notes:focus {
+  outline: none;
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 3px var(--clr-accent-soft);
+}
+
+.exam-field--checkbox { margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--clr-border); }
+
+.exam-attempted-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--clr-text-muted);
+}
+
+.exam-attempted-cb { cursor: pointer; width: 16px; height: 16px; accent-color: var(--clr-accent); }
+
+
+/* =============================================================================
+   [19d] EXAM — RESULTS SCREEN
+   ============================================================================= */
+.exam-results {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--clr-bg);
+  overflow-y: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 1.5rem 5rem;
+}
+
+.exam-results__inner {
+  width: min(800px, 100%);
+}
+
+.exam-results__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+/* Summary stats row */
+.exam-results__stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.results-stat {
+  flex: 1;
+  min-width: 120px;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.results-stat__val {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.results-stat__label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--clr-text-muted);
+}
+
+/* Per-question results list */
+.exam-results__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 2rem;
+}
+
+.results-row {
+  display: grid;
+  grid-template-columns: 160px 40px 110px 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 10px 14px;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+.results-row__id    { font-family: var(--font-mono); font-weight: 700; }
+.results-row__stars { color: var(--clr-warning); font-size: 0.8rem; letter-spacing: 1px; }
+.results-row__notes { color: var(--clr-text-muted); font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.exam-results__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+
+/* =============================================================================
+   [19e] EXAM — PICKER MODAL
+   ============================================================================= */
+.exam-picker-content { max-width: 440px; }
+
+.exam-picker__select-row { margin-bottom: 0.5rem; }
+
+.exam-picker-select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--clr-border);
+  background: var(--clr-surface-alt);
+  font-size: 0.9rem;
+  color: var(--clr-text);
+  cursor: pointer;
+}
+
+
+/* =============================================================================
+   RESPONSIVE — EXAM
+   ============================================================================= */
+@media (max-width: 768px) {
+  .exam-header {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+  }
+
+  .exam-header__right { display: none; } /* progress bar too cramped */
+
+  .exam-question-block__body { grid-template-columns: 1fr; }
+  .exam-question-block__img  { border-right: none; border-bottom: 1px solid var(--clr-border); }
+
+  .results-row { grid-template-columns: 1fr 40px; grid-template-rows: auto auto; }
+  .results-row__stars { display: none; }
+  .results-row__notes { grid-column: 1 / -1; }
+}
 
 /* =============================================================================
    20. DASHBOARD — LAYOUT

@@ -19,6 +19,8 @@ import { saveAttempt, loadAttempts }      from "./attempts.js";
 import { initNavigation }                  from "./navigation.js";
 import { DEBOUNCE_MS }                     from "../core/constants.js";
 
+import { toggleFlag, isFlagged } from "../core/flagStore.js";
+
 // ─── Module state ─────────────────────────────────────────────────────────────
 
 let currentQuestionID = null;
@@ -197,6 +199,15 @@ export async function loadQuestion(q, tags, li) {
   document.getElementById("solution-toggle").addEventListener("click", () => {
     document.getElementById("solution-container")?.classList.toggle("show");
   });
+
+  // 16. Flagging
+  const flagBtn = document.getElementById("viewer-flag-btn");
+  _updateFlagBtn(flagBtn, isFlagged(questionID));
+
+  flagBtn.addEventListener("click", () => {
+    const nowFlagged = toggleFlag(questionID);
+    _updateFlagBtn(flagBtn, nowFlagged);
+  });
 }
 
 // ─── Internal helpers ─────────────────────────────────────────────────────────
@@ -272,4 +283,10 @@ function _writeAttemptsCache(questionID, docs) {
   } catch (err) {
     console.warn("[viewer] Could not write attempts cache:", err);
   }
+}
+
+function _updateFlagBtn(btn, flagged) {
+  btn.textContent = flagged ? "⚑" : "⚐";
+  btn.title       = flagged ? "Remove flag" : "Flag for later";
+  btn.classList.toggle("flagged", flagged);
 }

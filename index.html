@@ -75,6 +75,7 @@
 
       <nav class="topbar__nav" role="navigation" aria-label="Main navigation">
         <button id="theme-toggle" class="btn btn--icon" title="Toggle dark mode" aria-label="Toggle dark mode">🌞</button>
+        <button id="open-exam" class="btn btn--ghost">📝 Exam</button>
 
         <!-- Logged out -->
         <div id="auth-buttons" class="topbar__auth">
@@ -204,6 +205,71 @@
         <button id="close-day-view" class="btn btn--ghost">← Back to Dashboard</button>
       </div>
       <div id="dayAttempts" class="day-attempts"></div>
+    </div>
+
+  </div>
+
+    <!-- =============================================
+       MOCK EXAM SCREEN
+       ============================================= -->
+  <div id="exam-screen" class="hidden" role="main" aria-label="Mock exam">
+
+    <!-- Sticky header with timer + controls -->
+    <header class="exam-header">
+      <div class="exam-header__left">
+        <button id="exam-exit" class="btn btn--ghost">← Exit</button>
+        <div class="exam-header__title">
+          <p class="dashboard-header__label">Mock Exam</p>
+          <h1 id="exam-title" class="exam-title"></h1>
+        </div>
+      </div>
+
+      <div class="exam-header__center">
+        <div id="exam-timer" class="exam-timer">3:00:00</div>
+        <div id="exam-timer-label" class="exam-timer-label">remaining</div>
+      </div>
+
+      <div class="exam-header__right">
+        <div class="exam-progress">
+          <span id="exam-progress-text" class="exam-progress__text">0 / 0 attempted</span>
+          <div class="exam-progress__track">
+            <div id="exam-progress-bar" class="exam-progress__bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <button id="exam-finish" class="btn btn--primary">Finish Exam</button>
+      </div>
+    </header>
+
+    <!-- All questions in a single scrollable column -->
+    <div class="exam-body">
+      <div id="exam-questions" class="exam-questions"></div>
+    </div>
+
+    <!-- Finish confirmation modal -->
+    <div id="exam-finish-modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <h3>Finish exam?</h3>
+        <p id="exam-finish-summary" style="color: var(--clr-text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;"></p>
+        <div class="modal-actions">
+          <button id="exam-finish-confirm" class="btn btn--primary">Finish &amp; save</button>
+          <button id="exam-finish-cancel" class="btn">Keep going</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results screen (shown after finishing) -->
+    <div id="exam-results" class="exam-results hidden">
+      <div class="exam-results__inner">
+        <p class="dashboard-header__label">Exam Complete</p>
+        <h2 id="exam-results-title" class="exam-results__title"></h2>
+        <div id="exam-results-stats" class="exam-results__stats"></div>
+        <div id="exam-results-list" class="exam-results__list"></div>
+        <div class="exam-results__actions">
+          <button id="exam-results-dashboard" class="btn btn--ghost">View Dashboard</button>
+          <button id="exam-results-close" class="btn btn--primary">Back to Questions</button>
+        </div>
+      </div>
     </div>
 
   </div>

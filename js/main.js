@@ -15,12 +15,13 @@ import "./ui/auth.js";
 import "./ui/splash.js";
 
 import { on }                           from "./core/eventBus.js";
-import { loadQuestionData, getTagsFor, setFilteredQuestions } from "./core/questionStore.js";
+import { loadQuestionData, getTagsFor, setFilteredQuestions, getFilteredQuestions } from "./core/questionStore.js";
 import { makeQuestionID }               from "./core/utils.js";
 import { BUILD_JSON }                   from "./core/constants.js";
 import { loadQuestion }                 from "./viewer/index.js";
 import { loadDashboard }                from "./dashboard/index.js";
 import { initImageZoom }                from "./ui/imageZoom.js";
+import { initExamLauncher }             from "./exam.js";
 
 // ─── Build info ───────────────────────────────────────────────────────────────
 
@@ -167,14 +168,8 @@ function _buildQuestionListItem(q, id, tags) {
   return li;
 }
 
-// ─── Helpers (re-exported for dashboard) ─────────────────────────────────────
-
-export function getFilteredQuestions() {
-  // Proxy to the store; used by initNavigation
-  return import("./core/questionStore.js")
-    .then(m => m.getFilteredQuestions());
-}
-
-
 // Initialises Image Zoom
 initImageZoom();
+
+// Initialises Mock Exam launcher
+initExamLauncher(allQuestions);
