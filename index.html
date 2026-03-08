@@ -2,150 +2,218 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>STEP Question Database</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STEP Questions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<div class="hidden" id="splash-screen">
-  <canvas id="chaos-canvas"></canvas>
-</div>
+  <!-- =============================================
+       SPLASH SCREEN
+       ============================================= -->
+  <div id="splash-screen" class="hidden" aria-hidden="true">
+    <canvas id="chaos-canvas"></canvas>
+  </div>
 
-<div id="main-screen" class="layout">
-  <!-- LEFT SIDEBAR -->
-  <aside class="sidebar">
-    <h2 id="easteregg">STEP Questions</h2>
+  <!-- =============================================
+       NOTIFICATION TOASTS
+       ============================================= -->
+  <div id="notifications" role="status" aria-live="polite"></div>
 
-    <input
-      type="text"
-      id="search"
-      placeholder="Search (e.g. 21 S2 Q5)"
-    >
-
-    <ul id="questionList"></ul>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <main class="content">
-    <div id="viewer">
-      <p class="placeholder">
-        Select a question from the list.
-      </p>
+  <!-- =============================================
+       AUTH MODALS
+       ============================================= -->
+  <div id="login-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <h3 id="login-modal-title">Log in</h3>
+      <div class="form-group">
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <div class="modal-actions">
+        <button id="login-submit" class="btn btn--primary">Log in</button>
+        <button class="btn close-modal">Cancel</button>
+      </div>
     </div>
-  </main>
+  </div>
 
-  <header class="topbar">
-  <header class="topbar">
-    <div class="topbar-right">
-      <button id="theme-toggle" title="Toggle dark mode">🌞</button>
+  <div id="signup-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <h3 id="signup-modal-title">Create account</h3>
+      <div class="form-group">
+        <label for="signup-email">Email</label>
+        <input id="signup-email" type="email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="signup-password">Password</label>
+        <input id="signup-password" type="password" placeholder="••••••••" autocomplete="new-password">
+      </div>
+      <div class="modal-actions">
+        <button id="signup-submit" class="btn btn--primary">Create account</button>
+        <button class="btn close-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
 
-      <div class="auth-area">
-        <div id="auth-buttons">
-          <button id="login-btn">Log in</button>
-          <button id="signup-btn">Sign up</button>
+  <!-- =============================================
+       MAIN APP SCREEN
+       ============================================= -->
+  <div id="main-screen" class="app-layout">
+
+    <!-- Top navigation bar -->
+    <header class="topbar" role="banner">
+      <span class="topbar__logo" id="easteregg">STEP</span>
+
+      <nav class="topbar__nav" role="navigation" aria-label="Main navigation">
+        <button id="theme-toggle" class="btn btn--icon" title="Toggle dark mode" aria-label="Toggle dark mode">🌞</button>
+
+        <!-- Logged out -->
+        <div id="auth-buttons" class="topbar__auth">
+          <button id="login-btn" class="btn btn--ghost">Log in</button>
+          <button id="signup-btn" class="btn btn--primary btn--sm">Sign up</button>
         </div>
 
-        <div id="user-menu" class="hidden">
-          <button id="profile-btn" class="profile-circle">👤</button>
-          <div id="profile-dropdown" class="dropdown-menu hidden">
-            <button id="open-dashboard" class="dropdown-item">Dashboard</button>
-            <button id="logout-btn" class="dropdown-item danger">Log out</button>
+        <!-- Logged in -->
+        <div id="user-menu" class="topbar__user hidden">
+          <button id="profile-btn" class="btn btn--icon" aria-label="Profile menu" aria-haspopup="true" aria-expanded="false">
+            <span class="avatar">👤</span>
+          </button>
+          <div id="profile-dropdown" class="dropdown hidden" role="menu">
+            <button id="open-dashboard" class="dropdown__item" role="menuitem">
+              <span class="dropdown__icon">📊</span> Dashboard
+            </button>
+            <hr class="dropdown__divider">
+            <button id="logout-btn" class="dropdown__item dropdown__item--danger" role="menuitem">
+              <span class="dropdown__icon">↩</span> Log out
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-  </header>
+      </nav>
+    </header>
 
-  <!-- LOGIN POPUP -->
-  <div id="login-modal" class="modal hidden">
-    <div class="modal-content">
-      <h3>Log in</h3>
-      <input id="login-email" type="email" placeholder="Email">
-      <input id="login-password" type="password" placeholder="Password">
-      <button id="login-submit">Log in</button>
-      <button class="close-modal">Cancel</button>
-    </div>
+    <!-- Sidebar: question list -->
+    <aside class="sidebar" role="complementary" aria-label="Question list">
+      <div class="sidebar__search">
+        <input
+          type="search"
+          id="search"
+          placeholder="Search questions or tags…"
+          aria-label="Search questions"
+          autocomplete="off"
+        >
+      </div>
+      <ul id="questionList" class="question-list" role="list" aria-label="Questions"></ul>
+    </aside>
+
+    <!-- Main viewer area -->
+    <main class="viewer-area" id="viewer-area" role="main">
+      <div id="viewer" class="viewer">
+        <div class="viewer__empty">
+          <p class="viewer__empty-text">← Select a question to begin</p>
+        </div>
+      </div>
+    </main>
+
   </div>
 
-  <!-- SIGNUP POPUP -->
-  <div id="signup-modal" class="modal hidden">
-    <div class="modal-content">
-      <h3>Sign up</h3>
-      <input id="signup-email" type="email" placeholder="Email">
-      <input id="signup-password" type="password" placeholder="Password">
-      <button id="signup-submit">Create account</button>
-      <button class="close-modal">Cancel</button>
+  <!-- =============================================
+       DASHBOARD SCREEN
+       ============================================= -->
+  <div id="dashboard-screen" class="hidden" role="main" aria-label="Dashboard">
+
+    <div class="dashboard-layout">
+
+      <header class="dashboard-header">
+        <div>
+          <p class="dashboard-header__label">Overview</p>
+          <h1 class="dashboard-header__title">Your Progress</h1>
+        </div>
+        <button id="close-dashboard" class="btn btn--ghost">← Back to Questions</button>
+      </header>
+
+      <!-- Stat cards -->
+      <section class="dashboard-stats" aria-label="Statistics">
+        <div id="stat-attempted"     class="stat-card"></div>
+        <div id="stat-completed"     class="stat-card"></div>
+        <div id="stat-avg-time"      class="stat-card"></div>
+        <div id="stat-avg-difficulty" class="stat-card"></div>
+      </section>
+
+      <!-- STEP Matrix -->
+      <section class="dashboard-section" aria-label="STEP question matrix">
+        <h2 class="dashboard-section__title">STEP Matrix</h2>
+        <p class="dashboard-section__subtitle">Colour intensity shows priority score. Click any cell to open that question.</p>
+        <div id="stepMatrix" class="step-matrix"></div>
+        <div class="matrix-legend">
+          <span class="matrix-legend__item matrix-empty">No attempts</span>
+          <span class="matrix-legend__item matrix-low">Low priority</span>
+          <span class="matrix-legend__item matrix-mid">Medium</span>
+          <span class="matrix-legend__item matrix-high">High priority</span>
+        </div>
+      </section>
+
+      <!-- Charts -->
+      <section class="dashboard-charts" aria-label="Performance charts">
+        <div class="dashboard-section">
+          <h3 class="dashboard-section__title">Time per attempt <span class="unit">(min)</span></h3>
+          <canvas id="timeChart" aria-label="Time per attempt chart"></canvas>
+        </div>
+        <div class="dashboard-section">
+          <h3 class="dashboard-section__title">Difficulty over time</h3>
+          <canvas id="difficultyChart" aria-label="Difficulty over time chart"></canvas>
+        </div>
+      </section>
+
+      <!-- Activity heatmap -->
+      <section class="dashboard-section" aria-label="Activity heatmap">
+        <h2 class="dashboard-section__title">Activity — last 120 days</h2>
+        <div id="heatmap" class="heatmap" role="grid" aria-label="Activity heatmap"></div>
+      </section>
+
+      <!-- Priority + Recent split -->
+      <div class="dashboard-split">
+        <section class="dashboard-section" aria-label="Priority review">
+          <h2 class="dashboard-section__title">Priority Review</h2>
+          <p class="dashboard-section__subtitle">Questions most worth revisiting now.</p>
+          <ul id="priorityList" class="priority-list" role="list"></ul>
+        </section>
+
+        <section class="dashboard-section" aria-label="Recent activity">
+          <h2 class="dashboard-section__title">Recent Activity</h2>
+          <p class="dashboard-section__subtitle">Your last 8 unique questions.</p>
+          <div id="recentList" class="recent-list"></div>
+        </section>
+      </div>
+
     </div>
+
+    <!-- Day drill-down view -->
+    <div id="day-screen" class="day-screen hidden" role="region" aria-label="Day detail">
+      <div class="day-screen__header">
+        <div>
+          <p class="dashboard-header__label">Detail</p>
+          <h1 id="dayTitle" class="dashboard-header__title">Attempts</h1>
+        </div>
+        <button id="close-day-view" class="btn btn--ghost">← Back to Dashboard</button>
+      </div>
+      <div id="dayAttempts" class="day-attempts"></div>
+    </div>
+
   </div>
-  </header>
-</div>
 
-<!-- DASHBOARD -->
-<div id="dashboard-screen" class="hidden">
+  <!-- =============================================
+       SCRIPTS
+       ============================================= -->
+  <script type="module" src="./js/main.js"></script>
 
-  <div class="dashboard-layout">
-
-    <div class="dashboard-header">
-      <h1>Your Progress</h1>
-      <button id="close-dashboard">Back to Questions</button>
-    </div>
-
-    <div class="dashboard-grid">
-      <div id="stat-attempted" class="dashboard-card"></div>
-      <div id="stat-completed" class="dashboard-card"></div>
-      <div id="stat-avg-time" class="dashboard-card"></div>
-      <div id="stat-avg-difficulty" class="dashboard-card"></div>
-    </div>
-
-    <div class="dashboard-section">
-      <h2>STEP Matrix</h2>
-      <div id="stepMatrix"></div>
-    </div>
-
-    <div class="dashboard-grid" style="grid-template-columns:1fr 1fr;">
-      <div class="dashboard-section">
-        <h3>Time (min) per attempt</h3>
-        <canvas id="timeChart"></canvas>
-      </div>
-      <div class="dashboard-section">
-        <h3>Difficulty per attempt</h3>
-        <canvas id="difficultyChart"></canvas>
-      </div>
-    </div>
-
-    <div class="dashboard-section">
-      <h3>Activity Map</h3>
-      <div id="heatmap"></div>
-    </div>
-
-    <div class="dashboard-split">
-      <div>
-        <h2>Priority Review</h2>
-        <ul id="priorityList"></ul>
-      </div>
-
-      <div>
-        <h2>Recent Activity</h2>
-        <div id="recentList"></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="day-screen" class="hidden">
-    <div class="dashboard-header">
-      <h1 id="dayTitle">Attempts</h1>
-      <button id="back-to-dashboard">Back</button>
-    </div>
-
-    <div id="dayAttempts"></div>
-  </div>
-
-</div>
-
-<!-- Notifications -->
-<div id="notifications"></div>
-
-<script type="module" src="./js/splash.js"></script>
-<script type="module" src="./js/main.js"></script>
-<script type="module" src="./js/dashboard/dashboard.js"></script>
+</body>
 </html>

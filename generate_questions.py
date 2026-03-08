@@ -2,8 +2,8 @@ import os
 import json
 import re
 
-BASE_DIR = "images/questions"
-OUTPUT_FILE = "questions.json"
+BASE_DIR = "assets/images/questions"
+OUTPUT_FILE = "data/questions.json"
 
 print("Current dir:", os.getcwd())
 print("BASE_DIR exists?", os.path.exists(BASE_DIR))

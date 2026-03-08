@@ -1,5 +1,21 @@
+# macOS
 .DS_Store
+**/.DS_Store
+
+# Firebase private key — NEVER commit this
+serviceAccountKey.json
+**/serviceAccountKey.json
+
+# Scripts not needed in production
+other_stuff/
 tag_generator.py
 change_file_names.py
-serviceAccountKey.json
 firebase_changer.py
+
+# Dependencies (if you add any later)
+node_modules/
+
+# Environment / secrets (future-proofing)
+.env
+.env.local
+.env*.local

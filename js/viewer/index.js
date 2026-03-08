@@ -1,285 +1,275 @@
-import { auth } from "../config.js";
-import { notify, createAttemptCard } from "../ui.js";
-import { emit } from "../eventBus.js";
+/**
+ * @file index.js  (viewer)
+ * @description Viewer entry point. `loadQuestion()` is the single public function —
+ *              it tears down previous state, renders the new question, and wires up
+ *              all interactivity (timer, stars, draft, attempts, navigation).
+ */
+
+import { auth }                from "../core/config.js";
+import { emit }                from "../core/eventBus.js";
+import { makeQuestionID }      from "../core/utils.js";
+import { getFilteredQuestions } from "../core/questionStore.js";
+import { COMMIT_SUCCESS_MS }   from "../core/constants.js";
+import { notify, createAttemptCard } from "../ui/ui.js";
 
 import { renderQuestion, loadSolutions } from "./render.js";
 import { initTimer, stop as stopTimer, setTime, getTime, makeTimeEditable } from "./timer.js";
 import { saveDraft, loadDraft, clearDraft } from "./draft.js";
-import { saveAttempt, loadAttempts } from "./attempts.js";
-import { initNavigation } from "./navigation.js";
+import { saveAttempt, loadAttempts }      from "./attempts.js";
+import { initNavigation }                  from "./navigation.js";
+import { DEBOUNCE_MS }                     from "../core/constants.js";
 
+// ─── Module state ─────────────────────────────────────────────────────────────
 
-let difficulty = 0;
-let authListenerBound = false;
 let currentQuestionID = null;
+let difficulty        = 0;
+let authListenerBound = false;
 
-function attemptsCacheKey(questionID) {
-    return `attempts:${questionID}`;
-}
-
-function loadAttemptsFromCache(questionID) {
-    const raw = localStorage.getItem(attemptsCacheKey(questionID));
-    return raw ? JSON.parse(raw) : null;
-}
-
-function saveAttemptsToCache(questionID, docs) {
-    const data = docs.map(d => ({
-        id: d.id,
-        data: d.data()
-    }));
-    
-    localStorage.setItem(attemptsCacheKey(questionID), JSON.stringify(data));
-}
-
-/**
- * Entry point from main.js
- */
-export async function loadQuestion(q, tags, li) {
-    // --- teardown previous state (DOM-safe)
-    stopTimer();
-    difficulty = 0;
-
-    // --- render DOM FIRST
-    const { questionID } = renderQuestion({ q, tags, li });
-    currentQuestionID = questionID;
-
-    // Enable tag filtering inside the viewer
-    document.querySelectorAll(".viewer-tag").forEach(el => {
-        el.onclick = e => {
-            e.stopPropagation();
-            const tag = e.target.dataset.tag;
-            emit("filter:apply", tag);
-        };
-    });
-
-    // Navigation (previous, after quickly)
-    initNavigation({
-        getQuestions: () => window.__filteredQuestions,
-        getCurrentId: () => currentQuestionID,
-        onNavigate: (q) => {
-            // reuse existing behaviour
-            loadQuestion(q.data, q.tags, q.li);
-        }
-    });
-
-    const questionMain = document.querySelector(".question-main");
-    const questionSidebar = document.querySelector(".question-sidebar");
-
-    // Remove any previous animation class
-    questionMain.classList.remove("show");
-    questionSidebar.classList.remove("show");
-
-    // Small timeout to trigger CSS transition
-    requestAnimationFrame(() => {
-        questionMain.classList.add("show");
-        questionSidebar.classList.add("show");
-    });
-
-
-    // --- DOM refs (safe now)
-    const statusElement = document.getElementById("status");
-    const notesElement = document.getElementById("notes");
-    const starsElement = document.getElementById("stars");
-    const commitButton = document.getElementById("commit-attempt");
-    const pastList = document.getElementById("past-notes-list");
-
-    if (!statusElement || !notesElement || !starsElement || !commitButton || !pastList) {
-        console.error("Viewer DOM not fully rendered");
-        return;
-    }
-
-    function disableInputs(disabled) {
-        statusElement.disabled = disabled;
-        notesElement.disabled = disabled;
-    }
-
-    // --- auth binding (ONCE, after DOM exists)
-    if (!authListenerBound) {
-        authListenerBound = true;
-        auth.onAuthStateChanged(user => {
-            disableInputs(!user);
-        });
-    }
-
-    // --- helper to save draft
-    function persistDraft() {
-        saveDraft(questionID, {
-            status: statusElement.value,
-            notes: notesElement.value,
-            time: getTime(),
-            difficulty
-        });
-    }
-
-    // --- stars (difficulty)
-    starsElement.onclick = e => {
-        if (!e.target.dataset.star || statusElement.disabled) return;
-
-        const n = Number(e.target.dataset.star);
-        difficulty = difficulty === n ? 0 : n;
-
-        [...starsElement.children].forEach(s => {
-            s.textContent =
-                Number(s.dataset.star) <= difficulty ? "★" : "☆";
-        });
-
-        persistDraft();
-        updateCommitButton();
-    };
-
-    // --- commit button enable logic
-    function updateCommitButton() {
-        commitButton.disabled = !(statusElement.value === "completed" && difficulty > 0);
-    }
-
-    statusElement.onchange = () => {
-        updateCommitButton();
-        persistDraft();
-    };
-
-    notesElement.oninput = persistDraft;
-
-    // --- timer
-    initTimer({ onTick: persistDraft });
-
-    // Make time editable on click
-    const timeDisplay = document.getElementById("time-display");
-    makeTimeEditable(timeDisplay, persistDraft);
-
-    // --- load local draft
-    const draft = loadDraft(questionID);
-    if (draft) {
-        statusElement.value = draft.status ?? "not-started";
-        notesElement.value = draft.notes ?? "";
-        difficulty = draft.difficulty ?? 0;
-        setTime(draft.time ?? 0);
-
-        [...starsElement.children].forEach(s => {
-            s.textContent =
-                Number(s.dataset.star) <= difficulty ? "★" : "☆";
-        });
-    } else {
-        setTime(0);
-    }
-
-    updateCommitButton();
-
-    // --- load sidebar attempts
-    await loadSidebarAttempts(questionID, pastList);
-
-    // --- commit completed attempt
-    commitButton.onclick = async () => {
-        const user = auth.currentUser;
-        if (!user) {
-            notify({
-                message: "Sign in to save completed attempts",
-                type: "warning"
-            });
-            return;
-        }
-
-        stopTimer();
-
-        await saveAttempt(user.uid, questionID, {
-            status: "completed",
-            time: getTime(),
-            difficulty,
-            notes: notesElement.value.trim()
-        });
-
-        // Removes cached attempts
-        localStorage.removeItem(attemptsCacheKey(questionID));
-
-        clearDraft(questionID);
-
-        commitButton.classList.add("success");
-        commitButton.textContent = "Saved ✓";
-
-        setTimeout(() => {
-            commitButton.classList.remove("success");
-            commitButton.textContent = "Save as completed attempt";
-        }, 1200);
-
-
-        // reset UI
-        difficulty = 0;
-        notesElement.value = "";
-        statusElement.value = "not-started";
-        setTime(0);
-
-        [...starsElement.children].forEach(s => (s.textContent = "☆"));
-        updateCommitButton();
-
-        await loadSidebarAttempts(questionID, pastList);
-    };
-
-    
-    const solutionContainer = document.getElementById("solution-container");
-    loadSolutions(q, questionID);
-    document.getElementById("solution-toggle").onclick = async () => {        
-        solutionContainer.classList.toggle("show");
-    };
-}
-
-// -----------------------------
-// Sidebar helpers (fixed)
-// -----------------------------
+// Per-question debounce handles for sidebar loading
 const sidebarTokens = new Map();
 const sidebarTimers = new Map();
 
-async function loadSidebarAttempts(questionID, list) {
-    list.innerHTML = "";
+const ATTEMPTS_CACHE_PREFIX = "attempts:";
 
-    // Check cache first
-    const cached = loadAttemptsFromCache(questionID);
-    if (cached && cached.length) {
-        console.log("Got cached data instead");
-        cached.forEach(item => {
-            const fakeDoc = { id: item.id, ref: null, data: () => item.data };
-            list.appendChild(createAttemptCard(fakeDoc));
-        });
-        return;
+// ─── Public API ───────────────────────────────────────────────────────────────
+
+/**
+ * Load a question into the viewer.
+ *
+ * @param {Object}          q     Question data { year, paper, question }
+ * @param {string[]}        tags
+ * @param {HTMLElement|null} li   Sidebar list item (for active highlight)
+ */
+export async function loadQuestion(q, tags, li) {
+  // 1. Tear down previous state
+  stopTimer();
+  difficulty = 0;
+
+  // 2. Render DOM
+  const { questionID } = renderQuestion({ q, tags, li });
+  currentQuestionID = questionID;
+
+  // 3. Animate in
+  const questionMain    = document.querySelector(".question-main");
+  const questionSidebar = document.querySelector(".question-sidebar");
+  questionMain?.classList.remove("show");
+  questionSidebar?.classList.remove("show");
+  requestAnimationFrame(() => {
+    questionMain?.classList.add("show");
+    questionSidebar?.classList.add("show");
+  });
+
+  // 4. Tag click → filter
+  document.querySelectorAll(".viewer-tag").forEach(el => {
+    el.addEventListener("click", e => {
+      e.stopPropagation();
+      emit("filter:apply", e.target.dataset.tag);
+    });
+  });
+
+  // 5. Navigation
+  initNavigation({
+    getQuestions: getFilteredQuestions,
+    getCurrentId: () => currentQuestionID,
+    onNavigate:   next => loadQuestion(next.data, next.tags, next.li)
+  });
+
+  // 6. DOM refs (guaranteed after renderQuestion)
+  const statusEl   = document.getElementById("status");
+  const notesEl    = document.getElementById("notes");
+  const starsEl    = document.getElementById("stars");
+  const commitBtn  = document.getElementById("commit-attempt");
+  const pastList   = document.getElementById("past-notes-list");
+
+  if (!statusEl || !notesEl || !starsEl || !commitBtn || !pastList) {
+    console.error("[viewer] Required DOM elements missing after render");
+    return;
+  }
+
+  // 7. Disable inputs when not logged in (bound once)
+  if (!authListenerBound) {
+    authListenerBound = true;
+    auth.onAuthStateChanged(user => {
+      statusEl.disabled = !user;
+      notesEl.disabled  = !user;
+    });
+  } else {
+    const isLoggedIn  = !!auth.currentUser;
+    statusEl.disabled = !isLoggedIn;
+    notesEl.disabled  = !isLoggedIn;
+  }
+
+  // 8. Draft persistence helper
+  function persistDraft() {
+    saveDraft(questionID, {
+      status:     statusEl.value,
+      notes:      notesEl.value,
+      time:       getTime(),
+      difficulty
+    });
+  }
+
+  // 9. Stars (difficulty rating)
+  starsEl.addEventListener("click", e => {
+    if (!e.target.dataset.star || statusEl.disabled) return;
+    const n = Number(e.target.dataset.star);
+    difficulty = difficulty === n ? 0 : n;
+    _renderStars(starsEl, difficulty);
+    persistDraft();
+    _updateCommitBtn(commitBtn, statusEl, difficulty);
+  });
+
+  // 10. Status + notes changes
+  statusEl.addEventListener("change", () => {
+    _updateCommitBtn(commitBtn, statusEl, difficulty);
+    persistDraft();
+  });
+  notesEl.addEventListener("input", persistDraft);
+
+  // 11. Timer
+  initTimer({ onTick: persistDraft });
+  makeTimeEditable(document.getElementById("time-display"), persistDraft);
+
+  // 12. Restore draft
+  const draft = loadDraft(questionID);
+  if (draft) {
+    statusEl.value = draft.status     ?? "not-started";
+    notesEl.value  = draft.notes      ?? "";
+    difficulty     = draft.difficulty ?? 0;
+    setTime(draft.time ?? 0);
+    _renderStars(starsEl, difficulty);
+  } else {
+    setTime(0);
+  }
+
+  _updateCommitBtn(commitBtn, statusEl, difficulty);
+
+  // 13. Load sidebar attempts
+  await _loadSidebarAttempts(questionID, pastList);
+
+  // 14. Commit button
+  commitBtn.addEventListener("click", async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      notify({ message: "Sign in to save completed attempts", type: "warning" });
+      return;
     }
 
-    // Increment token for this question
-    const token = (sidebarTokens.get(questionID) || 0) + 1;
-    sidebarTokens.set(questionID, token);
+    stopTimer();
 
-    // Clear previous debounce timer for this question
-    if (sidebarTimers.get(questionID)) clearTimeout(sidebarTimers.get(questionID));
+    try {
+      await saveAttempt(user.uid, questionID, {
+        status:     "completed",
+        time:       getTime(),
+        difficulty,
+        notes:      notesEl.value.trim()
+      });
+    } catch {
+      notify({ message: "Failed to save attempt — please try again.", type: "danger" });
+      return;
+    }
 
-    // Schedule request with debounce
-    const timer = setTimeout(async () => {
-        // Only proceed if token hasn't changed
-        if (sidebarTokens.get(questionID) !== token) return;
+    // Clear cache + draft
+    localStorage.removeItem(ATTEMPTS_CACHE_PREFIX + questionID);
+    clearDraft(questionID);
 
-        const user = auth.currentUser;
-        if (!user) {
-            showEmptyAttempts(list);
-            return;
-        }
+    // Success flash
+    commitBtn.classList.add("success");
+    commitBtn.textContent = "Saved ✓";
+    setTimeout(() => {
+      commitBtn.classList.remove("success");
+      commitBtn.textContent = "Save as completed attempt";
+    }, COMMIT_SUCCESS_MS);
 
-        const snap = await loadAttempts(user.uid, questionID);
+    // Reset UI
+    difficulty     = 0;
+    notesEl.value  = "";
+    statusEl.value = "not-started";
+    setTime(0);
+    _renderStars(starsEl, 0);
+    _updateCommitBtn(commitBtn, statusEl, difficulty);
 
-        if (snap.empty) {
-            showEmptyAttempts(list);
-            return;
-        }
+    await _loadSidebarAttempts(questionID, pastList);
+  });
 
-        snap.docs.forEach(d => list.appendChild(createAttemptCard(d)));
-
-        saveAttemptsToCache(questionID, snap.docs);
-
-    }, 300); // debounce delay
-
-    sidebarTimers.set(questionID, timer);
+  // 15. Solution toggle
+  loadSolutions(q, questionID);
+  document.getElementById("solution-toggle").addEventListener("click", () => {
+    document.getElementById("solution-container")?.classList.toggle("show");
+  });
 }
 
+// ─── Internal helpers ─────────────────────────────────────────────────────────
 
-function showEmptyAttempts(list) {
-    list.innerHTML = `
-        <li class="empty-attempts" style="opacity:0.6;font-style:italic;">
-            No previous attempts
-        </li>
-    `;
+function _renderStars(starsEl, value) {
+  [...starsEl.children].forEach(s => {
+    s.textContent = Number(s.dataset.star) <= value ? "★" : "☆";
+  });
+}
+
+function _updateCommitBtn(btn, statusEl, difficulty) {
+  btn.disabled = !(statusEl.value === "completed" && difficulty > 0);
+}
+
+async function _loadSidebarAttempts(questionID, list) {
+  list.innerHTML = "";
+
+  // Try cache first
+  const cached = _readAttemptsCache(questionID);
+  if (cached?.length) {
+    cached.forEach(item => {
+      const fakeDoc = { id: item.id, ref: null, data: () => item.data };
+      list.appendChild(createAttemptCard(fakeDoc));
+    });
+    return;
+  }
+
+  // Debounce Firestore fetch
+  const token = (sidebarTokens.get(questionID) ?? 0) + 1;
+  sidebarTokens.set(questionID, token);
+  clearTimeout(sidebarTimers.get(questionID));
+
+  const timer = setTimeout(async () => {
+    if (sidebarTokens.get(questionID) !== token) return;
+
+    const user = auth.currentUser;
+    if (!user) { _showEmpty(list); return; }
+
+    try {
+      const snap = await loadAttempts(user.uid, questionID);
+      if (snap.empty) { _showEmpty(list); return; }
+
+      snap.docs.forEach(d => list.appendChild(createAttemptCard(d)));
+      _writeAttemptsCache(questionID, snap.docs);
+    } catch (err) {
+      console.error("[viewer] loadAttempts failed:", err);
+      _showEmpty(list);
+    }
+  }, DEBOUNCE_MS);
+
+  sidebarTimers.set(questionID, timer);
+}
+
+function _showEmpty(list) {
+  list.innerHTML = `
+    <li class="empty-attempts" style="opacity:0.6;font-style:italic;">
+      No previous attempts
+    </li>
+  `;
+}
+
+function _readAttemptsCache(questionID) {
+  try {
+    const raw = localStorage.getItem(ATTEMPTS_CACHE_PREFIX + questionID);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function _writeAttemptsCache(questionID, docs) {
+  try {
+    const data = docs.map(d => ({ id: d.id, data: d.data() }));
+    localStorage.setItem(ATTEMPTS_CACHE_PREFIX + questionID, JSON.stringify(data));
+  } catch (err) {
+    console.warn("[viewer] Could not write attempts cache:", err);
+  }
 }

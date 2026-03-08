@@ -1,188 +1,175 @@
-// Shows build date in bottom right corner
-fetch("build.json", { cache: "no-store" })
-    .then(r => r.json())
-    .then(b => {
-        const tag = document.createElement("div");
-        tag.textContent = `Deployed ${b.commit.slice(0,7)} @ ${b.time}`;
-        tag.style.cssText = `
-            position:fixed;
-            bottom:6px;
-            right:8px;
-            font-size:11px;
-            opacity:0.6;
-            z-index:9999;
-        `;
-        document.body.appendChild(tag);
+/**
+ * @file main.js
+ * @description Application entry point. Responsibilities:
+ *   - Load question/tag data
+ *   - Render and filter the question sidebar
+ *   - Handle theme toggle
+ *   - Handle profile dropdown
+ *   - Route between main view and dashboard
+ *   - Show build info
+ *
+ * Auth and splash are side-effect imports that self-initialise.
+ */
+
+import "./ui/auth.js";
+import "./ui/splash.js";
+
+import { on }                           from "./core/eventBus.js";
+import { loadQuestionData, getTagsFor, setFilteredQuestions } from "./core/questionStore.js";
+import { makeQuestionID }               from "./core/utils.js";
+import { BUILD_JSON }                   from "./core/constants.js";
+import { loadQuestion }                 from "./viewer/index.js";
+import { loadDashboard }                from "./dashboard/index.js";
+
+// ─── Build info ───────────────────────────────────────────────────────────────
+
+fetch(BUILD_JSON, { cache: "no-store" })
+  .then(r => r.json())
+  .then(b => {
+    const tag = document.createElement("div");
+    tag.textContent = `Deployed ${b.commit.slice(0, 7)} @ ${b.time}`;
+    Object.assign(tag.style, {
+      position: "fixed", bottom: "6px", right: "8px",
+      fontSize: "11px", opacity: "0.6", zIndex: "9999"
     });
+    document.body.appendChild(tag);
+  })
+  .catch(() => { /* build.json missing in dev — silently ignore */ });
 
-import "./auth.js";
-import { auth } from "./config.js";
-import { loadQuestion } from "./viewer/index.js";
-import { on } from "./eventBus.js";
-import { startAttemptListener } from "./attemptStore.js";
-import { loadDashboard } from "./dashboard/dashboard.js";
+// ─── DOM refs ─────────────────────────────────────────────────────────────────
 
-auth.onAuthStateChanged(user => {
-    if (user) {
-        startAttemptListener();
-    }
-});
-
-const themeToggleBtn = document.getElementById("theme-toggle");
-
-// Load saved theme from localStorage
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark-mode");
-    themeToggleBtn.textContent = "🌙";
-} else {
-    themeToggleBtn.textContent = "🌞";
-}
-
-// Toggle on click
-themeToggleBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-
-    const isDark = document.body.classList.contains("dark-mode");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-
-    themeToggleBtn.textContent = isDark ? "🌙" : "🌞";
-});
-
-const profileBtn = document.getElementById("profile-btn");
-const dashboardBtn = document.getElementById("open-dashboard");
-const dropdown = document.getElementById("profile-dropdown");
-
-// Profile dropdown
-profileBtn.onclick = () => {
-    dropdown.classList.toggle("hidden");
-};
-
-document.addEventListener("click", e => {
-    if (!e.target.closest("#user-menu")) {
-        dropdown.classList.add("hidden");
-    }
-});
-
-// Opens dashboard
-const mainScreen = document.getElementById("main-screen");
+const listEl          = document.getElementById("questionList");
+const searchEl        = document.getElementById("search");
+const themeToggleBtn  = document.getElementById("theme-toggle");
+const profileBtn      = document.getElementById("profile-btn");
+const dropdown        = document.getElementById("profile-dropdown");
+const dashboardBtn    = document.getElementById("open-dashboard");
+const mainScreen      = document.getElementById("main-screen");
 const dashboardScreen = document.getElementById("dashboard-screen");
 
-dashboardBtn.onclick = () => {
-    mainScreen.classList.add("hidden");
-    dashboardScreen.classList.remove("hidden");
+// ─── Theme ────────────────────────────────────────────────────────────────────
 
-    loadDashboard(questions);
-};
-
-document.getElementById("close-dashboard").onclick = () => {
-    dashboardScreen.classList.add("hidden");
-    mainScreen.classList.remove("hidden");
-};
-
-
-const listEl = document.getElementById("questionList");
-const search = document.getElementById("search");
-
-let questions = [];
-let questionTags = {};  // <-- store tags
-let FILTER = search.value.toLowerCase() ?? "";
-
-// Load questions + tags
-Promise.all([
-    fetch("questions.json").then(r => r.json()),
-    fetch("question_tags.json").then(r => r.json())
-]).then(([questionsData, tagsData]) => {
-    questions = questionsData;
-    questionTags = tagsData;
-    renderList();
-});
-
-// Event listeners
-search.addEventListener("input", e => {
-    const value = e.target.value.toLowerCase();
-    FILTER = value;
-    renderList();
-});
-
-
-// Listen for tag filter events from render.js
-on("filter:apply", tag => {
-    search.value = tag;
-    FILTER = tag.toLowerCase();
-    renderList();
-
-    // Optional: auto-select first match
-    const first = window.__filteredQuestions?.[0];
-    if (first) {
-        loadQuestion(first.data, first.tags, first.li);
-    }
-});
-
-
-// Helper to make ID
-function makeId({ year, paper, question }) {
-    return `${year}-S${paper}-Q${question}`;
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "dark") {
+  document.body.classList.add("dark-mode");
+  themeToggleBtn.textContent = "🌙";
+} else {
+  themeToggleBtn.textContent = "🌞";
 }
 
-// Render question sidebar list
+themeToggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  const isDark = document.body.classList.contains("dark-mode");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+  themeToggleBtn.textContent = isDark ? "🌙" : "🌞";
+});
+
+// ─── Profile dropdown ─────────────────────────────────────────────────────────
+
+profileBtn.addEventListener("click", () => dropdown.classList.toggle("hidden"));
+
+document.addEventListener("click", e => {
+  if (!e.target.closest("#user-menu")) dropdown.classList.add("hidden");
+});
+
+// ─── Dashboard routing ────────────────────────────────────────────────────────
+
+dashboardBtn.addEventListener("click", () => {
+  mainScreen.classList.add("hidden");
+  dashboardScreen.classList.remove("hidden");
+  loadDashboard(allQuestions);
+});
+
+document.getElementById("close-dashboard").addEventListener("click", () => {
+  dashboardScreen.classList.add("hidden");
+  mainScreen.classList.remove("hidden");
+});
+
+// ─── Question list ────────────────────────────────────────────────────────────
+
+let allQuestions = [];
+let filter       = "";
+
+// Load data then render
+loadQuestionData().then(({ questions }) => {
+  allQuestions = questions;
+  renderList();
+});
+
+// Search input
+searchEl.addEventListener("input", e => {
+  filter = e.target.value.toLowerCase();
+  renderList();
+});
+
+// Tag filter events from viewer
+on("filter:apply", tag => {
+  searchEl.value = filter = tag.toLowerCase();
+  renderList();
+
+  // Auto-load first result
+  const first = getFilteredQuestions()[0];
+  if (first) loadQuestion(first.data, first.tags, first.li);
+});
+
+/**
+ * Re-render the sidebar question list based on the current filter.
+ */
 function renderList() {
-    listEl.innerHTML = "";
+  listEl.innerHTML = "";
 
-    const filter = FILTER.toLowerCase(); // normalize input
+  const filtered = allQuestions
+    .filter(q => {
+      const id   = makeQuestionID(q).toLowerCase();
+      const tags = getTagsFor(q.year, q.paper, q.question).map(t => t.toLowerCase());
+      return id.includes(filter) || tags.some(t => t.includes(filter));
+    })
+    .map(q => {
+      const id   = makeQuestionID(q);
+      const tags = getTagsFor(q.year, q.paper, q.question);
+      const li   = _buildQuestionListItem(q, id, tags);
+      listEl.appendChild(li);
+      return { id, data: q, tags, li };
+    });
 
-    const filtered = [];
-    
-    questions
-        .filter(q => {
-            const qId = makeId(q).toLowerCase();
+  setFilteredQuestions(filtered);
+}
 
-            const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
-            const tags = (questionTags[qPath] || []).map(t => t.toLowerCase()); // lowercase for search
+/**
+ * Build a single `<li>` for the question sidebar.
+ * @private
+ */
+function _buildQuestionListItem(q, id, tags) {
+  const li = document.createElement("li");
+  li.textContent = id;
 
-            // Search matches question ID OR any tag
-            return qId.includes(filter) || tags.some(t => t.includes(filter));
-        })
-        .forEach(q => {
-            const li = document.createElement("li");
-            li.textContent = makeId(q);
+  if (tags.length) {
+    const tagContainer = document.createElement("div");
+    tagContainer.className = "tag-container";
 
-            // display tags below question
-            const qPath = `images/questions/${q.year}/S${q.paper}/Q${q.question}.png`;
-            const tags = questionTags[qPath] || [];
+    tags.forEach(tag => {
+      const chip = document.createElement("span");
+      chip.className   = "tag-chip";
+      chip.textContent = tag;
+      chip.addEventListener("click", e => {
+        e.stopPropagation();
+        searchEl.value = filter = tag.toLowerCase();
+        renderList();
+      });
+      tagContainer.appendChild(chip);
+    });
 
-            if (tags.length) {
-                const tagContainer = document.createElement("div");
-                tagContainer.className = "tag-container";
+    li.appendChild(tagContainer);
+  }
 
-                tags.forEach(tag => {
-                const tagEl = document.createElement("span");
-                tagEl.className = "tag-chip";
-                tagEl.textContent = tag;
+  li.addEventListener("click", () => loadQuestion(q, tags, li));
+  return li;
+}
 
-                // (optional) click to search by tag
-                tagEl.onclick = e => {
-                    e.stopPropagation(); // don't trigger question click
-                    search.value = tag;
-                    FILTER = tag.toLowerCase();
-                    renderList();
-                };
+// ─── Helpers (re-exported for dashboard) ─────────────────────────────────────
 
-                tagContainer.appendChild(tagEl);
-                });
-
-                li.appendChild(tagContainer);
-            }
-
-            li.onclick = () => loadQuestion(q, tags, li);
-            listEl.appendChild(li);
-
-            filtered.push({
-                id: makeId(q),
-                data: q,
-                tags,
-                li
-            });
-        });
-
-    window.__filteredQuestions = filtered;
+export function getFilteredQuestions() {
+  // Proxy to the store; used by initNavigation
+  return import("./core/questionStore.js")
+    .then(m => m.getFilteredQuestions());
 }

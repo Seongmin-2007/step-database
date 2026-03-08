@@ -1,159 +1,155 @@
-import { formatTime, parseTime } from "../utils.js";
+/**
+ * @file timer.js
+ * @description Stopwatch timer for the question viewer.
+ *              Manages start/pause/resume state and exposes time get/set.
+ */
+
+import { formatTime, parseTime } from "../core/utils.js";
+
+// ─── State ────────────────────────────────────────────────────────────────────
 
 let interval = null;
-let elapsed = 0;
+let elapsed  = 0;
 
-function qs(id) {
-    return document.getElementById(id);
-}
+// ─── Public API ───────────────────────────────────────────────────────────────
 
+/**
+ * Initialise the timer UI and bind the start/pause button.
+ * Must be called after render.js has injected the viewer HTML.
+ *
+ * @param {{ onTick: (elapsed: number) => void }} opts
+ */
 export function initTimer({ onTick }) {
-    const startBtn = qs("start-timer");
-    const display = qs("time-display");
+  const startBtn = _el("start-timer");
+  const display  = _el("time-display");
+  if (!startBtn || !display) return;
 
-    if (!startBtn || !display) return;
+  _updateDisplay(display);
+  startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
 
-    function update() {
-        display.textContent = formatTime(elapsed);
-    }
-
-    function start() {
-        if (interval) return;
-        interval = setInterval(() => {
-            elapsed++;
-            update();
-            onTick(elapsed);
-        }, 1000);
-
-        startBtn.textContent = "Pause";
-    }
-
-    function pause() {
-        if (interval) clearInterval(interval);
-        interval = null;
-
-        startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
-    }
-
-    startBtn.onclick = () => {
-        if (interval) pause();
-        else start();
-    };
-
-    update();
-
-    startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
-}
-
-export function stop() {
-    if (interval) clearInterval(interval);
-    interval = null;
-}
-
-export function setTime(seconds) {
-    const display = qs("time-display");
-    elapsed = seconds;
-    display.textContent = formatTime(elapsed);
-
-
-    // If timer is running, pause it when time is manually set
-    if (interval) {
-        clearInterval(interval);
-        interval = null;
-        const startBtn = qs("start-timer");
-        if (startBtn) {
-            startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
-        }
-    }
-}
-
-export function getTime() {
-    return elapsed;
+  startBtn.onclick = () => {
+    if (interval) _pause(startBtn);
+    else          _start(startBtn, display, onTick);
+  };
 }
 
 /**
- * Makes a given span element editable on click
- * @param {HTMLElement} timeDisplay
- * @param {function} persistDraft Saves draft to local cloud on switching
+ * Stop the timer (without resetting elapsed time).
+ * Call this when navigating away from a question.
  */
-export function makeTimeEditable(timeDisplay, persistDraft) {
-    const startBtn = qs("start-timer");
+export function stop() {
+  if (interval) clearInterval(interval);
+  interval = null;
+}
 
-    timeDisplay.addEventListener("click", () => {
-        // Prevent multiple containers
-        if (timeDisplay.nextElementSibling?.classList.contains("time-edit-container")) return;
+/**
+ * Set elapsed time programmatically (e.g. when loading a draft).
+ * Pauses any running interval.
+ * @param {number} seconds
+ */
+export function setTime(seconds) {
+  stop();
+  elapsed = seconds;
 
-        // Pause timer while editing
-        if (interval) {
-            clearInterval(interval);
-            interval = null;
-            if (startBtn) {
-                startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
-            }
-        }
+  const display  = _el("time-display");
+  const startBtn = _el("start-timer");
+  if (display)  _updateDisplay(display);
+  if (startBtn) startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
+}
 
-        // Disable timer button while editing
-        if (startBtn) startBtn.disabled = true;
-        
-        const seconds = parseTime(timeDisplay.textContent);
-        const hrs = Math.floor(seconds / 3600);
-        const mins = Math.floor((seconds % 3600) / 60);
-        const secs = seconds % 60;
+/**
+ * Get the current elapsed time in seconds.
+ * @returns {number}
+ */
+export function getTime() {
+  return elapsed;
+}
 
-        timeDisplay.style.display = "none";
+/**
+ * Make the time display clickable to manually edit the time.
+ *
+ * @param {HTMLElement} timeDisplay
+ * @param {Function}    onSave      Called with new elapsed after save
+ */
+export function makeTimeEditable(timeDisplay, onSave) {
+  timeDisplay.addEventListener("click", () => {
+    // Prevent double-mount
+    if (timeDisplay.nextElementSibling?.classList.contains("time-edit-container")) return;
 
-        const hrInput = document.createElement("input");
-        hrInput.type = "number";
-        hrInput.min = 0;
-        hrInput.value = hrs;
-        hrInput.classList.add("time-edit-input");
+    stop();
+    const startBtn = _el("start-timer");
+    if (startBtn) { startBtn.disabled = true; startBtn.style.display = "none"; }
 
-        const minInput = document.createElement("input");
-        minInput.type = "number";
-        minInput.min = 0;
-        minInput.max = 59;
-        minInput.value = mins;
-        minInput.classList.add("time-edit-input");
+    const seconds = parseTime(timeDisplay.textContent);
+    const hrs  = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
 
-        const secInput = document.createElement("input");
-        secInput.type = "number";
-        secInput.min = 0;
-        secInput.max = 59;
-        secInput.value = secs;
-        secInput.classList.add("time-edit-input");
+    timeDisplay.style.display = "none";
 
-        const saveBtn = document.createElement("button");
-        saveBtn.textContent = "✔";
-        saveBtn.classList.add("time-save-btn");
+    const hrInput  = _numberInput(hrs,  0, null);
+    const minInput = _numberInput(mins, 0, 59);
+    const secInput = _numberInput(secs, 0, 59);
 
-        const container = document.createElement("span");
-        container.classList.add("time-edit-container");
-        container.append(hrInput, document.createTextNode("hrs "),
-                         minInput, document.createTextNode("mins "),
-                         secInput, document.createTextNode("secs "),
-                         saveBtn);
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "✔";
+    saveBtn.className   = "time-save-btn";
 
-        timeDisplay.parentNode.insertBefore(container, timeDisplay.nextSibling);
+    const wrap = document.createElement("span");
+    wrap.className = "time-edit-container";
+    wrap.append(
+      hrInput,  document.createTextNode("hrs "),
+      minInput, document.createTextNode("mins "),
+      secInput, document.createTextNode("secs "),
+      saveBtn
+    );
 
-        // Hide original span but keep layout
-        timeDisplay.style.display = "none";
-        startBtn.style.display = "none";
+    timeDisplay.parentNode.insertBefore(wrap, timeDisplay.nextSibling);
 
-        saveBtn.onclick = () => {
-            const totalSec = Number(hrInput.value) * 3600 +
-                             Number(minInput.value) * 60 +
-                             Number(secInput.value);
+    saveBtn.addEventListener("click", () => {
+      const total = Number(hrInput.value) * 3600 +
+                    Number(minInput.value) * 60  +
+                    Number(secInput.value);
 
-            setTime(totalSec);
-            persistDraft();
+      setTime(total);
+      onSave();
 
-            // Reset display & remove input container
-            container.remove();
-            timeDisplay.textContent = formatTime(totalSec);
-            timeDisplay.style.display = "inline";
-            startBtn.style.display = "inline";
-
-            if (startBtn) startBtn.disabled = false;
-        };
+      wrap.remove();
+      timeDisplay.style.display = "inline";
+      if (startBtn) { startBtn.disabled = false; startBtn.style.display = "inline"; }
     });
+  });
+}
+
+// ─── Internal ─────────────────────────────────────────────────────────────────
+
+function _start(startBtn, display, onTick) {
+  interval = setInterval(() => {
+    elapsed++;
+    _updateDisplay(display);
+    onTick(elapsed);
+  }, 1000);
+  startBtn.textContent = "Pause";
+}
+
+function _pause(startBtn) {
+  clearInterval(interval);
+  interval = null;
+  startBtn.textContent = elapsed === 0 ? "Start" : "Resume";
+}
+
+function _updateDisplay(display) {
+  display.textContent = formatTime(elapsed);
+}
+
+function _el(id) { return document.getElementById(id); }
+
+function _numberInput(value, min, max) {
+  const input = document.createElement("input");
+  input.type  = "number";
+  input.value = value;
+  input.min   = min;
+  if (max !== null) input.max = max;
+  input.className = "time-edit-input";
+  return input;
 }
