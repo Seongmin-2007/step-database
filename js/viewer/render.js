@@ -5,6 +5,10 @@
  */
 
 import { questionImagePath, solutionImagePath } from "../core/constants.js";
+import { renderViewerStatus, bindFlagButton } from "./viewerStatus.js";
+
+renderViewerStatus(questionID, attempts);
+bindFlagButton(questionID);
 
 // ─── Question template ────────────────────────────────────────────────────────
 
@@ -32,6 +36,11 @@ export function renderQuestion({ q, tags, li }) {
       <div class="question-title">
         <h2>${questionID}</h2>
         <div class="question-tags">${tagHTML}</div>
+      </div>
+
+      <div class="viewer-status-row">
+        <div id="viewer-status-badge"></div>
+        <button id="viewer-flag-btn" class="btn btn--icon" aria-label="Flag question">⚐</button>
       </div>
     </section>
 

@@ -138,6 +138,8 @@ export function renderTopicTree(tree) {
       list.classList.toggle("hidden", isOpen);
       header.setAttribute("aria-expanded", String(!isOpen));
       chevron.classList.toggle("open", !isOpen);
+
+      openTopicDetail(node.tag);
     });
 
     // Question click → navigate to viewer

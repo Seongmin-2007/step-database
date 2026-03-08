@@ -20,6 +20,7 @@ import { makeQuestionID }               from "./core/utils.js";
 import { BUILD_JSON }                   from "./core/constants.js";
 import { loadQuestion }                 from "./viewer/index.js";
 import { loadDashboard }                from "./dashboard/index.js";
+import { initImageZoom }                from "./ui/imageZoom.js";
 
 // ─── Build info ───────────────────────────────────────────────────────────────
 
@@ -173,3 +174,7 @@ export function getFilteredQuestions() {
   return import("./core/questionStore.js")
     .then(m => m.getFilteredQuestions());
 }
+
+
+// Initialises Image Zoom
+initImageZoom();

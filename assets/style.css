@@ -483,6 +483,61 @@ h1, h2, h3, h4 {
   transform: none;
 }
 
+/* =============================================================================
+   [8b] VIEWER — STATUS BADGE + FLAG BUTTON
+   ============================================================================= */
+
+/* Row sitting below the question title */
+.viewer-status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.viewer-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.viewer-badge.status-completed {
+  background: var(--clr-success-bg);
+  color: var(--clr-success);
+}
+
+.viewer-badge.status-attempted {
+  background: var(--clr-warning-bg);
+  color: var(--clr-warning);
+}
+
+.viewer-badge.status-none {
+  background: var(--clr-surface-alt);
+  color: var(--clr-text-xmuted);
+  border: 1px solid var(--clr-border);
+}
+
+.viewer-badge-meta {
+  font-size: 0.75rem;
+  color: var(--clr-text-muted);
+}
+
+/* Flag button */
+#viewer-flag-btn {
+  margin-left: auto;
+  font-size: 1.1rem;
+  color: var(--clr-text-xmuted);
+  transition: color var(--transition), transform var(--transition);
+}
+
+#viewer-flag-btn:hover  { color: var(--clr-warning); transform: scale(1.15); }
+#viewer-flag-btn.flagged { color: var(--clr-warning); }
+
+
+
 
 /* =============================================================================
    9. ATTEMPT PANEL
@@ -651,6 +706,71 @@ h1, h2, h3, h4 {
   margin: 1rem 0;
   border: 1px solid var(--clr-border);
 }
+
+/* =============================================================================
+   [12b] IMAGE ZOOM — LIGHTBOX
+   ============================================================================= */
+
+/* Zoomable cursor hint */
+.zoomable {
+  cursor: zoom-in;
+  transition: opacity var(--transition);
+}
+
+.zoomable:hover { opacity: 0.9; }
+
+/* Full-screen overlay */
+#zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease);
+}
+
+#zoom-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.zoom-img {
+  max-width: min(90vw, 1100px);
+  max-height: 90vh;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  object-fit: contain;
+  animation: zoom-appear 200ms var(--ease);
+}
+
+.zoom-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.zoom-close:hover { background: rgba(255,255,255,0.25); }
+
+@keyframes zoom-appear {
+  from { transform: scale(0.96); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+
 
 
 /* =============================================================================
@@ -860,6 +980,21 @@ button.secondary {
 }
 
 button.secondary:hover { background: var(--clr-surface-alt); }
+
+
+/* =============================================================================
+   [16b] FLAG BUTTON — SIDEBAR LIST INDICATOR
+   Optionally show a small flag on flagged questions in the sidebar
+   ============================================================================= */
+
+.question-list li.flagged::after {
+  content: "⚑";
+  font-size: 0.7rem;
+  color: var(--clr-warning);
+  margin-left: auto;
+  padding-left: 6px;
+}
+
 
 
 /* =============================================================================
@@ -1247,6 +1382,176 @@ body.dark-mode .heat-10 { background: #bfdbfe; }
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--clr-text);
+}
+
+
+/* =============================================================================
+   [26b] TOPIC DETAIL — FULL SCREEN PANEL
+   ============================================================================= */
+
+#topic-detail-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease);
+}
+
+#topic-detail-panel.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.topic-detail__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(3px);
+}
+
+.topic-detail__sheet {
+  position: relative;
+  z-index: 1;
+  background: var(--clr-bg);
+  width: min(1100px, 100vw);
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 2.5rem 2rem 4rem;
+  box-shadow: var(--shadow-lg);
+  animation: modal-appear 200ms var(--ease);
+}
+
+/* On larger screens, show as a centred modal rather than full-width */
+@media (min-width: 768px) {
+  .topic-detail__sheet {
+    width: min(1100px, 92vw);
+    max-height: 90vh;
+    margin-top: 5vh;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--clr-border);
+  }
+}
+
+.topic-detail__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.topic-detail__title { font-size: 1.6rem; font-weight: 700; }
+
+.topic-detail__close { flex-shrink: 0; }
+
+/* Summary pills */
+.topic-detail__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.topic-summary-pill {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--clr-text-muted);
+}
+
+/* Two-column question lists */
+.topic-detail__columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .topic-detail__columns { grid-template-columns: 1fr; }
+}
+
+.topic-detail__col-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.topic-detail__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Individual question card */
+.topic-q-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  padding: 0.875rem 1rem;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.topic-q-card:hover {
+  border-color: var(--clr-border-strong);
+  background: var(--clr-surface-alt);
+}
+
+.topic-q-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.topic-q-card__id {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.topic-q-card__badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.topic-q-card__badge.status-completed { background: var(--clr-success-bg); color: var(--clr-success); }
+.topic-q-card__badge.status-attempted { background: var(--clr-warning-bg); color: var(--clr-warning); }
+.topic-q-card__badge.status-none      { background: var(--clr-surface-alt); color: var(--clr-text-xmuted); border: 1px solid var(--clr-border); }
+
+.topic-q-card__meta {
+  font-size: 0.75rem;
+  color: var(--clr-text-muted);
+  margin-top: 2px;
+}
+
+.topic-q-card__notes {
+  font-size: 0.8rem;
+  color: var(--clr-text-muted);
+  font-style: italic;
+  margin-top: 6px;
+  line-height: 1.4;
+
+  /* Clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 
