@@ -87,7 +87,7 @@ export function renderPriorityList(list) {
     return;
   }
 
-  list.slice(0, 10).forEach(item => {
+  list.slice(0, 20).forEach(item => {
     const li = document.createElement("li");
     li.textContent = `${item.questionID} · Priority ${item.score}`;
     ul.appendChild(li);
