@@ -1054,18 +1054,6 @@ button.secondary:hover { background: var(--clr-surface-alt); }
   color: var(--clr-text-muted);
 }
 
-.dashboard-charts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-}
-
-.dashboard-section canvas {
-  width: 100% !important;
-  height: 200px !important;
-  margin-top: 0.75rem;
-}
-
 .dashboard-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1262,16 +1250,6 @@ body.dark-mode .heat-10 { background: #bfdbfe; }
 }
 
 
-/* =============================================================================
-   26. DASHBOARD — RECENT ACTIVITY
-   ============================================================================= */
-.recent-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.recent-list .past-attempt { margin: 0; }
 
 
 /* =============================================================================
@@ -1318,6 +1296,228 @@ body.dark-mode .heat-10 { background: #bfdbfe; }
   gap: 0.75rem;
 }
 
+/* =============================================================================
+   WEAK TOPICS
+   ============================================================================= */
+
+.weak-topics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.weak-topic-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.weak-topic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weak-topic-tag {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--clr-text);
+}
+
+.weak-topic-stars {
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.weak-topic-stars.severity-high  { color: var(--clr-danger); }
+.weak-topic-stars.severity-mid   { color: var(--clr-warning); }
+.weak-topic-stars.severity-low   { color: var(--clr-success); }
+
+.weak-topic-bar-track {
+  height: 5px;
+  background: var(--clr-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.weak-topic-bar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 400ms var(--ease);
+}
+
+.weak-topic-bar.severity-high { background: var(--clr-danger); }
+.weak-topic-bar.severity-mid  { background: var(--clr-warning); }
+.weak-topic-bar.severity-low  { background: var(--clr-success); }
+
+.weak-topic-meta {
+  font-size: 0.72rem;
+  color: var(--clr-text-xmuted);
+}
+
+/* =============================================================================
+   TOPIC TREE
+   ============================================================================= */
+
+.topic-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 0.25rem;
+}
+
+/* Topic node (one per tag) */
+.topic-node {
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.topic-node__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: var(--clr-surface-alt);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition);
+}
+
+.topic-node__header:hover { background: var(--clr-accent-soft); }
+
+.topic-node__title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.topic-node__tag {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--clr-text);
+  white-space: nowrap;
+}
+
+.topic-node__counts {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  flex-wrap: wrap;
+}
+
+.count-completed { color: var(--clr-success); font-weight: 600; }
+.count-attempted { color: var(--clr-warning); }
+.count-total     { color: var(--clr-text-xmuted); }
+
+.topic-node__progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.topic-node__bar-track {
+  flex: 1;
+  height: 4px;
+  background: var(--clr-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.topic-node__bar {
+  height: 100%;
+  background: var(--clr-success);
+  border-radius: 999px;
+  transition: width 400ms var(--ease);
+}
+
+.topic-node__pct {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--clr-text-muted);
+  width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.topic-node__chevron {
+  font-size: 1.1rem;
+  color: var(--clr-text-muted);
+  transition: transform var(--transition);
+  flex-shrink: 0;
+}
+
+.topic-node__chevron.open { transform: rotate(90deg); }
+
+/* Question list inside a node */
+.topic-node__questions {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  gap: 2px;
+  background: var(--clr-surface);
+  border-top: 1px solid var(--clr-border);
+}
+
+.topic-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.topic-question:hover { background: var(--clr-accent-soft); }
+
+.topic-question__id {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--clr-text);
+}
+
+.topic-question__status {
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.topic-question.status-completed .topic-question__status {
+  background: var(--clr-success-bg);
+  color: var(--clr-success);
+}
+
+.topic-question.status-attempted .topic-question__status {
+  background: var(--clr-warning-bg);
+  color: var(--clr-warning);
+}
+
+.topic-question.status-none .topic-question__status {
+  background: var(--clr-surface-alt);
+  color: var(--clr-text-xmuted);
+}
+
+/* =============================================================================
+   SHARED DASHBOARD UTILITY
+   ============================================================================= */
+
+.dashboard-empty {
+  font-size: 0.85rem;
+  color: var(--clr-text-xmuted);
+  font-style: italic;
+  padding: 0.5rem 0;
+}
+
 
 /* =============================================================================
    28. ANIMATIONS
@@ -1354,7 +1554,6 @@ body.dark-mode .heat-10 { background: #bfdbfe; }
    ============================================================================= */
 @media (max-width: 1024px) {
   .dashboard-stats  { grid-template-columns: repeat(2, 1fr); }
-  .dashboard-charts { grid-template-columns: 1fr; }
   .dashboard-split  { grid-template-columns: 1fr; }
 }
 

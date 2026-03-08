@@ -140,18 +140,18 @@
         <button id="close-dashboard" class="btn btn--ghost">← Back to Questions</button>
       </header>
 
-      <!-- Stat cards -->
+      <!-- 1. Headline stats -->
       <section class="dashboard-stats" aria-label="Statistics">
-        <div id="stat-attempted"     class="stat-card"></div>
-        <div id="stat-completed"     class="stat-card"></div>
-        <div id="stat-avg-time"      class="stat-card"></div>
+        <div id="stat-attempted"      class="stat-card"></div>
+        <div id="stat-completed"      class="stat-card"></div>
+        <div id="stat-avg-time"       class="stat-card"></div>
         <div id="stat-avg-difficulty" class="stat-card"></div>
       </section>
 
-      <!-- STEP Matrix -->
+      <!-- 2. STEP Matrix -->
       <section class="dashboard-section" aria-label="STEP question matrix">
         <h2 class="dashboard-section__title">STEP Matrix</h2>
-        <p class="dashboard-section__subtitle">Colour intensity shows priority score. Click any cell to open that question.</p>
+        <p class="dashboard-section__subtitle">Colour shows priority score. Click any cell to open that question.</p>
         <div id="stepMatrix" class="step-matrix"></div>
         <div class="matrix-legend">
           <span class="matrix-legend__item matrix-empty">No attempts</span>
@@ -161,38 +161,36 @@
         </div>
       </section>
 
-      <!-- Charts -->
-      <section class="dashboard-charts" aria-label="Performance charts">
-        <div class="dashboard-section">
-          <h3 class="dashboard-section__title">Time per attempt <span class="unit">(min)</span></h3>
-          <canvas id="timeChart" aria-label="Time per attempt chart"></canvas>
-        </div>
-        <div class="dashboard-section">
-          <h3 class="dashboard-section__title">Difficulty over time</h3>
-          <canvas id="difficultyChart" aria-label="Difficulty over time chart"></canvas>
-        </div>
-      </section>
-
-      <!-- Activity heatmap -->
+      <!-- 3. Activity heatmap -->
       <section class="dashboard-section" aria-label="Activity heatmap">
         <h2 class="dashboard-section__title">Activity — last 120 days</h2>
+        <p class="dashboard-section__subtitle">Click any day to see what you attempted.</p>
         <div id="heatmap" class="heatmap" role="grid" aria-label="Activity heatmap"></div>
       </section>
 
-      <!-- Priority + Recent split -->
+      <!-- 4. Priority + Weak Topics (side by side) -->
       <div class="dashboard-split">
+
         <section class="dashboard-section" aria-label="Priority review">
           <h2 class="dashboard-section__title">Priority Review</h2>
-          <p class="dashboard-section__subtitle">Questions most worth revisiting now.</p>
+          <p class="dashboard-section__subtitle">Questions most worth revisiting right now.</p>
           <ul id="priorityList" class="priority-list" role="list"></ul>
         </section>
 
-        <section class="dashboard-section" aria-label="Recent activity">
-          <h2 class="dashboard-section__title">Recent Activity</h2>
-          <p class="dashboard-section__subtitle">Your last 8 unique questions.</p>
-          <div id="recentList" class="recent-list"></div>
+        <section class="dashboard-section" aria-label="Weak topics">
+          <h2 class="dashboard-section__title">Weak Topics</h2>
+          <p class="dashboard-section__subtitle">Topics where you've rated questions hardest on average.</p>
+          <div id="weakTopicsList" class="weak-topics-list"></div>
         </section>
+
       </div>
+
+      <!-- 5. Topic / Syllabus Tree -->
+      <section class="dashboard-section" aria-label="Topic syllabus tree">
+        <h2 class="dashboard-section__title">Topic Tree</h2>
+        <p class="dashboard-section__subtitle">Browse all questions grouped by topic. Click a question to open it.</p>
+        <div id="topicTree" class="topic-tree"></div>
+      </section>
 
     </div>
 

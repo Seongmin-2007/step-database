@@ -1,19 +1,30 @@
 /**
  * @file index.js  (dashboard)
- * @description Dashboard entry point. Orchestrates all dashboard sub-modules.
- *              Call `loadDashboard(questions)` to initialise or refresh.
+ * @description Dashboard entry point.
+ *
+ * Sections (in order):
+ *   1. Stats          — headline numbers
+ *   2. STEP Matrix    — question grid coloured by priority
+ *   3. Heatmap        — activity over last 120 days
+ *   4. Priority List  — top questions to revisit
+ *   5. Weak Topics    — tags with highest average difficulty
+ *   6. Topic Tree     — full syllabus tree with completion progress
+ *
+ * Removed (were bloat):
+ *   - Time per attempt chart     (not actionable)
+ *   - Difficulty over time chart (not actionable)
+ *   - Recent Activity list       (duplicated by heatmap day-view)
  */
 
 import { getAttempts, onAttemptsChanged } from "../core/attemptStore.js";
-import { getAllQuestions }                from "../core/questionStore.js";
 
-import { computeStats,        renderStats }         from "./stats.js";
+import { computeStats,        renderStats }      from "./stats.js";
 import { computePriorityList, buildPriorityMap,
-         renderPriorityList }                        from "./priority.js";
-import { computeRecentQuestions, renderRecentList } from "./recent.js";
-import { renderHeatmap, closeDayView }              from "./heatmap.js";
-import { renderTimeChart, renderDifficultyChart }   from "./charts.js";
-import { renderStepMatrix }                         from "./matrix.js";
+         renderPriorityList }                     from "./priority.js";
+import { renderHeatmap, closeDayView }           from "./heatmap.js";
+import { renderStepMatrix }                      from "./matrix.js";
+import { computeWeakTopics,  renderWeakTopics }  from "./weakTopics.js";
+import { buildTopicTree,     renderTopicTree }   from "./topicTree.js";
 
 // ─── State ────────────────────────────────────────────────────────────────────
 
@@ -24,56 +35,42 @@ let initialized = false;
 /**
  * Initialise and render the dashboard.
  * Safe to call multiple times — only subscribes to attempt changes once.
- *
- * @param {Object[]} questions  Full question list (from questionStore)
+ * @param {Object[]} questions
  */
 export function loadDashboard(questions) {
-  const attempts = getAttempts();
-  _render(attempts, questions);
+  _render(getAttempts(), questions);
 
   if (!initialized) {
     onAttemptsChanged(newAttempts => _render(newAttempts, questions));
     initialized = true;
   }
 
-  // Wire up day-view back button (once)
-  document.getElementById("close-day-view")?.addEventListener("click", closeDayView, { once: false });
+  document.getElementById("close-day-view")
+    ?.addEventListener("click", closeDayView);
 }
 
 // ─── Internal ─────────────────────────────────────────────────────────────────
 
-/**
- * Build the dashboard data model from raw attempts.
- * @private
- */
-function _buildModel(attempts) {
-  const sorted = [...attempts].sort(
-    (a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0)
-  );
-
-  const priorityList = computePriorityList(sorted);
+function _buildModel(attempts, questions) {
+  const priorityList = computePriorityList(attempts);
 
   return {
-    attempts:         sorted,
-    stats:            computeStats(sorted),
-    priority:         priorityList,
-    priorityMap:      buildPriorityMap(priorityList),
-    recent:           computeRecentQuestions(sorted),
+    attempts,
+    stats:       computeStats(attempts),
+    priority:    priorityList,
+    priorityMap: buildPriorityMap(priorityList),
+    weakTopics:  computeWeakTopics(attempts),
+    topicTree:   buildTopicTree(questions, attempts)
   };
 }
 
-/**
- * Render all dashboard sections from a fresh model.
- * @private
- */
 function _render(attempts, questions) {
-  const model = _buildModel(attempts);
+  const model = _buildModel(attempts, questions);
 
   renderStats(model.stats);
-  renderPriorityList(model.priority);
-  renderRecentList(model.recent);
-  renderHeatmap(model.attempts);
   renderStepMatrix(questions, model.priorityMap);
-  renderTimeChart(model.attempts);
-  renderDifficultyChart(model.attempts);
+  renderHeatmap(model.attempts);
+  renderPriorityList(model.priority);
+  renderWeakTopics(model.weakTopics);
+  renderTopicTree(model.topicTree);
 }
