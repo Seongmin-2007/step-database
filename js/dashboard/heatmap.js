@@ -58,8 +58,8 @@ export function openDayView(dateKey, allAttempts) {
 
   if (!dashboard || !dayScreen) return;
 
-  dashboard.style.display = "none";
-  dayScreen.style.display = "block";
+  dashboard.classList.add("hidden");
+  dayScreen.classList.remove("hidden");
 
   document.getElementById("dayTitle").textContent = `Attempts on ${dateKey}`;
 
@@ -70,6 +70,8 @@ export function openDayView(dateKey, allAttempts) {
     if (!a.createdAt) return false;
     return toDate(a.createdAt).toISOString().slice(0, 10) === dateKey;
   });
+
+  console.log(dayAttempts);
 
   if (!dayAttempts.length) {
     container.innerHTML = "<p>No attempts that day.</p>";
@@ -98,7 +100,7 @@ export function openDayView(dateKey, allAttempts) {
     attemptsBox.className = "attempts-container";
 
     qAttempts.forEach(a => {
-      const fakeDoc = { id: a.id, ref: null, data: () => a };
+      const fakeDoc = { id: a.id ?? a.questionID + "_" + (a.createdAt?.seconds ?? Date.now()), ref: null, data: () => a };
       attemptsBox.appendChild(createAttemptCard(fakeDoc, { includeID: true }));
     });
 
@@ -113,6 +115,7 @@ export function openDayView(dateKey, allAttempts) {
 export function closeDayView() {
   const dashboard = document.querySelector(".dashboard-layout");
   const dayScreen = document.getElementById("day-screen");
-  if (dashboard) dashboard.style.display = "";
-  if (dayScreen) dayScreen.style.display = "none";
+  
+  if (dashboard) dashboard.classList.remove("hidden");
+  if (dayScreen) dayScreen.classList.add("hidden");
 }
