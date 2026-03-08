@@ -2837,7 +2837,7 @@
   "assets/images/questions/2013/S1/Q13.png": [
     "Combinatorics",
     "Probability",
-    "Random variables / Expectation"
+    "Random Variables / Expectation"
   ],
   "assets/images/questions/2013/S1/Q12.png": [
     "Combinatorics",
@@ -3091,8 +3091,8 @@
   ],
   "assets/images/questions/2008/S1/Q1.png": [
     "Algebra",
-    "Number theory",
-    "Proof / induction"
+    "Number Theory",
+    "Proof / Induction"
   ],
   "assets/images/questions/2008/S1/Q9.png": [
     "Kinematics",
@@ -3169,9 +3169,9 @@
   ],
   "assets/images/questions/2009/S1/Q2.png": [
     "Differentiation",
-    "Coordinate geometry",
+    "Coordinate Geometry",
     "Polynomials",
-    "Number theory"
+    "Number Theory"
   ],
   "assets/images/questions/2009/S1/Q5.png": [
     "Differentiation",
@@ -3307,7 +3307,7 @@
   ],
   "assets/images/questions/2010/S1/Q13.png": [
     "Probability",
-    "Random variables / expectation",
+    "Random Variables / Expectation",
     "Distributions",
     "Algebra",
     "Inequalities"
