@@ -14,7 +14,10 @@ import {
   PRIORITY_ATTEMPT_LOG
 } from "../core/constants.js";
 
-import { toDate } from "../core/utils.js";
+import { toDate, makeQuestionID }   from "../core/utils.js";
+import { getAllQuestions, getTagsFor } from "../core/questionStore.js";
+import { emit }                        from "../core/eventBus.js";
+import { loadQuestion }                from "../viewer/index.js";
 
 // ─── Compute ──────────────────────────────────────────────────────────────────
 
@@ -87,9 +90,31 @@ export function renderPriorityList(list) {
     return;
   }
 
+  const allQuestions = getAllQuestions();
+
   list.slice(0, 20).forEach(item => {
+    const q = allQuestions.find(q => makeQuestionID(q) === item.questionID);
+
     const li = document.createElement("li");
-    li.textContent = `${item.questionID} · Priority ${item.score}`;
+    li.className = "priority-item";
+    li.innerHTML = `
+      <span class="priority-item__id">${item.questionID}</span>
+      <span class="priority-item__score">Priority ${item.score}</span>
+    `;
+
+    if (q) {
+      li.style.cursor = "pointer";
+      li.addEventListener("click", () => {
+        const tags = getTagsFor(q.year, q.paper, q.question);
+        loadQuestion(q, tags, null);
+        emit("filter:apply", item.questionID);
+
+        // Switch to main screen
+        document.getElementById("main-screen")?.classList.remove("hidden");
+        document.getElementById("dashboard-screen")?.classList.add("hidden");
+      });
+    }
+
     ul.appendChild(li);
   });
 }
