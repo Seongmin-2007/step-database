@@ -232,6 +232,7 @@ async function _loadSidebarAttempts(questionID, list) {
       const fakeDoc = { id: item.id, ref: null, data: () => item.data };
       list.appendChild(createAttemptCard(fakeDoc));
     });
+    
     return;
   }
 
