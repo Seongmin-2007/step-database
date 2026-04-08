@@ -245,6 +245,23 @@
       <div id="exam-questions" class="exam-questions"></div>
     </div>
 
+<!-- Add this block inside #exam-screen, between #exam-questions and #exam-results -->
+
+<div id="exam-review" class="hidden">
+  <div class="exam-review-header">
+    <h2 class="exam-review-title">Review your answers</h2>
+    <p class="exam-review-subtitle">
+      Edit notes, difficulty, and status before saving. Uncheck "Save this question"
+      to exclude it.
+    </p>
+  </div>
+  <div id="exam-review-list" class="exam-review-list"></div>
+  <div class="exam-review-actions">
+    <button id="exam-review-back" class="btn btn--ghost">← Back to exam</button>
+    <button id="exam-review-save" class="btn btn--primary">Save all &amp; finish</button>
+  </div>
+</div>
+
     <!-- Finish confirmation modal -->
     <div id="exam-finish-modal" class="modal hidden" role="dialog" aria-modal="true">
       <div class="modal-backdrop"></div>
