@@ -8,6 +8,7 @@ import { toDate }            from "../core/utils.js";
 import { parseQuestionID }   from "../core/utils.js";
 import { questionImagePath } from "../core/constants.js";
 import { createAttemptCard } from "../ui/ui.js";
+import { navigate }          from "../router.js";
 
 // ─── Heatmap ──────────────────────────────────────────────────────────────────
 
@@ -53,15 +54,12 @@ export function renderHeatmap(attempts) {
  * @param {Object[]} allAttempts
  */
 export function openDayView(dateKey, allAttempts) {
-  const dashboard = document.querySelector(".dashboard-layout");
-  const dayScreen = document.getElementById("day-screen");
+  navigate("day");
 
-  if (!dashboard || !dayScreen) return;
-
-  dashboard.classList.add("hidden");
-  dayScreen.classList.remove("hidden");
-
-  document.getElementById("dayTitle").textContent = `Attempts on ${dateKey}`;
+  // Format date nicely e.g. "Thursday, 3 April 2025"
+  const dateObj     = new Date(dateKey + "T12:00:00");
+  const dateLabel   = dateObj.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  document.getElementById("dayTitle").textContent = dateLabel;
 
   const container = document.getElementById("dayAttempts");
   container.innerHTML = "";
@@ -71,12 +69,52 @@ export function openDayView(dateKey, allAttempts) {
     return toDate(a.createdAt).toISOString().slice(0, 10) === dateKey;
   });
 
-  console.log(dayAttempts);
-
   if (!dayAttempts.length) {
     container.innerHTML = "<p>No attempts that day.</p>";
     return;
   }
+
+  // ── Daily stats bar ───────────────────────────────────────────────────────
+  const uniqueQuestions = new Set(dayAttempts.map(a => a.questionID));
+  const completed       = dayAttempts.filter(a => a.status === "completed");
+  const totalSecs       = dayAttempts.reduce((sum, a) => sum + (a.time ?? 0), 0);
+  const ratedAttempts   = dayAttempts.filter(a => a.difficulty);
+  const avgDiff         = ratedAttempts.length
+    ? (ratedAttempts.reduce((sum, a) => sum + a.difficulty, 0) / ratedAttempts.length).toFixed(1)
+    : null;
+
+  const hours   = Math.floor(totalSecs / 3600);
+  const minutes = Math.floor((totalSecs % 3600) / 60);
+  const timeStr = hours > 0
+    ? `${hours}h ${minutes}m`
+    : minutes > 0 ? `${minutes}m` : "< 1m";
+
+  const statsBar = document.createElement("div");
+  statsBar.className = "day-stats-bar";
+  statsBar.innerHTML = `
+    <div class="day-stat">
+      <span class="day-stat__value">${timeStr}</span>
+      <span class="day-stat__label">Time spent</span>
+    </div>
+    <div class="day-stat">
+      <span class="day-stat__value">${uniqueQuestions.size}</span>
+      <span class="day-stat__label">Question${uniqueQuestions.size !== 1 ? "s" : ""} attempted</span>
+    </div>
+    <div class="day-stat">
+      <span class="day-stat__value">${completed.length}</span>
+      <span class="day-stat__label">Completed</span>
+    </div>
+    <div class="day-stat">
+      <span class="day-stat__value">${dayAttempts.length}</span>
+      <span class="day-stat__label">Total attempt${dayAttempts.length !== 1 ? "s" : ""}</span>
+    </div>
+    ${avgDiff !== null ? `
+    <div class="day-stat">
+      <span class="day-stat__value">${avgDiff}</span>
+      <span class="day-stat__label">Avg difficulty</span>
+    </div>` : ""}
+  `;
+  container.appendChild(statsBar);
 
   // Group by question
   /** @type {Record<string, Object[]>} */
@@ -113,9 +151,5 @@ export function openDayView(dateKey, allAttempts) {
  * Close the day view and return to the dashboard layout.
  */
 export function closeDayView() {
-  const dashboard = document.querySelector(".dashboard-layout");
-  const dayScreen = document.getElementById("day-screen");
-  
-  if (dashboard) dashboard.classList.remove("hidden");
-  if (dayScreen) dayScreen.classList.add("hidden");
+  navigate("dashboard-root");
 }
