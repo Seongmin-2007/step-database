@@ -8,7 +8,6 @@ import { toDate }            from "../core/utils.js";
 import { parseQuestionID }   from "../core/utils.js";
 import { questionImagePath } from "../core/constants.js";
 import { createAttemptCard } from "../ui/ui.js";
-import { navigate }          from "../router.js";
 
 // ─── Heatmap ──────────────────────────────────────────────────────────────────
 
@@ -54,8 +53,6 @@ export function renderHeatmap(attempts) {
  * @param {Object[]} allAttempts
  */
 export function openDayView(dateKey, allAttempts) {
-  navigate("day");
-
   // Format date nicely e.g. "Thursday, 3 April 2025"
   const dateObj     = new Date(dateKey + "T12:00:00");
   const dateLabel   = dateObj.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
@@ -151,5 +148,9 @@ export function openDayView(dateKey, allAttempts) {
  * Close the day view and return to the dashboard layout.
  */
 export function closeDayView() {
-  navigate("dashboard-root");
+  const dashboard = document.querySelector(".dashboard-layout");
+  const dayScreen = document.getElementById("day-screen");
+  
+  if (dashboard) dashboard.classList.remove("hidden");
+  if (dayScreen) dayScreen.classList.add("hidden");
 }
