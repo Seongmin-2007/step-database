@@ -53,6 +53,14 @@ export function renderHeatmap(attempts) {
  * @param {Object[]} allAttempts
  */
 export function openDayView(dateKey, allAttempts) {
+  const dashboard = document.querySelector(".dashboard-layout");
+  const dayScreen = document.getElementById("day-screen");
+
+  if (!dashboard || !dayScreen) return;
+
+  dashboard.classList.add("hidden");
+  dayScreen.classList.remove("hidden");
+
   // Format date nicely e.g. "Thursday, 3 April 2025"
   const dateObj     = new Date(dateKey + "T12:00:00");
   const dateLabel   = dateObj.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
