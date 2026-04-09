@@ -94,12 +94,12 @@ export function openDayView(dateKey, allAttempts) {
     ? `${hours}h ${minutes}m`
     : minutes > 0 ? `${minutes}m` : "< 1m";
 
-  const avgSecs = Math.floor(totalSecs / completed);
+  const avgSecs = completed.length ? Math.floor(totalSecs / completed.length) : 0;
   const avgHours   = Math.floor(avgSecs / 3600);
   const avgMinutes = Math.floor((avgSecs % 3600) / 60);
   const avgTimeStr = avgHours > 0
     ? `${avgHours}h ${avgMinutes}m`
-    : avgMinutes > 0 ? `${avgMinutes}m` : "< 1m";
+    : (avgMinutes > 0 ? `${avgMinutes}m` : "< 1m");
 
   const statsBar = document.createElement("div");
   statsBar.className = "day-stats-bar";

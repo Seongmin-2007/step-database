@@ -80,7 +80,7 @@ export function openExam(year, paper, questions) {
       notes:      "",
       difficulty: 0,
       attempted:  false,
-      status:     "attempted",
+      status:     "completed",   // default; still editable on the review screen
       elapsed:    0,
       running:    false,
       interval:   null,
@@ -209,6 +209,11 @@ function _renderQuestions(paperQs) {
     block.id          = `exam-q-${qid}`;
     block.dataset.qid = qid;
 
+    // Status select, "Mark as attempted" checkbox, and the attempted-detection
+    // logic are intentionally absent from the exam panel — they live only on
+    // the review screen. Attempted state is inferred automatically when the
+    // user types notes or clicks a star. Status defaults to "completed" and
+    // difficulty defaults to 1 star at save time if left unset.
     block.innerHTML = `
       <div class="exam-question-block__header">
         <span class="exam-q-number">Q${q.question}</span>
@@ -227,16 +232,6 @@ function _renderQuestions(paperQs) {
         </div>
 
         <div class="exam-question-block__panel">
-
-          <div class="exam-field">
-            <label class="exam-field__label">Status</label>
-            <select id="exam-status-${qid}" class="exam-status-select">
-              <option value="attempted">Attempted</option>
-              <option value="completed">Completed</option>
-              <option value="not-started">Not started</option>
-              <option value="revision">Needs revision</option>
-            </select>
-          </div>
 
           <div class="exam-field">
             <label class="exam-field__label">Difficulty</label>
@@ -259,13 +254,6 @@ function _renderQuestions(paperQs) {
             ></textarea>
           </div>
 
-          <div class="exam-field exam-field--checkbox">
-            <label class="exam-attempted-label">
-              <input type="checkbox" id="exam-attempted-${qid}" class="exam-attempted-cb">
-              Mark as attempted
-            </label>
-          </div>
-
         </div>
       </div>
     `;
@@ -285,14 +273,7 @@ function _bindQuestionControls(block, qid) {
     else                      _startQuestionTimer(qid);
   });
 
-  // Status select
-  const statusEl = block.querySelector(`#exam-status-${qid}`);
-  statusEl.addEventListener("change", () => {
-    answers[qid].status = statusEl.value;
-    if (statusEl.value !== "not-started") _markAttempted(qid);
-  });
-
-  // Stars
+  // Stars — clicking any star auto-marks the question as attempted
   const starsEl = block.querySelector(`#exam-stars-${qid}`);
   starsEl.querySelectorAll("span").forEach(star => {
     star.addEventListener("click", () => {
@@ -308,30 +289,23 @@ function _bindQuestionControls(block, qid) {
       _renderStars(starsEl, answers[qid].difficulty));
   });
 
-  // Notes
+  // Notes — typing anything auto-marks the question as attempted
   const notesEl = block.querySelector(`#exam-notes-${qid}`);
   notesEl.addEventListener("input", () => {
     answers[qid].notes = notesEl.value;
     if (notesEl.value.trim()) _markAttempted(qid);
     _autosave();
   });
-
-  // Attempted checkbox
-  const cb = block.querySelector(`#exam-attempted-${qid}`);
-  cb.addEventListener("change", () => {
-    answers[qid].attempted = cb.checked;
-    _updateBadge(qid);
-    _updateProgress();
-    _autosave();
-  });
 }
 
+/**
+ * Mark a question as attempted (idempotent).
+ * Also auto-starts the per-question stopwatch on the first interaction.
+ */
 function _markAttempted(qid) {
   if (answers[qid].attempted) return;
   answers[qid].attempted = true;
-  const cb = document.getElementById(`exam-attempted-${qid}`);
-  if (cb) cb.checked = true;
-  // Auto-start timer if not already running
+  // Auto-start the stopwatch on first interaction
   if (!answers[qid].running && answers[qid].elapsed === 0) {
     _startQuestionTimer(qid);
   }
@@ -478,9 +452,9 @@ function _openReviewScreen() {
     listEl.appendChild(row);
 
     // Bind review controls back to answers{}
-    const starsEl  = row.querySelector(`#review-stars-${qid}`);
-    const notesEl  = row.querySelector(`.review-notes[data-qid="${qid}"]`);
-    const statusEl = row.querySelector(`.review-status[data-qid="${qid}"]`);
+    const starsEl   = row.querySelector(`#review-stars-${qid}`);
+    const notesEl   = row.querySelector(`.review-notes[data-qid="${qid}"]`);
+    const statusEl  = row.querySelector(`.review-status[data-qid="${qid}"]`);
     const includeCb = row.querySelector(`.review-include-cb[data-qid="${qid}"]`);
 
     statusEl.addEventListener("change", () => { answers[qid].status = statusEl.value; });
@@ -540,14 +514,20 @@ async function _saveToFirestore() {
   const saves = [];
 
   for (const [qid, ans] of Object.entries(answers)) {
-    // Only save if the "Save this question" checkbox was checked
+    // Only save if the "Save this question" checkbox was checked on the review screen
     if (!ans.attempted && !ans.notes.trim() && !ans.difficulty) continue;
+
+    // Apply save-time defaults:
+    //   status     → "completed" if somehow still unset
+    //   difficulty → 1 star     if the user never rated this question
+    const statusToSave     = ans.status     || "completed";
+    const difficultyToSave = ans.difficulty || 1;
 
     const attemptData = {
       questionID:  qid,
       userID:      user.uid,
-      status:      ans.status || "attempted",
-      difficulty:  ans.difficulty || null,
+      status:      statusToSave,
+      difficulty:  difficultyToSave,
       notes:       ans.notes.trim(),
       time:        ans.elapsed,          // ← per-question time, not total exam time
       createdAt:   serverTimestamp(),
@@ -561,7 +541,7 @@ async function _saveToFirestore() {
         attemptData
       )
       .then(() => {
-        // ← Bust the sidebar cache so the viewer fetches fresh attempts
+        // Bust the sidebar cache so the viewer fetches fresh attempts
         localStorage.removeItem(ATTEMPTS_CACHE_PFX + qid);
       })
       .catch(err => console.error(`[exam] Failed to save ${qid}:`, err))
@@ -823,7 +803,7 @@ export function restoreExam(allQuestions) {
         notes:      s?.notes      ?? "",
         difficulty: s?.difficulty ?? 0,
         attempted:  s?.attempted  ?? false,
-        status:     s?.status     ?? "attempted",
+        status:     s?.status     ?? "completed",
         elapsed:    s?.elapsed    ?? 0,
         running:    false,
         interval:   null,
