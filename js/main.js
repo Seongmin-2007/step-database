@@ -21,7 +21,7 @@ import { BUILD_JSON }                   from "./core/constants.js";
 import { loadQuestion }                 from "./viewer/index.js";
 import { loadDashboard }                from "./dashboard/index.js";
 import { initImageZoom }                from "./ui/imageZoom.js";
-import { initExamLauncher }             from "./exam.js";
+import { initExamLauncher, recoverExamIfNeeded } from "./exam.js";
 
 // ─── Build info ───────────────────────────────────────────────────────────────
 
@@ -99,6 +99,7 @@ loadQuestionData().then(({ questions }) => {
 
   // Initialises Mock Exam launcher
   initExamLauncher(allQuestions);
+  recoverExamIfNeeded();
 });
 
 // Search input
