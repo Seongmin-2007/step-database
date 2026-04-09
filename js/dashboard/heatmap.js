@@ -94,6 +94,13 @@ export function openDayView(dateKey, allAttempts) {
     ? `${hours}h ${minutes}m`
     : minutes > 0 ? `${minutes}m` : "< 1m";
 
+  const avgSecs = Math.floor(totalSecs / completed);
+  const avgHours   = Math.floor(avgSecs / 3600);
+  const avgMinutes = Math.floor((avgSecs % 3600) / 60);
+  const avgTimeStr = avgHours > 0
+    ? `${avgHours}h ${avgMinutes}m`
+    : avgMinutes > 0 ? `${avgMinutes}m` : "< 1m";
+
   const statsBar = document.createElement("div");
   statsBar.className = "day-stats-bar";
   statsBar.innerHTML = `
@@ -102,16 +109,12 @@ export function openDayView(dateKey, allAttempts) {
       <span class="day-stat__label">Time spent</span>
     </div>
     <div class="day-stat">
-      <span class="day-stat__value">${uniqueQuestions.size}</span>
-      <span class="day-stat__label">Question${uniqueQuestions.size !== 1 ? "s" : ""} attempted</span>
-    </div>
-    <div class="day-stat">
       <span class="day-stat__value">${completed.length}</span>
       <span class="day-stat__label">Completed</span>
     </div>
     <div class="day-stat">
-      <span class="day-stat__value">${dayAttempts.length}</span>
-      <span class="day-stat__label">Total attempt${dayAttempts.length !== 1 ? "s" : ""}</span>
+      <span class="day-stat__value">${avgTimeStr}</span>
+      <span class="day-stat__label">Avg time taken</span>
     </div>
     ${avgDiff !== null ? `
     <div class="day-stat">
