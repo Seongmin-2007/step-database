@@ -25,6 +25,7 @@ import { notify }                                from "./ui/ui.js";
 
 const EXAM_DURATION_MS    = 3 * 60 * 60 * 1000; // 3 hours
 const ATTEMPTS_CACHE_PFX  = "attempts:";         // must match viewer/index.js
+const EXAM_AUTOSAVE_KEY   = "exam:autosave";       // localStorage key for crash recovery
 
 // ─── State ────────────────────────────────────────────────────────────────────
 
@@ -299,6 +300,7 @@ function _bindQuestionControls(block, qid) {
       answers[qid].difficulty = answers[qid].difficulty === val ? 0 : val;
       _renderStars(starsEl, answers[qid].difficulty);
       _markAttempted(qid);
+      _autosave();
     });
     star.addEventListener("mouseenter", () =>
       _renderStars(starsEl, Number(star.dataset.star), true));
@@ -311,6 +313,7 @@ function _bindQuestionControls(block, qid) {
   notesEl.addEventListener("input", () => {
     answers[qid].notes = notesEl.value;
     if (notesEl.value.trim()) _markAttempted(qid);
+    _autosave();
   });
 
   // Attempted checkbox
@@ -319,6 +322,7 @@ function _bindQuestionControls(block, qid) {
     answers[qid].attempted = cb.checked;
     _updateBadge(qid);
     _updateProgress();
+    _autosave();
   });
 }
 
@@ -407,9 +411,16 @@ function _openReviewScreen() {
   const reviewEl    = document.getElementById("exam-review");
   const headerEl    = document.querySelector(".exam-header");
 
+  // If the review screen HTML doesn't exist, skip straight to saving
+  if (!reviewEl) {
+    console.warn("[exam] #exam-review not found — saving directly.");
+    _saveToFirestore();
+    return;
+  }
+
   if (questionsEl) questionsEl.classList.add("hidden");
   if (headerEl)    headerEl.classList.add("exam-header--finished");
-  if (reviewEl)    reviewEl.classList.remove("hidden");
+  reviewEl.classList.remove("hidden");
 
   const listEl = document.getElementById("exam-review-list");
   listEl.innerHTML = "";
@@ -519,7 +530,6 @@ function _openReviewScreen() {
 
 async function _saveToFirestore() {
   if (finished) return;
-  finished = true;
 
   const user = auth.currentUser;
   if (!user) {
@@ -561,10 +571,18 @@ async function _saveToFirestore() {
   const saveBtn = document.getElementById("exam-review-save");
   if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = "Saving…"; }
 
-  await Promise.all(saves);
-
-  notify({ message: "Exam saved!", type: "success", timeout: 3000 });
-  _showResults();
+  try {
+    await Promise.all(saves);
+    finished = true;  // only mark done after successful save
+    localStorage.removeItem(EXAM_AUTOSAVE_KEY);  // clear crash recovery data
+    notify({ message: "Exam saved!", type: "success", timeout: 3000 });
+    _showResults();
+  } catch (err) {
+    console.error("[exam] Save failed:", err);
+    notify({ message: "Some questions failed to save. Please try again.", type: "danger" });
+    const saveBtn = document.getElementById("exam-review-save");
+    if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = "Retry save"; }
+  }
 }
 
 // ─── Results screen ───────────────────────────────────────────────────────────
@@ -639,6 +657,9 @@ function _showResults() {
     document.getElementById("dashboard-screen")?.classList.remove("hidden");
     document.getElementById("main-screen")?.classList.add("hidden");
   });
+
+  // Scroll to top of exam screen so results are visible
+  document.getElementById("exam-screen")?.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // ─── Exam launcher modal ──────────────────────────────────────────────────────
@@ -718,6 +739,112 @@ function _bindExitButton() {
     if (finished) { closeExam(); return; }
     if (confirm("Exit exam? Your work will not be saved.")) closeExam();
   });
+}
+
+// ─── Autosave (crash recovery) ───────────────────────────────────────────────
+
+/**
+ * Persist current answers + exam meta to localStorage.
+ * Called on every meaningful user interaction so data survives a crash/reload.
+ */
+function _autosave() {
+  try {
+    const payload = {
+      examMeta,
+      timeLeftMs,
+      answers: Object.fromEntries(
+        Object.entries(answers).map(([qid, a]) => [qid, {
+          notes:      a.notes,
+          difficulty: a.difficulty,
+          attempted:  a.attempted,
+          status:     a.status,
+          elapsed:    a.elapsed,
+          // don't save running/interval — timers must be restarted manually
+        }])
+      )
+    };
+    localStorage.setItem(EXAM_AUTOSAVE_KEY, JSON.stringify(payload));
+  } catch (err) {
+    console.warn("[exam] Autosave failed:", err);
+  }
+}
+
+/**
+ * Check if there is a saved exam session and offer to restore it.
+ * Call this from initExamLauncher on page load.
+ */
+export function recoverExamIfNeeded() {
+  try {
+    const raw = localStorage.getItem(EXAM_AUTOSAVE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!saved?.examMeta || !saved?.answers) return;
+
+    const { year, paper } = saved.examMeta;
+    notify({
+      title:   "Unfinished exam found",
+      message: `You have an unsaved exam: ${year} STEP ${["I","II","III"][paper-1] ?? paper}. Reload the page and re-open the exam picker to restore it — your notes and timers are preserved in browser storage.`,
+      type:    "warning",
+      timeout: null  // sticky
+    });
+  } catch { /* ignore */ }
+}
+
+/**
+ * Restore a previously autosaved exam session into answers{} and examMeta.
+ * Returns true if restoration succeeded.
+ * @param {Object[]} allQuestions
+ * @returns {boolean}
+ */
+export function restoreExam(allQuestions) {
+  try {
+    const raw = localStorage.getItem(EXAM_AUTOSAVE_KEY);
+    if (!raw) return false;
+    const saved = JSON.parse(raw);
+    if (!saved?.examMeta || !saved?.answers) return false;
+
+    const { year, paper } = saved.examMeta;
+    const paperQs = allQuestions
+      .filter(q => q.year === year && q.paper === paper)
+      .sort((a, b) => a.question - b.question);
+
+    if (!paperQs.length) return false;
+
+    examMeta   = { year, paper, questions: paperQs };
+    timeLeftMs = saved.timeLeftMs ?? EXAM_DURATION_MS;
+    finished   = false;
+    startedAt  = new Date();
+
+    answers = {};
+    paperQs.forEach(q => {
+      const qid = makeQuestionID(q);
+      const s   = saved.answers[qid];
+      answers[qid] = {
+        notes:      s?.notes      ?? "",
+        difficulty: s?.difficulty ?? 0,
+        attempted:  s?.attempted  ?? false,
+        status:     s?.status     ?? "attempted",
+        elapsed:    s?.elapsed    ?? 0,
+        running:    false,
+        interval:   null,
+      };
+    });
+
+    _showScreen();
+    _renderQuestions(paperQs);
+    // Restore elapsed display
+    paperQs.forEach(q => _renderQuestionTimer(makeQuestionID(q)));
+    _startCountdown();
+    document.getElementById("exam-title").textContent =
+      `${year} STEP ${["I","II","III"][paper-1] ?? paper} (Restored)`;
+
+    localStorage.removeItem(EXAM_AUTOSAVE_KEY);
+    notify({ message: "Exam session restored.", type: "success", timeout: 3000 });
+    return true;
+  } catch (err) {
+    console.error("[exam] Restore failed:", err);
+    return false;
+  }
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
