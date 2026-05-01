@@ -51,8 +51,8 @@ export function renderStepMatrix(questions, priorityMap) {
         const score = priorityMap[id];
 
         if      (score === undefined) cell.classList.add("matrix-empty");
-        else if (score < 10)          cell.classList.add("matrix-low");
-        else if (score < 20)          cell.classList.add("matrix-mid");
+        else if (score < 30)          cell.classList.add("matrix-low");
+        else if (score < 50)          cell.classList.add("matrix-mid");
         else                          cell.classList.add("matrix-high");
 
         const tags  = getTagsFor(q.year, q.paper, q.question);
