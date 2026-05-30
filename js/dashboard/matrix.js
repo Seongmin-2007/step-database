@@ -56,7 +56,7 @@ export function renderStepMatrix(questions, priorityMap) {
         else                          cell.classList.add("matrix-high");
 
         const tags  = getTagsFor(q.year, q.paper, q.question);
-        cell.title  = `${id}\n${tags.join(", ")}`;
+        cell.title  = `${id}\n${tags.join(", ")}\n${score}`;
 
         cell.addEventListener("click", () => {
           loadQuestion(q, tags, null);
