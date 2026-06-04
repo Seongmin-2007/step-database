@@ -49,7 +49,9 @@ export function loadDashboard(questions) {
   document.getElementById("close-day-view")
     ?.addEventListener("click", closeDayView);
     
+  if (confirm("Do you want to download?")) {
     exportQuestionData("txt"); // or "csv" or "json"
+  }
 }
 
 // ─── Internal ─────────────────────────────────────────────────────────────────
