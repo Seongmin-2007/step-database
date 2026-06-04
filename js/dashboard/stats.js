@@ -11,13 +11,11 @@
  * @returns {{ attempted: number, completed: number, avgTimeMin: number, avgDifficulty: string }}
  */
 export function computeStats(attempts) {
-  const attempted  = new Set();
   const completed  = new Set();
   let totalTime    = 0, timeCount = 0;
   let totalDiff    = 0, diffCount = 0;
 
   attempts.forEach(a => {
-    attempted.add(a.questionID);
     if (a.status === "completed") completed.add(a.questionID);
 
     if (typeof a.time === "number") { totalTime += a.time;       timeCount++; }
@@ -25,7 +23,7 @@ export function computeStats(attempts) {
   });
 
   return {
-    attempted:     attempted.size,
+    attempted:     attempts.length,
     completed:     completed.size,
     avgTimeMin:    timeCount ? Math.round(totalTime / timeCount / 60) : 0,
     avgDifficulty: diffCount ? (totalDiff / diffCount).toFixed(1) : "—"

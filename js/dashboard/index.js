@@ -25,6 +25,7 @@ import { renderHeatmap, closeDayView }           from "./heatmap.js";
 import { renderStepMatrix }                      from "./matrix.js";
 import { computeWeakTopics,  renderWeakTopics }  from "./weakTopics.js";
 import { buildTopicTree,     renderTopicTree }   from "./topicTree.js";
+import { exportQuestionData } from "./exportQuestionData.js";
 
 // ─── State ────────────────────────────────────────────────────────────────────
 
@@ -47,6 +48,8 @@ export function loadDashboard(questions) {
 
   document.getElementById("close-day-view")
     ?.addEventListener("click", closeDayView);
+    
+    exportQuestionData("txt"); // or "csv" or "json"
 }
 
 // ─── Internal ─────────────────────────────────────────────────────────────────
